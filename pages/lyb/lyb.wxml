@@ -63,7 +63,10 @@
     <view class="message-card" wx:for="{{messages}}" wx:key="id">
       <!-- 用户信息 -->
       <view class="user-info">
-        <view class="user-avatar">{{item.nickname[0]}}</view>
+        <view class="user-avatar" wx:if="{{item.avatar}}">
+          <image src="{{item.avatar}}" mode="aspectFill" />
+        </view>
+        <view class="user-avatar" wx:else>{{item.nickname[0]}}</view>
         <view class="user-detail">
           <text class="user-name">{{item.nickname}}</text>
           <text class="user-time">{{item.time}}</text>
