@@ -1,3 +1,21 @@
 <view class="container">
-  <text>视频页 - 功能开发中</text>
+  <view class="header">
+    <text class="title">视频</text>
+  </view>
+
+  <view class="video-grid" wx:if="{{videos.length > 0}}">
+    <view class="video-item" wx:for="{{videos}}" wx:key="id" bindtap="onPlay" data-id="{{item.id}}">
+      <view class="cover">
+        <image class="cover-image" src="{{item.cover || '/images/default-video.png'}}" mode="aspectFill" />
+        <view class="play-icon">▶</view>
+      </view>
+      <view class="video-info">
+        <text class="video-title">{{item.title}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{videos.length === 0}}">
+    <text>暂无视频</text>
+  </view>
 </view>

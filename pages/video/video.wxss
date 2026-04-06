@@ -1,4 +1,82 @@
 .container {
   padding: 30rpx;
+  background: #faf8f5;
+  min-height: 100vh;
+}
+
+.header {
+  margin-bottom: 30rpx;
+}
+
+.title {
+  font-size: 32rpx;
+  color: #2c3e50;
+  font-weight: bold;
+  padding-left: 20rpx;
+  border-left: 4rpx solid #e74c3c;
+}
+
+.video-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.video-item {
+  width: 48%;
+  margin-bottom: 20rpx;
+  background: #fff;
+  border-radius: 12rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.video-item:active {
+  box-shadow: 0 8rpx 30rpx rgba(0,0,0,0.15);
+}
+
+.cover {
+  width: 100%;
+  height: 200rpx;
+  position: relative;
+}
+
+.cover-image {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+}
+
+.play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80rpx;
+  height: 80rpx;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+}
+
+.video-info {
+  padding: 20rpx;
+}
+
+.video-title {
+  font-size: 28rpx;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.empty-state {
   text-align: center;
+  padding: 100rpx 0;
+  color: #999;
+  font-size: 28rpx;
 }
