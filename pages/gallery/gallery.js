@@ -38,9 +38,12 @@ Page({
   async getPhotoLikeStatus(photo) {
     try {
       const likeRes = await request(`/media/photo/${photo.id}/like`);
-      return { ...photo, likeCount: likeRes.count, liked: likeRes.liked };
+      // 拼接完整的图片URL
+      const url = `/static/imgs/messages/${photo.filename}`;
+      return { ...photo, url, likeCount: likeRes.count, liked: likeRes.liked };
     } catch {
-      return { ...photo, likeCount: 0, liked: false };
+      const url = `/static/imgs/messages/${photo.filename}`;
+      return { ...photo, url, likeCount: 0, liked: false };
     }
   },
 
