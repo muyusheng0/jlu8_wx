@@ -1,0 +1,26 @@
+<view class="container">
+  <van-loading wx:if="{{loading}}" vertical />
+
+  <view class="page-header">
+    <van-icon name="orders-o" size="24px" color="#ee0a24" />
+    <text class="page-title">动态管理</text>
+  </view>
+
+  <view class="activity-list" wx:if="{{!loading && activities.length > 0}}">
+    <view class="activity-item" wx:for="{{activities}}" wx:key="id">
+      <view class="activity-header">
+        <text class="activity-user">{{item.user_name}}</text>
+        <text class="activity-time">{{formatTime(item.created_at)}}</text>
+      </view>
+      <view class="activity-content">{{item.description}}</view>
+      <view class="activity-actions">
+        <van-button size="small" type="danger" plain hairline catchtap="onDelete" data-time="{{item.time}}" data-actor="{{item.actor}}">删除</van-button>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{!loading && activities.length === 0}}">
+    <van-icon name="orders-o" size="48px" color="#c8c9cc" />
+    <text>暂无动态</text>
+  </view>
+</view>

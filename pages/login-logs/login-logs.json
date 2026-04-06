@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "van-loading": "miniprogram_npm/vant-weapp/loading/index",
+    "van-cell": "miniprogram_npm/vant-weapp/cell/index",
+    "van-cell-group": "miniprogram_npm/vant-weapp/cell-group/index",
+    "van-icon": "miniprogram_npm/vant-weapp/icon/index"
+  },
+  "navigationBarTitleText": "登录日志"
+}

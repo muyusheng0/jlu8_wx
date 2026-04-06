@@ -51,7 +51,7 @@
       </view>
     </view>
 
-    <!-- 个人信息 -->
+    <!-- 基本信息 -->
     <view class="section">
       <view class="section-header">
         <van-icon name="user-o" size="18px" color="#ee0a24" />
@@ -68,15 +68,15 @@
     </view>
 
     <!-- 社交媒体 -->
-    <view class="section" wx:if="{{profile.github || profile.douyin || profile.xiaohongshu}}">
+    <view class="section">
       <view class="section-header">
         <van-icon name="share" size="18px" color="#ee0a24" />
         <text class="section-title">社交媒体</text>
       </view>
       <van-cell-group border="{{false}}" inset>
-        <van-cell wx:if="{{profile.github}}" title="GitHub" value="{{profile.github}}" is-link bind:click="onEdit" data-field="github" />
-        <van-cell wx:if="{{profile.douyin}}" title="抖音" value="{{profile.douyin}}" is-link bind:click="onEdit" data-field="douyin" />
-        <van-cell wx:if="{{profile.xiaohongshu}}" title="小红书" value="{{profile.xiaohongshu}}" is-link bind:click="onEdit" data-field="xiaohongshu" />
+        <van-cell title="GitHub" value="{{profile.github || '未填写'}}" is-link bind:click="onEdit" data-field="github" />
+        <van-cell title="抖音" value="{{profile.douyin || '未填写'}}" is-link bind:click="onEdit" data-field="douyin" />
+        <van-cell title="小红书" value="{{profile.xiaohongshu || '未填写'}}" is-link bind:click="onEdit" data-field="xiaohongshu" />
       </van-cell-group>
     </view>
 
@@ -102,6 +102,31 @@
       <van-cell-group border="{{false}}" inset>
         <van-cell title="兴趣爱好" value="{{profile.hobby || '未填写'}}" is-link bind:click="onEdit" data-field="hobby" />
         <van-cell title="梦想" value="{{profile.dream || '未填写'}}" is-link bind:click="onEdit" data-field="dream" />
+      </van-cell-group>
+    </view>
+
+    <!-- 管理员功能 (仅管理员可见) -->
+    <view class="section" wx:if="{{profile.is_admin || profile.is_super_admin}}">
+      <view class="section-header">
+        <van-icon name="setting" size="18px" color="#ee0a24" />
+        <text class="section-title">管理功能</text>
+      </view>
+      <van-cell-group border="{{false}}" inset>
+        <van-cell title="动态管理" is-link bind:click="goToActivityAdmin">
+          <van-icon slot="icon" name="orders-o" size="18px" color="#ee0a24" />
+        </van-cell>
+        <van-cell title="登录日志" is-link bind:click="goToLoginLogs">
+          <van-icon slot="icon" name="log" size="18px" color="#ee0a24" />
+        </van-cell>
+      </van-cell-group>
+    </view>
+
+    <!-- 超级管理员功能 -->
+    <view class="section" wx:if="{{profile.is_super_admin}}">
+      <van-cell-group border="{{false}}" inset>
+        <van-cell title="管理员设置" is-link bind:click="goToAdminSettings">
+          <van-icon slot="icon" name="shield-o" size="18px" color="#ee0a24" />
+        </van-cell>
       </van-cell-group>
     </view>
 

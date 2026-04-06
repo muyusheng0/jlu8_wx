@@ -1,0 +1,38 @@
+<view class="container">
+  <van-loading wx:if="{{loading}}" vertical />
+
+  <view class="page-header">
+    <van-icon name="shield-o" size="24px" color="#ee0a24" />
+    <text class="page-title">管理员设置</text>
+  </view>
+
+  <view class="student-list" wx:if="{{!loading && students.length > 0}}">
+    <van-cell-group border="{{false}}" inset>
+      <van-cell wx:for="{{students}}" wx:key="id" title="{{item.name}}" label="学号: {{item.id}}">
+        <view slot="right-icon" class="admin-btns">
+          <van-switch
+            size="24px"
+            checked="{{item.is_admin}}"
+            active-color="#ee0a24"
+            bind:change="onToggleAdmin"
+            data-id="{{item.id}}"
+          />
+          <text class="admin-label">管理员</text>
+          <van-switch
+            size="24px"
+            checked="{{item.is_super_admin}}"
+            active-color="#7232dd"
+            bind:change="onToggleSuperAdmin"
+            data-id="{{item.id}}"
+          />
+          <text class="admin-label">超管</text>
+        </view>
+      </van-cell>
+    </van-cell-group>
+  </view>
+
+  <view class="empty-state" wx:if="{{!loading && students.length === 0}}">
+    <van-icon name="shield-o" size="48px" color="#c8c9cc" />
+    <text>暂无同学数据</text>
+  </view>
+</view>

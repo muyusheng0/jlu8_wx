@@ -1,0 +1,21 @@
+<view class="container">
+  <van-loading wx:if="{{loading}}" vertical />
+
+  <view class="page-header">
+    <van-icon name="log" size="24px" color="#ee0a24" />
+    <text class="page-title">登录日志</text>
+  </view>
+
+  <view class="log-list" wx:if="{{!loading && logs.length > 0}}">
+    <van-cell-group border="{{false}}" inset>
+      <van-cell wx:for="{{logs}}" wx:key="id" title="{{item.name}}" label="{{item.ip}} - {{item.location}}">
+        <view slot="right-icon" class="log-time">{{formatTime(item.login_time)}}</view>
+      </van-cell>
+    </van-cell-group>
+  </view>
+
+  <view class="empty-state" wx:if="{{!loading && logs.length === 0}}">
+    <van-icon name="log" size="48px" color="#c8c9cc" />
+    <text>暂无登录记录</text>
+  </view>
+</view>

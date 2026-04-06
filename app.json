@@ -10,7 +10,10 @@
     "pages/profile/profile",
     "pages/bind/bind",
     "pages/deleted/deleted",
-    "pages/notifications/notifications"
+    "pages/notifications/notifications",
+    "pages/activity-admin/activity-admin",
+    "pages/login-logs/login-logs",
+    "pages/admin-settings/admin-settings"
   ],
   "window": {
     "navigationBarBackgroundColor": "#2c3e50",

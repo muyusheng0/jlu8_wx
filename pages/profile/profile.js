@@ -158,6 +158,18 @@ Page({
     wx.navigateTo({ url: '/pages/deleted/deleted' });
   },
 
+  goToActivityAdmin() {
+    wx.navigateTo({ url: '/pages/activity-admin/activity-admin' });
+  },
+
+  goToLoginLogs() {
+    wx.navigateTo({ url: '/pages/login-logs/login-logs' });
+  },
+
+  goToAdminSettings() {
+    wx.navigateTo({ url: '/pages/admin-settings/admin-settings' });
+  },
+
   onLogout() {
     wx.showModal({
       title: '提示',
