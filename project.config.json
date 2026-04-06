@@ -36,7 +36,7 @@
     "enableEngineNative": false,
     "useIsolateContext": true,
     "userConfirmedBundleSwitch": false,
-    "packNpmManually": true,
+    "packNpmManually": false,
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
