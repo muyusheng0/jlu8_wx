@@ -6,7 +6,9 @@
     "upload": "miniprogram-ci upload",
     "preview": "miniprogram-ci preview"
   },
-  "dependencies": {},
+  "dependencies": {
+    "vant-weapp": "^0.5.29"
+  },
   "devDependencies": {
     "miniprogram-ci": "^2.1.32"
   }

@@ -24,5 +24,23 @@
       { "pagePath": "pages/lyb/lyb", "text": "留言板" },
       { "pagePath": "pages/profile/profile", "text": "我的" }
     ]
+  },
+  "usingComponents": {
+    "van-button": "vant-weapp/button/index",
+    "van-cell": "vant-weapp/cell/index",
+    "van-cell-group": "vant-weapp/cell-group/index",
+    "van-field": "vant-weapp/field/index",
+    "van-toast": "vant-weapp/toast/index",
+    "van-dialog": "vant-weapp/dialog/index",
+    "van-card": "vant-weapp/card/index",
+    "van-tag": "vant-weapp/tag/index",
+    "van-popup": "vant-weapp/popup/index",
+    "van-icon": "vant-weapp/icon/index",
+    "van-image": "vant-weapp/image/index",
+    "van-empty": "vant-weapp/empty/index",
+    "van-divider": "vant-weapp/divider/index",
+    "van-loading": "vant-weapp/loading/index",
+    "van-overlay": "vant-weapp/overlay/index",
+    "van-transition": "vant-weapp/transition/index"
   }
 }
