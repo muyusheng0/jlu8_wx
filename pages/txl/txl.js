@@ -30,10 +30,19 @@ Page({
     wx.showLoading({ title: '加载中...' });
     try {
       const res = await request('/txl');
-      const students = (res.students || []).map((s, index) => ({
-        ...s,
-        avatarColor: avatarColors[index % avatarColors.length]
-      }));
+      const app = getApp();
+      const baseUrl = app.globalData.apiBase.replace('/api/wx', '');
+      const students = (res.students || []).map((s, index) => {
+        let avatar = s.avatar || '';
+        if (avatar && !avatar.startsWith('http')) {
+          avatar = baseUrl + avatar;
+        }
+        return {
+          ...s,
+          avatar,
+          avatarColor: avatarColors[index % avatarColors.length]
+        };
+      });
       this.setData({
         students: students,
         filteredStudents: students

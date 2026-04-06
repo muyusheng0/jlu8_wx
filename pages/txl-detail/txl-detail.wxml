@@ -5,7 +5,10 @@
     <!-- 头像卡片 -->
     <view class="profile-card">
       <view class="avatar-wrapper">
-        <view class="avatar">{{student.name[0]}}</view>
+        <view class="avatar" wx:if="{{student.avatar}}">
+          <image src="{{student.avatar}}" mode="aspectFill" />
+        </view>
+        <view class="avatar" wx:else>{{student.name[0]}}</view>
         <view class="avatar-ring"></view>
       </view>
       <text class="name">{{student.name}}</text>

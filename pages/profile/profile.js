@@ -40,8 +40,15 @@ Page({
         // 根据姓名生成固定颜色
         const nameStr = res.profile.name || '';
         const colorIndex = nameStr.charCodeAt(0) % avatarColors.length;
+        // 处理头像URL
+        const app = getApp();
+        const baseUrl = app.globalData.apiBase.replace('/api/wx', '');
+        let avatar = res.profile.avatar || '';
+        if (avatar && !avatar.startsWith('http')) {
+          avatar = baseUrl + avatar;
+        }
         this.setData({
-          profile: res.profile,
+          profile: { ...res.profile, avatar },
           loading: false,
           avatarColor: avatarColors[colorIndex]
         });

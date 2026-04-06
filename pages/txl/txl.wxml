@@ -30,7 +30,8 @@
           data-id="{{item.id}}"
         >
           <view class="nearest-avatar">
-            {{item.name[0]}}
+            <image wx:if="{{item.avatar}}" src="{{item.avatar}}" mode="aspectFill" />
+            <text wx:else>{{item.name[0]}}</text>
           </view>
           <view class="nearest-name">{{item.name}}</view>
           <view class="nearest-distance">{{item.distance}}km</view>
@@ -43,7 +44,8 @@
   <view class="student-list">
     <view wx:for="{{ filteredStudents }}" wx:key="id" class="student-card" bindtap="goDetail" data-id="{{ item.id }}">
       <view class="student-avatar" style="background: linear-gradient(135deg, {{item.avatarColor || '#2c3e50,#34495e'}})">
-        {{ item.name[0] }}
+        <image wx:if="{{item.avatar}}" src="{{item.avatar}}" mode="aspectFill" />
+        <text wx:else>{{item.name[0]}}</text>
       </view>
       <view class="student-info">
         <view class="student-name-row">

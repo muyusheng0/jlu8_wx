@@ -65,6 +65,7 @@ Page({
       const baseUrl = app.globalData.apiBase.replace('/api/wx', '');
       const messages = (res.messages || []).map(m => ({
         ...m,
+        avatar: m.avatar ? (m.avatar.startsWith('http') ? m.avatar : baseUrl + m.avatar) : '',
         image: m.image ? (m.image.startsWith('http') ? m.image : baseUrl + m.image) : '',
         voice: m.voice ? (m.voice.startsWith('http') ? m.voice : baseUrl + m.voice) : ''
       }));

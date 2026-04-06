@@ -24,8 +24,15 @@ Page({
     try {
       const res = await request(`/txl/${studentId}`);
       if (res.success && res.student) {
-        this.setData({ student: res.student, loading: false });
-        this.loadVoiceShouts(res.student.name);
+        const app = getApp();
+        const baseUrl = app.globalData.apiBase.replace('/api/wx', '');
+        let avatar = res.student.avatar || '';
+        if (avatar && !avatar.startsWith('http')) {
+          avatar = baseUrl + avatar;
+        }
+        const student = { ...res.student, avatar };
+        this.setData({ student, loading: false });
+        this.loadVoiceShouts(student.name);
       }
     } catch (e) {
       wx.showToast({ title: '加载失败', icon: 'none' });
