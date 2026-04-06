@@ -139,6 +139,19 @@
   border-radius: 6rpx;
 }
 
+.delete-btn {
+  position: absolute;
+  top: 16rpx;
+  left: 16rpx;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* 视频信息 */
 .video-info {
   padding: 24rpx;

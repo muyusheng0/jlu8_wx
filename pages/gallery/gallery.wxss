@@ -89,11 +89,59 @@
   background: #f7f8fa;
 }
 
-/* 点赞按钮 */
-.like-btn {
+/* 照片悬浮层 */
+.photo-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 40%, transparent 60%, rgba(0,0,0,0.3) 100%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.photo-wrapper:active .photo-overlay,
+.photo-wrapper:hover .photo-overlay {
+  opacity: 1;
+}
+
+.overlay-top {
   position: absolute;
   top: 12rpx;
+  left: 12rpx;
   right: 12rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.overlay-bottom {
+  position: absolute;
+  bottom: 12rpx;
+  left: 12rpx;
+  right: 12rpx;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.action-btns {
+  display: flex;
+  gap: 12rpx;
+}
+
+.action-btn {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8rpx);
+  border-radius: 50%;
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 点赞按钮 */
+.like-btn {
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(8rpx);
   border-radius: 24rpx;

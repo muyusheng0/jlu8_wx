@@ -10,11 +10,28 @@ const getFullUrl = (path) => {
 Page({
   data: {
     videos: [],
-    loading: true
+    loading: true,
+    currentUser: null,
+    isAdmin: false
   },
 
   onLoad() {
+    this.loadUserProfile();
     this.loadVideos();
+  },
+
+  async loadUserProfile() {
+    try {
+      const res = await request('/profile');
+      if (res.success) {
+        this.setData({
+          currentUser: res.profile,
+          isAdmin: res.profile.is_admin || res.profile.is_super_admin
+        });
+      }
+    } catch (e) {
+      console.error('loadUserProfile error:', e);
+    }
   },
 
   async loadVideos() {
@@ -70,6 +87,29 @@ Page({
     } catch (e) {
       wx.showToast({ title: e.message || '操作失败', icon: 'none' });
     }
+  },
+
+  onDelete(e) {
+    const { id } = e.currentTarget.dataset;
+    const videos = this.data.videos;
+    const video = videos.find(v => v.id === id);
+    if (!video) return;
+
+    wx.showModal({
+      title: '提示',
+      content: '确定删除这个视频？',
+      success: async (res) => {
+        if (res.confirm) {
+          try {
+            await request(`/media/video/${id}`, {}, 'DELETE');
+            wx.showToast({ title: '删除成功' });
+            this.loadVideos();
+          } catch (e) {
+            wx.showToast({ title: e.message || '删除失败', icon: 'none' });
+          }
+        }
+      }
+    });
   },
 
   onPlay(e) {

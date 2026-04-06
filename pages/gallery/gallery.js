@@ -12,11 +12,28 @@ Page({
   data: {
     photos: [],
     loading: true,
-    previewUrls: []
+    previewUrls: [],
+    currentUser: null,
+    isAdmin: false
   },
 
   onLoad() {
+    this.loadUserProfile();
     this.loadPhotos();
+  },
+
+  async loadUserProfile() {
+    try {
+      const res = await request('/profile');
+      if (res.success) {
+        this.setData({
+          currentUser: res.profile,
+          isAdmin: res.profile.is_admin || res.profile.is_super_admin
+        });
+      }
+    } catch (e) {
+      console.error('loadUserProfile error:', e);
+    }
   },
 
   onShow() {
@@ -84,6 +101,46 @@ Page({
       this.setData({ photos });
       wx.showToast({ title: e.message || '操作失败', icon: 'none' });
     }
+  },
+
+  onDelete(e) {
+    const { id } = e.currentTarget.dataset;
+    const photos = this.data.photos;
+    const photo = photos.find(p => p.id === id);
+    if (!photo) return;
+
+    wx.showModal({
+      title: '提示',
+      content: '确定删除这张照片？',
+      success: async (res) => {
+        if (res.confirm) {
+          try {
+            await request(`/media/photo/${id}`, {}, 'DELETE');
+            wx.showToast({ title: '删除成功' });
+            this.loadPhotos();
+          } catch (e) {
+            wx.showToast({ title: e.message || '删除失败', icon: 'none' });
+          }
+        }
+      }
+    });
+  },
+
+  onSaveImage(e) {
+    const { url } = e.currentTarget.dataset;
+    wx.saveImageToPhotosAlbum({
+      filePath: url,
+      success: () => {
+        wx.showToast({ title: '保存成功' });
+      },
+      fail: (err) => {
+        if (err.errMsg.includes('auth deny')) {
+          wx.showToast({ title: '请授权保存图片', icon: 'none' });
+        } else {
+          wx.showToast({ title: '保存失败', icon: 'none' });
+        }
+      }
+    });
   },
 
   onPreview(e) {

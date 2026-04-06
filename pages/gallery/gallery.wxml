@@ -22,17 +22,31 @@
           class="photo-image"
           lazy-load
         />
-        <view class="like-btn" catchtap="onLike" data-id="{{item.id}}">
-          <van-icon name="{{item.liked ? 'like' : 'like-o'}}"
-                    color="{{item.liked ? '#ee0a24' : '#fff'}}"
-                    size="18px" />
-          <text class="like-count">{{item.likeCount || 0}}</text>
+        <view class="photo-overlay">
+          <view class="overlay-top">
+            <view class="like-btn" catchtap="onLike" data-id="{{item.id}}">
+              <van-icon name="{{item.liked ? 'like' : 'like-o'}}"
+                        color="{{item.liked ? '#ee0a24' : '#fff'}}"
+                        size="18px" />
+              <text class="like-count">{{item.likeCount || 0}}</text>
+            </view>
+          </view>
+          <view class="overlay-bottom">
+            <view class="action-btns">
+              <view class="action-btn" catchtap="onSaveImage" data-url="{{item.url}}">
+                <van-icon name="down" size="16px" color="#fff" />
+              </view>
+              <view class="action-btn" wx:if="{{currentUser && (currentUser.name === item.owner || isAdmin)}}" catchtap="onDelete" data-id="{{item.id}}">
+                <van-icon name="delete" size="16px" color="#fff" />
+              </view>
+            </view>
+          </view>
         </view>
       </view>
       <view class="photo-info">
         <view class="photo-owner">
           <van-icon name="user-o" size="12px" />
-          <text>{{item.owner}}</text>
+          <text>{{item.owner || '匿名'}}</text>
         </view>
       </view>
     </view>

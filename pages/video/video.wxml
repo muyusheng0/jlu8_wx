@@ -44,6 +44,10 @@
           </view>
         </view>
         <view class="video-duration" wx:if="{{item.duration}}">{{item.duration}}</view>
+        <!-- 删除按钮 -->
+        <view class="delete-btn" wx:if="{{currentUser && (currentUser.name === item.owner || isAdmin)}}" catchtap="onDelete" data-id="{{item.id}}">
+          <van-icon name="delete" size="18px" color="#fff" />
+        </view>
       </view>
 
       <!-- 视频信息 -->
