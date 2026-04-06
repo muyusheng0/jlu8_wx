@@ -10,14 +10,7 @@
   <van-tabbar-item
     wx:for="{{ list }}"
     wx:key="index"
-    info="{{ item.info }}"
   >
-    <view slot="icon" class="tab-icon">
-      <van-icon name="{{ item.icon }}" size="22px" />
-    </view>
-    <view slot="icon-active" class="tab-icon">
-      <van-icon name="{{ item.selectedIcon }}" size="22px" />
-    </view>
     <view class="tab-emoji">{{ item.emoji }}</view>
     <view class="tab-text">{{ item.text }}</view>
   </van-tabbar-item>
