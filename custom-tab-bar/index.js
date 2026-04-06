@@ -2,36 +2,11 @@ Component({
   data: {
     active: 0,
     list: [
-      {
-        name: 'home',
-        emoji: '🏠',
-        text: '首页',
-        path: '/pages/index/index'
-      },
-      {
-        name: 'txl',
-        emoji: '👥',
-        text: '通讯录',
-        path: '/pages/txl/txl'
-      },
-      {
-        name: 'lyb',
-        emoji: '💬',
-        text: '留言板',
-        path: '/pages/lyb/lyb'
-      },
-      {
-        name: 'media',
-        emoji: '📷',
-        text: '媒体',
-        path: '/pages/media/media'
-      },
-      {
-        name: 'profile',
-        emoji: '👤',
-        text: '我的',
-        path: '/pages/profile/profile'
-      }
+      { text: '首页', path: '/pages/index/index' },
+      { text: '通讯录', path: '/pages/txl/txl' },
+      { text: '留言板', path: '/pages/lyb/lyb' },
+      { text: '媒体', path: '/pages/media/media' },
+      { text: '我的', path: '/pages/profile/profile' }
     ]
   },
 
@@ -42,13 +17,9 @@ Component({
   methods: {
     setActive() {
       const pages = getCurrentPages()
-      if (pages.length === 0) {
-        return
-      }
+      if (pages.length === 0) return
       const currentPage = pages[pages.length - 1]
-      if (!currentPage) {
-        return
-      }
+      if (!currentPage) return
       const route = currentPage.route
       const active = this.data.list.findIndex(item => item.path === `/${route}`)
       if (active !== -1) {
@@ -56,13 +27,11 @@ Component({
       }
     },
 
-    onChange(e) {
-      const { value } = e.detail
-      const item = this.data.list[value]
-      if (!item) {
-        return
-      }
-      this.setData({ active: value })
+    onTabChange(e) {
+      const index = e.currentTarget.dataset.index
+      const item = this.data.list[index]
+      if (!item) return
+      this.setData({ active: index })
       wx.switchTab({ url: item.path })
     }
   }

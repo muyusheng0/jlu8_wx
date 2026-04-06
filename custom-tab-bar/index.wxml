@@ -1,17 +1,11 @@
-<van-tabbar
-  active="{{ active }}"
-  bind:change="onChange"
-  fixed
-  placeholder
-  safe-area-inset-bottom
-  active-color="#ee0a24"
-  inactive-color="#969799"
->
-  <van-tabbar-item
+<view class="tab-bar">
+  <view
     wx:for="{{ list }}"
     wx:key="index"
+    class="tab-item {{active === index ? 'active' : ''}}"
+    bindtap="onTabChange"
+    data-index="{{ index }}"
   >
-    <view class="tab-emoji">{{ item.emoji }}</view>
     <view class="tab-text">{{ item.text }}</view>
-  </van-tabbar-item>
-</van-tabbar>
+  </view>
+</view>
