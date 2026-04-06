@@ -39,8 +39,6 @@
     "van-loading": "miniprogram_npm/vant-weapp/loading/index",
     "van-overlay": "miniprogram_npm/vant-weapp/overlay/index",
     "van-transition": "miniprogram_npm/vant-weapp/transition/index",
-    "van-image": "miniprogram_npm/vant-weapp/image/index",
-    "van-empty": "miniprogram_npm/vant-weapp/empty/index",
     "van-search": "miniprogram_npm/vant-weapp/search/index"
   }
 }
