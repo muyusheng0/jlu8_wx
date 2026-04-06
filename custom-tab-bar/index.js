@@ -14,22 +14,12 @@ Component({
     this.setActive()
   },
 
-  pageLifetimes: {
-    show() {
-      // 延迟一点执行，确保页面已切换完成
-      setTimeout(() => {
-        this.setActive()
-      }, 100)
-    }
-  },
-
   methods: {
     setActive() {
       const pages = getCurrentPages()
       if (pages.length === 0) return
       const currentPage = pages[pages.length - 1]
       if (!currentPage || !currentPage.route) return
-
       const active = this.data.list.findIndex(item => item.path === `/${currentPage.route}`)
       if (active !== -1) {
         this.setData({ active })
