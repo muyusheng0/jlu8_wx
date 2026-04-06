@@ -1,6 +1,12 @@
 {
   "description": "吉大自动化八班小程序",
-  "packNpmRelationList": [],
+  "miniprogramRoot": "./",
+  "packNpmRelationList": [
+    {
+      "packageJsonPath": "./package.json",
+      "miniprogramNpmAllPath": "./miniprogram_npm/"
+    }
+  ],
   "setting": {
     "urlCheck": false,
     "es6": true,
@@ -30,8 +36,7 @@
     "enableEngineNative": false,
     "useIsolateContext": true,
     "userConfirmedBundleSwitch": false,
-    "packNpmManually": false,
-    "packNpmRelationList": [],
+    "packNpmManually": true,
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
