@@ -9,7 +9,8 @@
 >
   <van-tabbar-item
     wx:for="{{ list }}"
-    wx:key="index"
+    wx:key="name"
+    name="{{ item.name }}"
   >
     <view class="tab-emoji">{{ item.emoji }}</view>
     <view class="tab-text">{{ item.text }}</view>

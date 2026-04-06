@@ -3,26 +3,31 @@ Component({
     active: 0,
     list: [
       {
+        name: 'home',
         emoji: '🏠',
         text: '首页',
         path: '/pages/index/index'
       },
       {
+        name: 'txl',
         emoji: '👥',
         text: '通讯录',
         path: '/pages/txl/txl'
       },
       {
+        name: 'lyb',
         emoji: '💬',
         text: '留言板',
         path: '/pages/lyb/lyb'
       },
       {
+        name: 'media',
         emoji: '📷',
         text: '媒体',
         path: '/pages/media/media'
       },
       {
+        name: 'profile',
         emoji: '👤',
         text: '我的',
         path: '/pages/profile/profile'
