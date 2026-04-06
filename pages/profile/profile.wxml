@@ -7,9 +7,10 @@
       <view class="card-wave"></view>
       <view class="avatar-wrap">
         <view class="avatar" style="background: linear-gradient(135deg, {{avatarColor}});">
-          {{profile.name[0]}}
+          <image wx:if="{{profile.avatar}}" src="{{profile.avatar}}" class="avatar-img" />
+          <text wx:else>{{profile.name[0]}}</text>
         </view>
-        <view class="edit-avatar-btn" bindtap="onEdit">
+        <view class="edit-avatar-btn" bindtap="onUploadAvatar">
           <van-icon name="edit" size="24rpx" color="#fff" />
         </view>
       </view>
@@ -19,6 +20,11 @@
         <van-icon name="location-o" size="22rpx" color="rgba(255,255,255,0.8)" />
         <text class="location">{{profile.city || profile.hometown_name}}</text>
       </view>
+      <!-- GPS位置 -->
+      <view class="gps-wrap" wx:if="{{profile.gps_coords}}">
+        <van-icon name="location-o" size="22rpx" color="rgba(255,255,255,0.8)" />
+        <text class="gps-text">{{profile.gps_coords}}</text>
+      </view>
       <!-- 个性签名 -->
       <view class="custom-intro" wx:if="{{profile.custom_intro}}">
         <text>{{profile.custom_intro}}</text>
@@ -27,13 +33,6 @@
 
     <!-- 快捷操作 -->
     <view class="quick-actions">
-      <view class="action-item" bindtap="goToMessages">
-        <view class="action-icon" style="background: linear-gradient(135deg, #07c160, #10b981);">
-          <van-icon name="comment-o" size="24px" color="#fff" />
-        </view>
-        <text class="action-text">我的留言</text>
-        <van-icon name="arrow" size="14px" color="#c8c9cc" />
-      </view>
       <view class="action-item" bindtap="goToNotifications">
         <view class="action-icon" style="background: linear-gradient(135deg, #e74c3c, #f39c12);">
           <van-icon name="bell" size="24px" color="#fff" />
@@ -61,9 +60,7 @@
         <van-cell title="性别" value="{{profile.gender || '未填写'}}" is-link bind:click="onEdit" data-field="gender" />
         <van-cell title="生日" value="{{profile.birthday || '未填写'}}" is-link bind:click="onEdit" data-field="birthday" />
         <van-cell title="联系电话" value="{{profile.phone || '未填写'}}" is-link bind:click="onEdit" data-field="phone" />
-        <van-cell title="微信号" value="{{profile.wechat || '未填写'}}" is-link bind:click="onEdit" data-field="wechat" />
-        <van-cell title="QQ" value="{{profile.qq || '未填写'}}" is-link bind:click="onEdit" data-field="qq" />
-        <van-cell title="电子邮箱" value="{{profile.email || '未填写'}}" is-link bind:click="onEdit" data-field="email" />
+        <van-cell title="当前所在地" value="{{profile.city || profile.hometown_name || '未填写'}}" is-link bind:click="onEdit" data-field="city" />
       </van-cell-group>
     </view>
 
@@ -72,6 +69,7 @@
       <view class="section-header">
         <van-icon name="share" size="18px" color="#ee0a24" />
         <text class="section-title">社交媒体</text>
+        <text class="section-hint">通讯录可见</text>
       </view>
       <van-cell-group border="{{false}}" inset>
         <van-cell title="GitHub" value="{{profile.github || '未填写'}}" is-link bind:click="onEdit" data-field="github" />
@@ -181,31 +179,6 @@
           type="number"
           maxlength="11"
           error="{{errors.phone}}"
-        />
-        <van-field
-          label="微信号"
-          value="{{editForm.wechat}}"
-          data-field="wechat"
-          bind:change="onEditField"
-          placeholder="请输入微信号"
-        />
-        <van-field
-          label="QQ"
-          value="{{editForm.qq}}"
-          data-field="qq"
-          bind:change="onEditField"
-          placeholder="请输入QQ号"
-          type="number"
-          maxlength="11"
-          error="{{errors.qq}}"
-        />
-        <van-field
-          label="电子邮箱"
-          value="{{editForm.email}}"
-          data-field="email"
-          bind:change="onEditField"
-          placeholder="请输入邮箱"
-          error="{{errors.email}}"
         />
         <van-field
           label="从事行业"

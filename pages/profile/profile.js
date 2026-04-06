@@ -66,6 +66,50 @@ Page({
     }
   },
 
+  // 上传头像
+  onUploadAvatar() {
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: (res) => {
+        const tempFilePath = res.tempFilePaths[0];
+        wx.showLoading({ title: '上传中...' });
+        this.uploadAvatar(tempFilePath);
+      }
+    });
+  },
+
+  uploadAvatar(tempFilePath) {
+    const token = getApp().globalData.token;
+    wx.uploadFile({
+      url: `${getApp().globalData.apiBase.replace('/api/wx', '')}/api/wx/avatar`,
+      filePath: tempFilePath,
+      name: 'avatar',
+      header: {
+        'Authorization': token ? `Bearer ${token}` : ''
+      },
+      success: (res) => {
+        wx.hideLoading();
+        try {
+          const data = JSON.parse(res.data);
+          if (data.success) {
+            wx.showToast({ title: '头像上传成功' });
+            this.loadProfile();
+          } else {
+            wx.showToast({ title: data.error || '上传失败', icon: 'none' });
+          }
+        } catch (e) {
+          wx.showToast({ title: '上传失败', icon: 'none' });
+        }
+      },
+      fail: () => {
+        wx.hideLoading();
+        wx.showToast({ title: '上传失败', icon: 'none' });
+      }
+    });
+  },
+
   onEdit() {
     const { profile } = this.data;
     this.setData({
@@ -75,9 +119,6 @@ Page({
         gender: profile.gender || '',
         birthday: profile.birthday || '',
         phone: profile.phone || '',
-        wechat: profile.wechat || '',
-        qq: profile.qq || '',
-        email: profile.email || '',
         industry: profile.industry || '',
         company: profile.company || '',
         position: profile.position || '',
@@ -110,16 +151,6 @@ Page({
       isValid = false;
     }
 
-    if (editForm.email && !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(editForm.email)) {
-      errors.email = '请输入正确的邮箱';
-      isValid = false;
-    }
-
-    if (editForm.qq && !/^[1-9]\d{4,10}$/.test(editForm.qq)) {
-      errors.qq = '请输入正确的QQ号';
-      isValid = false;
-    }
-
     this.setData({ errors });
     return isValid;
   },
@@ -144,10 +175,6 @@ Page({
 
   onCancel() {
     this.setData({ showEdit: false, errors: {} });
-  },
-
-  goToMessages() {
-    wx.switchTab({ url: '/pages/lyb/lyb' });
   },
 
   goToNotifications() {
