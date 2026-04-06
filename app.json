@@ -36,8 +36,6 @@
     "van-tag": "miniprogram_npm/vant-weapp/tag/index",
     "van-popup": "miniprogram_npm/vant-weapp/popup/index",
     "van-icon": "miniprogram_npm/vant-weapp/icon/index",
-    "van-empty": "miniprogram_npm/vant-weapp/empty/index",
-    "van-divider": "miniprogram_npm/vant-weapp/divider/index",
     "van-loading": "miniprogram_npm/vant-weapp/loading/index",
     "van-overlay": "miniprogram_npm/vant-weapp/overlay/index",
     "van-transition": "miniprogram_npm/vant-weapp/transition/index"
