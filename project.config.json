@@ -1,18 +1,10 @@
 {
   "description": "吉大自动化八班小程序",
-  "miniprogramRoot": "./",
-  "packNpmRelationList": [
-    {
-      "packageJsonPath": "./package.json",
-      "miniprogramNpmAllPath": "./miniprogram_npm/"
-    }
-  ],
   "setting": {
     "urlCheck": false,
     "es6": true,
     "enhance": true,
     "postcss": true,
-    "preloadBackgroundData": false,
     "minified": true,
     "newFeature": true,
     "coverView": true,
