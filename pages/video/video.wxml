@@ -47,7 +47,9 @@
     </van-cell>
   </van-cell-group>
 
-  <van-empty wx:if="{{!loading && videos.length === 0}}" description="暂无视频" />
+  <view wx:if="{{!loading && videos.length === 0}}" class="empty">
+    <text>暂无视频</text>
+  </view>
 </view>
 
 <van-toast id="van-toast" />

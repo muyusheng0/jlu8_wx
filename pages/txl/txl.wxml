@@ -29,6 +29,6 @@
   </van-cell-group>
 
   <view wx:if="{{ filteredStudents.length === 0 }}" class="empty">
-    <van-empty description="未找到匹配的联系人" />
+    <text>未找到匹配的联系人</text>
   </view>
 </view>

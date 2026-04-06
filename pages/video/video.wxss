@@ -16,6 +16,16 @@
   border-left: 4rpx solid #e74c3c;
 }
 
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 200rpx 0;
+  color: #969799;
+  font-size: 28rpx;
+}
+
 .video-group {
   margin-bottom: 20rpx;
 }
