@@ -16,11 +16,14 @@ Page({
   data: {
     students: [],
     filteredStudents: [],
-    searchKey: ''
+    searchKey: '',
+    nearestClassmates: [],
+    locationLoading: false
   },
 
   onLoad() {
     this.loadStudents();
+    this.updateLocation();
   },
 
   async loadStudents() {
@@ -41,6 +44,32 @@ Page({
     } finally {
       wx.hideLoading();
     }
+  },
+
+  updateLocation() {
+    wx.getLocation({
+      type: 'gcj02',
+      success: async (res) => {
+        const { latitude, longitude } = res;
+        this.setData({ locationLoading: true });
+        try {
+          // 更新GPS坐标到服务器
+          await request('/profile', { gps_coords: `${latitude},${longitude}` }, 'PUT');
+          // 获取离我最近的同学
+          const nearestRes = await request(`/nearest?lat=${latitude}&lon=${longitude}`);
+          if (nearestRes.success && nearestRes.nearest) {
+            this.setData({ nearestClassmates: nearestRes.nearest });
+          }
+        } catch (e) {
+          console.error('updateLocation error:', e);
+        } finally {
+          this.setData({ locationLoading: false });
+        }
+      },
+      fail: () => {
+        console.log('Location permission denied');
+      }
+    });
   },
 
   onSearchChange(e) {
@@ -81,13 +110,8 @@ Page({
     wx.navigateTo({ url: `/pages/txl-detail/txl-detail?id=${id}` });
   },
 
-  scrollToIndex(e) {
-    const index = e.currentTarget.dataset.index;
-    // 简单提示
-    wx.showToast({
-      title: `索引 ${index}`,
-      icon: 'none',
-      duration: 500
-    });
+  goToNearestDetail(e) {
+    const id = e.currentTarget.dataset.id;
+    wx.navigateTo({ url: `/pages/txl-detail/txl-detail?id=${id}` });
   }
 });

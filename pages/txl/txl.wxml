@@ -14,6 +14,31 @@
     />
   </view>
 
+  <!-- 离我最近的同学 -->
+  <view class="nearest-section" wx:if="{{nearestClassmates.length > 0}}">
+    <view class="section-header">
+      <van-icon name="location-o" size="18px" color="#ee0a24" />
+      <text class="section-title">离我最近的同学</text>
+    </view>
+    <scroll-view scroll-x class="nearest-scroll">
+      <view class="nearest-list">
+        <view
+          wx:for="{{nearestClassmates}}"
+          wx:key="id"
+          class="nearest-item"
+          bindtap="goToNearestDetail"
+          data-id="{{item.id}}"
+        >
+          <view class="nearest-avatar">
+            {{item.name[0]}}
+          </view>
+          <view class="nearest-name">{{item.name}}</view>
+          <view class="nearest-distance">{{item.distance}}km</view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
   <!-- 同学列表 -->
   <view class="student-list">
     <view wx:for="{{ filteredStudents }}" wx:key="id" class="student-card" bindtap="goDetail" data-id="{{ item.id }}">
@@ -43,28 +68,5 @@
       <van-icon name="friends-o" size="60px" />
       <text>未找到匹配的联系人</text>
     </view>
-  </view>
-
-  <!-- 索引栏 -->
-  <view class="index-bar">
-    <view class="index-item" bindtap="scrollToIndex" data-index="A">A</view>
-    <view class="index-item" bindtap="scrollToIndex" data-index="B">B</view>
-    <view class="index-item" bindtap="scrollToIndex" data-index="C">C</view>
-    <view class="index-item" bindtap="scrollToIndex" data-index="D">D</view>
-    <view class="index-item" bindtap="scrollToIndex" data-index="F">F</view>
-    <view class="index-item" bindtap="scrollToIndex" data-index="G">G</view>
-    <view class="index-item" bindtap="scrollToIndex" data-index="H">H</view>
-    <view class="index-item" bindtap="scrollToIndex" data-index="J">J</view>
-    <view class="index-item" bindtap="scrollToIndex" data-index="L">L</view>
-    <view class="index-item" bindtap="scrollToIndex" data-index="M">M</view>
-    <view class="index-item" bindtap="scrollToIndex" data-index="N">N</view>
-    <view class="index-item" bindtap="scrollToIndex" data-index="P">P</view>
-    <view class="index-item" bindtap="scrollToIndex" data-index="Q">Q</view>
-    <view class="index-item" bindtap="scrollToIndex" data-index="S">S</view>
-    <view class="index-item" bindtap="scrollToIndex" data-index="T">T</view>
-    <view class="index-item" bindtap="scrollToIndex" data-index="W">W</view>
-    <view class="index-item" bindtap="scrollToIndex" data-index="X">X</view>
-    <view class="index-item" bindtap="scrollToIndex" data-index="Y">Y</view>
-    <view class="index-item" bindtap="scrollToIndex" data-index="Z">Z</view>
   </view>
 </view>

@@ -153,3 +153,68 @@
 .empty-state text {
   font-size: 28rpx;
 }
+
+/* 离我最近的同学 */
+.nearest-section {
+  background: #fff;
+  padding: 24rpx 20rpx;
+  margin-bottom: 16rpx;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  color: #323233;
+  font-weight: 600;
+  margin-left: 10rpx;
+}
+
+.nearest-scroll {
+  white-space: nowrap;
+  width: 100%;
+}
+
+.nearest-list {
+  display: inline-flex;
+  gap: 24rpx;
+  padding: 8rpx 0;
+}
+
+.nearest-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 140rpx;
+}
+
+.nearest-avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ee0a24, #ff6034);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 12rpx;
+  box-shadow: 0 4rpx 16rpx rgba(238, 10, 36, 0.3);
+}
+
+.nearest-name {
+  font-size: 26rpx;
+  color: #323233;
+  font-weight: 500;
+  margin-bottom: 4rpx;
+}
+
+.nearest-distance {
+  font-size: 22rpx;
+  color: #969799;
+}

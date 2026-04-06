@@ -46,6 +46,26 @@
       </van-cell-group>
     </view>
 
+    <!-- 喊话区域 -->
+    <view class="section voice-section">
+      <van-cell-group title="喊话">
+        <view class="voice-list">
+          <view wx:for="{{voiceShouts}}" wx:key="id" class="voice-item">
+            <view class="voice-from">{{item.from_name}}</view>
+            <view class="voice-play" bindtap="playVoice" data-url="{{item.audio_url}}">
+              <van-icon name="volume-o" size="20px" />
+              <text>播放</text>
+            </view>
+            <view class="voice-time">{{item.time}}</view>
+          </view>
+          <view wx:if="{{voiceShouts.length === 0}}" class="voice-empty">暂无喊话记录</view>
+        </view>
+        <view class="voice-action">
+          <van-button type="primary" size="small" round bind:click="onVoiceShout">🎤 发起喊话</van-button>
+        </view>
+      </van-cell-group>
+    </view>
+
     <!-- 底部按钮 -->
     <view class="btn-group" wx:if="{{student.phone}}">
       <van-button type="primary" size="large" round bind:click="showPhoneAction">联系同学</van-button>
@@ -61,6 +81,24 @@
   bind:select="onPhoneActionSelect"
   cancel-text="取消"
 />
+
+<!-- 喊话面板 -->
+<van-action-sheet
+  show="{{ showVoiceSheet }}"
+  title="对 {{student.name}} 喊话"
+  bind:close="onVoiceSheetClose"
+>
+  <view class="voice-sheet-content">
+    <view class="voice-tip">录制一段语音，对TA说点什么吧</view>
+    <view class="voice-record-area">
+      <view class="record-btn {{recording ? 'recording' : ''}}" bindtap="{{recording ? 'stopRecord' : 'startRecord'}}">
+        <van-icon name="{{recording ? 'stop' : 'volume'}}" size="32px" />
+        <text>{{recording ? '停止(' + recordingTime + 's)' : '录音'}}</text>
+      </view>
+    </view>
+    <view class="voice-hint">最长5秒</view>
+  </view>
+</van-action-sheet>
 
 <van-dialog id="van-dialog" />
 <van-toast id="van-toast" />
