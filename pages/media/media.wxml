@@ -1,0 +1,74 @@
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="header-content">
+      <view class="header-icon">
+        <van-icon name="photo-o" size="36px" color="#fff" />
+      </view>
+      <view class="header-text">
+        <text class="title">媒体中心</text>
+        <text class="subtitle">照片 · 视频 · 回忆</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能卡片 -->
+  <view class="content-area">
+    <!-- 相册卡片 -->
+    <view class="media-card" bindtap="goToGallery">
+      <view class="media-bg" style="background: linear-gradient(135deg, #2c3e50, #34495e);"></view>
+      <view class="media-content">
+        <view class="media-icon">
+          <van-icon name="photo-o" size="40px" color="#fff" />
+        </view>
+        <view class="media-info">
+          <text class="media-title">相册</text>
+          <text class="media-desc">照片留念 · 定格青春</text>
+        </view>
+        <view class="media-count">
+          <text class="count-num">{{photoCount}}</text>
+          <text class="count-unit">张照片</text>
+        </view>
+      </view>
+      <view class="media-arrow">
+        <van-icon name="arrow" size="24px" color="#fff" />
+      </view>
+    </view>
+
+    <!-- 视频卡片 -->
+    <view class="media-card" bindtap="goToVideo">
+      <view class="media-bg" style="background: linear-gradient(135deg, #9c27b0, #e040fb);"></view>
+      <view class="media-content">
+        <view class="media-icon">
+          <van-icon name="video-o" size="40px" color="#fff" />
+        </view>
+        <view class="media-info">
+          <text class="media-title">视频</text>
+          <text class="media-desc">精彩瞬间 · 历历在目</text>
+        </view>
+        <view class="media-count">
+          <text class="count-num">{{videoCount}}</text>
+          <text class="count-unit">个视频</text>
+        </view>
+      </view>
+      <view class="media-arrow">
+        <van-icon name="arrow" size="24px" color="#fff" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 最近照片预览 -->
+  <view class="section" wx:if="{{recentPhotos.length > 0}}">
+    <view class="section-header">
+      <van-icon name="clock" size="18px" color="#ee0a24" />
+      <text class="section-title">最新照片</text>
+    </view>
+    <view class="photo-preview">
+      <view class="photo-item" wx:for="{{recentPhotos}}" wx:key="id" bindtap="previewPhoto" data-url="{{item.url}}">
+        <image src="{{item.url}}" mode="aspectFill" class="photo-img" />
+      </view>
+    </view>
+  </view>
+</view>
+
+<van-toast id="van-toast" />

@@ -4,6 +4,7 @@
     "pages/txl/txl",
     "pages/txl-detail/txl-detail",
     "pages/lyb/lyb",
+    "pages/media/media",
     "pages/gallery/gallery",
     "pages/video/video",
     "pages/profile/profile",
@@ -28,6 +29,7 @@
       { "pagePath": "pages/index/index", "text": "首页" },
       { "pagePath": "pages/txl/txl", "text": "通讯录" },
       { "pagePath": "pages/lyb/lyb", "text": "留言板" },
+      { "pagePath": "pages/media/media", "text": "媒体" },
       { "pagePath": "pages/profile/profile", "text": "我的" }
     ]
   },
