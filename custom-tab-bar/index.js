@@ -14,6 +14,12 @@ Component({
     this.setActive()
   },
 
+  pageLifetimes: {
+    show() {
+      this.setActive()
+    }
+  },
+
   methods: {
     setActive() {
       const pages = getCurrentPages()
