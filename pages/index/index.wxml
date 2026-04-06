@@ -1,11 +1,12 @@
 <view class="container">
   <view class="header">
     <text class="title">吉大自动化八班</text>
-    <text class="subtitle">同学录</text>
+    <text class="subtitle">同学录 · 时光不老我们不散</text>
   </view>
 
-  <view class="stats">
+  <view class="stats-card">
     <view class="stat-item">
+      <text class="stat-icon">👥</text>
       <text class="stat-num">{{studentCount}}</text>
       <text class="stat-label">位同学</text>
     </view>
@@ -14,7 +15,7 @@
   <view class="section">
     <text class="section-title">最新留言</text>
     <view class="message-list">
-      <view class="message-item" wx:for="{{recentMessages}}" wx:key="id">
+      <view class="message-card" wx:for="{{recentMessages}}" wx:key="id">
         <text class="message-nickname">{{item.nickname}}</text>
         <text class="message-content">{{item.content}}</text>
       </view>
