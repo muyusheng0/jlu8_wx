@@ -63,11 +63,74 @@
     </view>
   </view>
 
-  <!-- 最新留言 -->
+  <!-- 最新动态 -->
+  <view class="section" wx:if="{{activities.length > 0}}">
+    <view class="section-header">
+      <view class="section-title-wrap">
+        <van-icon name="clock" size="18px" color="#ee0a24" />
+        <text class="section-title">最新动态</text>
+      </view>
+      <view class="section-more">
+        <text>查看更多</text>
+        <van-icon name="arrow" size="14px" color="#969799" />
+      </view>
+    </view>
+
+    <!-- 轮播 -->
+    <swiper class="activity-swiper" autoplay interval="4000" circular bindchange="onSwiperChange">
+      <swiper-item wx:for="{{activities}}" wx:key="index">
+        <view class="activity-card {{item.type}}">
+          <view class="activity-icon">
+            <van-icon wx:if="{{item.type === 'birthday'}}" name="cake" size="32px" color="#fff" />
+            <van-icon wx:elif="{{item.type === 'message'}}" name="comment-o" size="32px" color="#fff" />
+            <van-icon wx:elif="{{item.type === 'photo'}}" name="photo-o" size="32px" color="#fff" />
+            <van-icon wx:elif="{{item.type === 'video'}}" name="video-o" size="32px" color="#fff" />
+            <van-icon wx:elif="{{item.type === 'voice_shout'}}" name="volume-o" size="32px" color="#fff" />
+            <van-icon wx:else name="star-o" size="32px" color="#fff" />
+          </view>
+          <view class="activity-content">
+            <text class="activity-actor">{{item.actor}}</text>
+            <text class="activity-text">{{item.content}}</text>
+            <text class="activity-time">{{item.time}}</text>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+
+    <!-- 指示器 -->
+    <view class="swiper-indicators">
+      <view wx:for="{{activities}}" wx:key="index" class="indicator {{currentSwiper === index ? 'active' : ''}}"></view>
+    </view>
+  </view>
+
+  <!-- 我们的时光 -->
   <view class="section">
     <view class="section-header">
       <view class="section-title-wrap">
         <van-icon name="clock" size="18px" color="#ee0a24" />
+        <text class="section-title">我们的时光</text>
+      </view>
+    </view>
+
+    <view class="timeline">
+      <view class="timeline-item" wx:for="{{timeline}}" wx:key="index">
+        <view class="timeline-marker">
+          <view class="timeline-dot"></view>
+          <view class="timeline-line" wx:if="{{index < timeline.length - 1}}"></view>
+        </view>
+        <view class="timeline-content">
+          <text class="timeline-year">{{item.year}}</text>
+          <text class="timeline-event">{{item.event}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最新留言 -->
+  <view class="section">
+    <view class="section-header">
+      <view class="section-title-wrap">
+        <van-icon name="comment-o" size="18px" color="#ee0a24" />
         <text class="section-title">最新留言</text>
       </view>
       <view class="section-more" bindtap="goToLYB">

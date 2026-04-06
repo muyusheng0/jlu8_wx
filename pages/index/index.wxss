@@ -177,6 +177,158 @@
   color: #969799;
 }
 
+/* 最新动态轮播 */
+.activity-swiper {
+  height: 200rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.activity-card {
+  height: 200rpx;
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  border-radius: 16rpx;
+  padding: 30rpx;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.activity-card.birthday {
+  background: linear-gradient(135deg, #ff6034, #ee0a24);
+}
+
+.activity-card.message {
+  background: linear-gradient(135deg, #07c160, #10b981);
+}
+
+.activity-card.photo {
+  background: linear-gradient(135deg, #9c27b0, #e040fb);
+}
+
+.activity-card.video {
+  background: linear-gradient(135deg, #00bcd4, #0097a7);
+}
+
+.activity-icon {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24rpx;
+  flex-shrink: 0;
+}
+
+.activity-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+}
+
+.activity-actor {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+}
+
+.activity-text {
+  font-size: 26rpx;
+  opacity: 0.9;
+  margin-bottom: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.activity-time {
+  font-size: 22rpx;
+  opacity: 0.7;
+}
+
+/* 轮播指示器 */
+.swiper-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 8rpx;
+  margin-top: 20rpx;
+}
+
+.indicator {
+  width: 16rpx;
+  height: 8rpx;
+  border-radius: 4rpx;
+  background: #d0d0d0;
+  transition: all 0.3s;
+}
+
+.indicator.active {
+  width: 32rpx;
+  background: #ee0a24;
+}
+
+/* 班级时光时间线 */
+.timeline {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.timeline-item {
+  display: flex;
+  padding-bottom: 30rpx;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 24rpx;
+}
+
+.timeline-dot {
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6034, #ee0a24);
+  flex-shrink: 0;
+}
+
+.timeline-line {
+  width: 4rpx;
+  flex: 1;
+  background: linear-gradient(180deg, #ff6034, #ebedf0);
+  margin-top: 8rpx;
+}
+
+.timeline-content {
+  flex: 1;
+  padding-bottom: 10rpx;
+}
+
+.timeline-year {
+  display: block;
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 8rpx;
+}
+
+.timeline-event {
+  display: block;
+  font-size: 26rpx;
+  color: #646566;
+  line-height: 1.6;
+}
+
 /* 留言卡片 */
 .message-card {
   border-radius: 16rpx !important;
