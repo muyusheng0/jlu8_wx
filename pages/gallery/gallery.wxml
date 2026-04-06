@@ -1,7 +1,14 @@
 <view class="container">
+  <!-- 头部 -->
   <view class="header">
-    <text class="title">相册</text>
-    <text class="subtitle">{{photos.length}} 张照片</text>
+    <view class="header-content">
+      <text class="title">相册</text>
+      <text class="subtitle">{{photos.length}} 张照片</text>
+    </view>
+    <view class="upload-btn" bindtap="onUploadPhoto">
+      <van-icon name="photograph" size="20px" color="#fff" />
+      <text>上传照片</text>
+    </view>
   </view>
 
   <van-loading wx:if="{{loading}}" vertical />
@@ -22,14 +29,22 @@
           <text class="like-count">{{item.likeCount || 0}}</text>
         </view>
       </view>
-      <view class="photo-info" wx:if="{{item.title}}">
-        <text class="photo-title">{{item.title}}</text>
+      <view class="photo-info">
+        <view class="photo-owner">
+          <van-icon name="user-o" size="12px" />
+          <text>{{item.owner}}</text>
+        </view>
       </view>
     </view>
   </view>
 
   <view wx:if="{{!loading && photos.length === 0}}" class="empty-state">
+    <van-icon name="photo-o" size="60px" />
     <text>暂无照片</text>
+    <view class="empty-upload" bindtap="onUploadPhoto">
+      <van-icon name="plus" size="24px" />
+      <text>上传第一张照片</text>
+    </view>
   </view>
 </view>
 

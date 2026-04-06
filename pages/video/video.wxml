@@ -10,6 +10,10 @@
         <text class="subtitle">回忆那些美好时光</text>
       </view>
     </view>
+    <view class="upload-btn" bindtap="onUploadVideo">
+      <van-icon name="plus" size="18px" color="#fff" />
+      <text>上传视频</text>
+    </view>
   </view>
 
   <van-loading wx:if="{{loading}}" vertical />
@@ -64,6 +68,10 @@
   <view wx:if="{{!loading && videos.length === 0}}" class="empty-state">
     <van-icon name="video-o" size="60px" />
     <text>暂无视频</text>
+    <view class="empty-upload" bindtap="onUploadVideo">
+      <van-icon name="plus" size="24px" />
+      <text>上传第一个视频</text>
+    </view>
   </view>
 </view>
 

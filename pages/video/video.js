@@ -1,5 +1,12 @@
 const { request } = require('../../utils/auth');
 
+const app = getApp();
+const getFullUrl = (path) => {
+  if (!path) return '';
+  if (path.startsWith('http')) return path;
+  return app.globalData.apiBase.replace('/api/wx', '') + path;
+};
+
 Page({
   data: {
     videos: [],
@@ -14,13 +21,26 @@ Page({
     try {
       const res = await request('/videos');
       const videos = res.videos || [];
-      // 获取每个视频的点赞状态
       const videoList = await Promise.all(videos.map(async (v) => {
         try {
           const likeRes = await request(`/media/video/${v.id}/like`);
-          return { ...v, likeCount: likeRes.count, liked: likeRes.liked, playing: false };
+          return {
+            ...v,
+            url: getFullUrl(v.url),
+            cover: getFullUrl(v.cover),
+            likeCount: likeRes.count,
+            liked: likeRes.liked,
+            playing: false
+          };
         } catch {
-          return { ...v, likeCount: 0, liked: false, playing: false };
+          return {
+            ...v,
+            url: getFullUrl(v.url),
+            cover: getFullUrl(v.cover),
+            likeCount: 0,
+            liked: false,
+            playing: false
+          };
         }
       }));
       this.setData({ videos: videoList, loading: false });
@@ -55,7 +75,6 @@ Page({
   onPlay(e) {
     const { url } = e.currentTarget.dataset;
     if (url) {
-      // 使用原生 video 组件在当前页面播放
       const { id } = e.currentTarget.dataset;
       const videos = this.data.videos.map(v => ({
         ...v,
@@ -69,11 +88,76 @@ Page({
     const { url, id } = e.currentTarget.dataset;
     if (!url) return;
 
-    // 停止其他视频播放
     const videos = this.data.videos.map(v => ({
       ...v,
       playing: v.id === id ? !v.playing : false
     }));
     this.setData({ videos });
+  },
+
+  // 上传视频
+  onUploadVideo() {
+    wx.chooseVideo({
+      sourceType: ['album', 'camera'],
+      maxDuration: 60,
+      camera: 'back',
+      success: async (res) => {
+        wx.showLoading({ title: '上传中...' });
+
+        try {
+          const token = getApp().globalData.token;
+          const tempFilePath = res.tempFilePath;
+          const thumbTempFilePath = res.thumbTempFilePath;
+          const duration = res.duration;
+          const height = res.height;
+          const width = res.width;
+
+          // 生成标题
+          const title = `视频_${Date.now()}`;
+
+          const uploadRes = await this.uploadVideoFile(tempFilePath, title, duration);
+          wx.hideLoading();
+
+          if (uploadRes.success) {
+            wx.showToast({ title: '上传成功' });
+            this.loadVideos();
+          } else {
+            wx.showToast({ title: uploadRes.message || '上传失败', icon: 'none' });
+          }
+        } catch (e) {
+          wx.hideLoading();
+          wx.showToast({ title: e.message || '上传失败', icon: 'none' });
+        }
+      }
+    });
+  },
+
+  uploadVideoFile(tempFilePath, title, duration) {
+    return new Promise((resolve, reject) => {
+      const token = getApp().globalData.token;
+      wx.uploadFile({
+        url: `${app.globalData.apiBase.replace('/api/wx', '')}/api/upload_video`,
+        filePath: tempFilePath,
+        name: 'video',
+        formData: {
+          title: title,
+          duration: duration
+        },
+        header: {
+          'Authorization': token ? `Bearer ${token}` : ''
+        },
+        success: (res) => {
+          try {
+            const data = JSON.parse(res.data);
+            resolve(data);
+          } catch (e) {
+            reject(e);
+          }
+        },
+        fail: (err) => {
+          reject(err);
+        }
+      });
+    });
   }
 });

@@ -1,5 +1,13 @@
 const { request } = require('../../utils/auth');
 
+const app = getApp();
+// 获取完整的图片URL
+const getFullUrl = (path) => {
+  if (!path) return '';
+  if (path.startsWith('http')) return path;
+  return app.globalData.apiBase.replace('/api/wx', '') + path;
+};
+
 Page({
   data: {
     photos: [],
@@ -12,7 +20,6 @@ Page({
   },
 
   onShow() {
-    // 每次显示页面时刷新点赞状态
     if (this.data.photos.length > 0) {
       this.refreshLikeStatus();
     }
@@ -23,7 +30,6 @@ Page({
     try {
       const res = await request('/photos');
       const photos = res.photos || [];
-      // 并行获取所有照片的点赞状态
       const photoList = await Promise.all(
         photos.map(p => this.getPhotoLikeStatus(p))
       );
@@ -38,11 +44,10 @@ Page({
   async getPhotoLikeStatus(photo) {
     try {
       const likeRes = await request(`/media/photo/${photo.id}/like`);
-      // 拼接完整的图片URL
-      const url = `/static/imgs/messages/${photo.filename}`;
+      const url = getFullUrl(`/static/imgs/messages/${photo.filename}`);
       return { ...photo, url, likeCount: likeRes.count, liked: likeRes.liked };
     } catch {
-      const url = `/static/imgs/messages/${photo.filename}`;
+      const url = getFullUrl(`/static/imgs/messages/${photo.filename}`);
       return { ...photo, url, likeCount: 0, liked: false };
     }
   },
@@ -54,7 +59,7 @@ Page({
       );
       this.setData({ photos: photoList });
     } catch (e) {
-      // 静默失败，不影响用户操作
+      // 静默失败
     }
   },
 
@@ -65,7 +70,6 @@ Page({
     const photo = photos.find(p => p.id === id);
     if (!photo) return;
 
-    // 乐观更新 UI
     const newPhotos = photos.map(p =>
       p.id === id
         ? { ...p, liked: !p.liked, likeCount: p.liked ? p.likeCount - 1 : p.likeCount + 1 }
@@ -77,7 +81,6 @@ Page({
       const method = photo.liked ? 'DELETE' : 'POST';
       await request(`/media/photo/${id}/like`, { media_type: 'photo', media_id: id }, method);
     } catch (e) {
-      // 回滚 UI
       this.setData({ photos });
       wx.showToast({ title: e.message || '操作失败', icon: 'none' });
     }
@@ -88,6 +91,66 @@ Page({
     wx.previewImage({
       current: url,
       urls: urls || [url]
+    });
+  },
+
+  // 选择并上传照片
+  onUploadPhoto() {
+    wx.chooseImage({
+      count: 9, // 最多选择9张
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: async (res) => {
+        const tempFilePaths = res.tempFilePaths;
+        wx.showLoading({ title: '上传中...' });
+
+        let successCount = 0;
+        for (let i = 0; i < tempFilePaths.length; i++) {
+          try {
+            await this.uploadSinglePhoto(tempFilePaths[i]);
+            successCount++;
+          } catch (e) {
+            console.error('上传失败:', e);
+          }
+        }
+
+        wx.hideLoading();
+        if (successCount > 0) {
+          wx.showToast({ title: `成功上传${successCount}张` });
+          this.loadPhotos();
+        } else {
+          wx.showToast({ title: '上传失败', icon: 'none' });
+        }
+      }
+    });
+  },
+
+  uploadSinglePhoto(tempFilePath) {
+    return new Promise((resolve, reject) => {
+      const token = getApp().globalData.token;
+      wx.uploadFile({
+        url: `${app.globalData.apiBase.replace('/api/wx', '')}/api/upload_image`,
+        filePath: tempFilePath,
+        name: 'image',
+        header: {
+          'Authorization': token ? `Bearer ${token}` : ''
+        },
+        success: (res) => {
+          try {
+            const data = JSON.parse(res.data);
+            if (data.success) {
+              resolve(data);
+            } else {
+              reject(new Error(data.message || '上传失败'));
+            }
+          } catch (e) {
+            reject(e);
+          }
+        },
+        fail: (err) => {
+          reject(err);
+        }
+      });
     });
   }
 });

@@ -6,7 +6,7 @@
 
 .header {
   background: linear-gradient(135deg, #2c3e50, #34495e);
-  padding: 50rpx 30rpx 80rpx;
+  padding: 50rpx 30rpx 30rpx;
   position: relative;
 }
 
@@ -19,6 +19,12 @@
   height: 40rpx;
   background: #f5f5f5;
   border-radius: 50% 50% 0 0;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20rpx;
 }
 
 .title {
@@ -34,6 +40,20 @@
   margin-top: 10rpx;
 }
 
+.upload-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  background: linear-gradient(135deg, #ff6034, #ee0a24);
+  color: #fff;
+  padding: 16rpx 32rpx;
+  border-radius: 36rpx;
+  font-size: 26rpx;
+  font-weight: 500;
+  box-shadow: 0 4rpx 12rpx rgba(238, 10, 36, 0.3);
+}
+
 .content-area {
   padding: 30rpx 20rpx;
   margin-top: -20rpx;
@@ -45,6 +65,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  padding: 20rpx;
 }
 
 .photo-item {
@@ -66,16 +87,6 @@
   height: 320rpx;
   display: block;
   background: #f7f8fa;
-}
-
-/* 图片遮罩层 */
-.photo-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 60rpx 16rpx 16rpx;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
 }
 
 /* 点赞按钮 */
@@ -125,7 +136,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   padding: 200rpx 0;
   color: #969799;
 }
@@ -138,6 +148,28 @@
 
 .empty-state text {
   font-size: 28rpx;
+}
+
+.empty-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40rpx;
+  padding: 40rpx 60rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.empty-upload .van-icon {
+  font-size: 48rpx;
+  color: #ee0a24;
+  margin-bottom: 10rpx;
+}
+
+.empty-upload text {
+  font-size: 26rpx;
+  color: #646566;
 }
 
 .van-loading {
