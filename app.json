@@ -24,10 +24,10 @@
     "enablePullDownRefresh": false
   },
   "tabBar": {
+    "custom": true,
     "color": "#969799",
     "selectedColor": "#ee0a24",
     "backgroundColor": "#ffffff",
-    "borderStyle": "black",
     "list": [
       { "pagePath": "pages/index/index", "text": "首页" },
       { "pagePath": "pages/txl/txl", "text": "通讯录" },
@@ -52,6 +52,8 @@
     "van-transition": "miniprogram_npm/vant-weapp/transition/index",
     "van-search": "miniprogram_npm/vant-weapp/search/index",
     "van-action-sheet": "miniprogram_npm/vant-weapp/action-sheet/index",
-    "van-notify": "miniprogram_npm/vant-weapp/notify/index"
+    "van-notify": "miniprogram_npm/vant-weapp/notify/index",
+    "van-tabbar": "miniprogram_npm/vant-weapp/tabbar/index",
+    "van-tabbar-item": "miniprogram_npm/vant-weapp/tabbar-item/index"
   }
 }
