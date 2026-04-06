@@ -1,26 +1,65 @@
 <view class="container">
-  <van-loading wx:if="{{loading}}" />
+  <van-loading wx:if="{{loading}}" vertical />
 
   <block wx:if="{{!loading && profile}}">
     <!-- 头像卡片 -->
     <view class="profile-card">
+      <view class="card-wave"></view>
       <view class="avatar-wrap">
-        <view class="avatar">{{profile.name[0]}}</view>
+        <view class="avatar" style="background: linear-gradient(135deg, {{avatarColor}});">
+          {{profile.name[0]}}
+        </view>
         <view class="edit-avatar-btn" bindtap="onEdit">
-          <van-icon name="edit" size="28rpx" color="#fff" />
+          <van-icon name="edit" size="24rpx" color="#fff" />
         </view>
       </view>
       <text class="name">{{profile.name}}</text>
       <text class="student-id">学号: {{profile.id}}</text>
       <view class="location-wrap" wx:if="{{profile.city || profile.hometown_name}}">
-        <van-icon name="location-o" size="26rpx" color="rgba(255,255,255,0.8)" />
+        <van-icon name="location-o" size="22rpx" color="rgba(255,255,255,0.8)" />
         <text class="location">{{profile.city || profile.hometown_name}}</text>
+      </view>
+      <!-- 个性签名 -->
+      <view class="custom-intro" wx:if="{{profile.custom_intro}}">
+        <text>{{profile.custom_intro}}</text>
+      </view>
+    </view>
+
+    <!-- 快捷操作 -->
+    <view class="quick-actions">
+      <view class="action-item" bindtap="goToMessages">
+        <view class="action-icon" style="background: linear-gradient(135deg, #07c160, #10b981);">
+          <van-icon name="comment-o" size="24px" color="#fff" />
+        </view>
+        <text class="action-text">我的留言</text>
+        <van-icon name="arrow" size="14px" color="#c8c9cc" />
+      </view>
+      <view class="action-item" bindtap="goToNotifications">
+        <view class="action-icon" style="background: linear-gradient(135deg, #e74c3c, #f39c12);">
+          <van-icon name="bell" size="24px" color="#fff" />
+          <view class="badge" wx:if="{{unreadCount > 0}}">{{unreadCount > 99 ? '99+' : unreadCount}}</view>
+        </view>
+        <text class="action-text">消息通知</text>
+        <van-icon name="arrow" size="14px" color="#c8c9cc" />
+      </view>
+      <view class="action-item" bindtap="goToDeleted">
+        <view class="action-icon" style="background: linear-gradient(135deg, #969799, #787878);">
+          <van-icon name="delete-o" size="24px" color="#fff" />
+        </view>
+        <text class="action-text">已删除内容</text>
+        <van-icon name="arrow" size="14px" color="#c8c9cc" />
       </view>
     </view>
 
     <!-- 个人信息 -->
     <view class="section">
+      <view class="section-header">
+        <van-icon name="user-o" size="18px" color="#ee0a24" />
+        <text class="section-title">基本信息</text>
+      </view>
       <van-cell-group border="{{false}}" inset>
+        <van-cell title="性别" value="{{profile.gender || '未填写'}}" is-link bind:click="onEdit" data-field="gender" />
+        <van-cell title="生日" value="{{profile.birthday || '未填写'}}" is-link bind:click="onEdit" data-field="birthday" />
         <van-cell title="联系电话" value="{{profile.phone || '未填写'}}" is-link bind:click="onEdit" data-field="phone" />
         <van-cell title="微信号" value="{{profile.wechat || '未填写'}}" is-link bind:click="onEdit" data-field="wechat" />
         <van-cell title="QQ" value="{{profile.qq || '未填写'}}" is-link bind:click="onEdit" data-field="qq" />
@@ -28,14 +67,38 @@
       </van-cell-group>
     </view>
 
-    <view class="section">
+    <!-- 社交媒体 -->
+    <view class="section" wx:if="{{profile.github || profile.douyin || profile.xiaohongshu}}">
+      <view class="section-header">
+        <van-icon name="share" size="18px" color="#ee0a24" />
+        <text class="section-title">社交媒体</text>
+      </view>
       <van-cell-group border="{{false}}" inset>
+        <van-cell wx:if="{{profile.github}}" title="GitHub" value="{{profile.github}}" is-link bind:click="onEdit" data-field="github" />
+        <van-cell wx:if="{{profile.douyin}}" title="抖音" value="{{profile.douyin}}" is-link bind:click="onEdit" data-field="douyin" />
+        <van-cell wx:if="{{profile.xiaohongshu}}" title="小红书" value="{{profile.xiaohongshu}}" is-link bind:click="onEdit" data-field="xiaohongshu" />
+      </van-cell-group>
+    </view>
+
+    <!-- 工作信息 -->
+    <view class="section">
+      <view class="section-header">
+        <van-icon name="bag-o" size="18px" color="#ee0a24" />
+        <text class="section-title">工作信息</text>
+      </view>
+      <van-cell-group border="{{false}}" inset>
+        <van-cell title="从事行业" value="{{profile.industry || '未填写'}}" is-link bind:click="onEdit" data-field="industry" />
         <van-cell title="工作单位" value="{{profile.company || '未填写'}}" is-link bind:click="onEdit" data-field="company" />
         <van-cell title="职位" value="{{profile.position || '未填写'}}" is-link bind:click="onEdit" data-field="position" />
       </van-cell-group>
     </view>
 
+    <!-- 个人兴趣 -->
     <view class="section">
+      <view class="section-header">
+        <van-icon name="star-o" size="18px" color="#ee0a24" />
+        <text class="section-title">个人兴趣</text>
+      </view>
       <van-cell-group border="{{false}}" inset>
         <van-cell title="兴趣爱好" value="{{profile.hobby || '未填写'}}" is-link bind:click="onEdit" data-field="hobby" />
         <van-cell title="梦想" value="{{profile.dream || '未填写'}}" is-link bind:click="onEdit" data-field="dream" />
@@ -63,6 +126,27 @@
 
     <scroll-view scroll-y class="popup-content">
       <van-cell-group border="{{false}}">
+        <van-field
+          label="个性签名"
+          value="{{editForm.custom_intro}}"
+          data-field="custom_intro"
+          bind:change="onEditField"
+          placeholder="一句话介绍自己"
+        />
+        <van-field
+          label="性别"
+          value="{{editForm.gender}}"
+          data-field="gender"
+          bind:change="onEditField"
+          placeholder="男/女"
+        />
+        <van-field
+          label="生日"
+          value="{{editForm.birthday}}"
+          data-field="birthday"
+          bind:change="onEditField"
+          placeholder="YYYY-MM-DD"
+        />
         <van-field
           label="联系电话"
           value="{{editForm.phone}}"
@@ -99,6 +183,13 @@
           error="{{errors.email}}"
         />
         <van-field
+          label="从事行业"
+          value="{{editForm.industry}}"
+          data-field="industry"
+          bind:change="onEditField"
+          placeholder="请输入行业"
+        />
+        <van-field
           label="工作单位"
           value="{{editForm.company}}"
           data-field="company"
@@ -125,6 +216,27 @@
           data-field="dream"
           bind:change="onEditField"
           placeholder="请输入你的梦想"
+        />
+        <van-field
+          label="GitHub"
+          value="{{editForm.github}}"
+          data-field="github"
+          bind:change="onEditField"
+          placeholder="GitHub主页链接"
+        />
+        <van-field
+          label="抖音"
+          value="{{editForm.douyin}}"
+          data-field="douyin"
+          bind:change="onEditField"
+          placeholder="抖音主页链接"
+        />
+        <van-field
+          label="小红书"
+          value="{{editForm.xiaohongshu}}"
+          data-field="xiaohongshu"
+          bind:change="onEditField"
+          placeholder="小红书主页链接"
         />
       </van-cell-group>
     </scroll-view>

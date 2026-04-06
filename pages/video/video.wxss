@@ -1,55 +1,88 @@
 .container {
-  padding: 30rpx;
-  background: #f5f5f5;
+  padding: 0;
+  background: linear-gradient(180deg, #f5f5f5 0%, #ffffff 100%);
   min-height: 100vh;
 }
 
 .header {
-  margin-bottom: 30rpx;
+  background: linear-gradient(135deg, #9c27b0, #e040fb);
+  padding: 50rpx 30rpx 80rpx;
+  position: relative;
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40rpx;
+  background: #f5f5f5;
+  border-radius: 50% 50% 0 0;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+}
+
+.header-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 20rpx;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
 }
 
 .title {
-  font-size: 32rpx;
-  color: #2c3e50;
+  font-size: 40rpx;
+  color: #fff;
   font-weight: bold;
-  padding-left: 20rpx;
-  border-left: 4rpx solid #e74c3c;
+  letter-spacing: 2rpx;
 }
 
-.empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 200rpx 0;
-  color: #969799;
-  font-size: 28rpx;
+.subtitle {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 8rpx;
 }
 
-.video-group {
-  margin-bottom: 20rpx;
+/* 视频列表 */
+.video-list {
+  padding: 30rpx 20rpx;
+  margin-top: -20rpx;
+  position: relative;
+  z-index: 2;
 }
 
-.video-cell {
-  padding: 20rpx !important;
-  background: #fff !important;
-  margin-bottom: 20rpx !important;
-  border-radius: 12rpx !important;
+.video-card {
+  background: #fff;
+  border-radius: 20rpx;
+  overflow: hidden;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
 }
 
 .video-cover {
   position: relative;
-  width: 200rpx;
-  height: 120rpx;
-  margin-right: 20rpx;
-  border-radius: 8rpx;
-  overflow: hidden;
+  width: 100%;
+  height: 400rpx;
   background: #000;
 }
 
-.video-player {
+.video-player,
+.video-poster {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 .play-overlay {
@@ -58,22 +91,54 @@
   left: 0;
   right: 0;
   bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.3);
 }
 
-.video-content {
+.play-btn {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
+}
+
+.play-btn .van-icon {
+  color: #9c27b0;
+  margin-left: 8rpx;
+}
+
+.video-duration {
+  position: absolute;
+  bottom: 16rpx;
+  right: 16rpx;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 22rpx;
+  padding: 6rpx 12rpx;
+  border-radius: 6rpx;
+}
+
+/* 视频信息 */
+.video-info {
+  padding: 24rpx;
+  display: flex;
+  align-items: center;
+}
+
+.video-main {
   flex: 1;
+  min-width: 0;
 }
 
 .video-title {
-  font-size: 28rpx;
-  color: #333;
+  font-size: 30rpx;
+  color: #323233;
+  font-weight: 600;
   line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -82,26 +147,61 @@
 }
 
 .video-meta {
-  margin-top: 8rpx;
+  display: flex;
+  align-items: center;
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: #969799;
 }
 
-.video-time {
-  font-size: 22rpx;
-  color: #999;
+.video-meta .van-icon {
+  margin-right: 6rpx;
 }
 
-.like-wrapper {
+.video-actions {
+  display: flex;
+  align-items: center;
+  padding-left: 24rpx;
+}
+
+.action-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-width: 60rpx;
-  padding-left: 16rpx;
-  border-left: 1rpx solid #eee;
+  gap: 4rpx;
+  color: #969799;
+  font-size: 24rpx;
 }
 
-.like-count {
-  font-size: 20rpx;
-  color: #666;
-  margin-top: 4rpx;
+.action-btn .van-icon {
+  font-size: 40rpx;
+}
+
+.action-liked {
+  color: #ee0a24;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 200rpx 0;
+  color: #969799;
+}
+
+.empty-state .van-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.4;
+}
+
+.empty-state text {
+  font-size: 28rpx;
+}
+
+.van-loading {
+  display: flex !important;
+  justify-content: center;
+  padding: 100rpx 0;
 }

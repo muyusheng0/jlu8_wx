@@ -1,44 +1,155 @@
 .container {
   padding: 0;
-  background: #f7f8fa;
+  background: #f5f5f5;
   min-height: 100vh;
 }
 
-.list {
-  margin: 20rpx;
+.search-area {
+  background: #fff;
+  padding: 16rpx 20rpx;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
 }
 
-.avatar {
+.search-box {
+  border-radius: 36rpx !important;
+}
+
+/* 同学列表 */
+.student-list {
+  padding: 20rpx;
+}
+
+.student-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  margin-bottom: 16rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.student-card:active {
+  transform: scale(0.98);
+  box-shadow: 0 1rpx 6rpx rgba(0, 0, 0, 0.06);
+}
+
+.student-avatar {
   width: 96rpx;
   height: 96rpx;
   border-radius: 50%;
-  margin-right: 24rpx;
-  background: linear-gradient(135deg, #2c3e50, #34495e);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: 34rpx;
+  font-size: 36rpx;
   font-weight: bold;
+  margin-right: 24rpx;
   flex-shrink: 0;
 }
 
-.name {
-  font-size: 30rpx;
-  color: #2c3e50;
+.student-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.student-name-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.student-name {
+  font-size: 32rpx;
+  color: #323233;
   font-weight: 600;
 }
 
-.location {
+.admin-tag {
+  margin-left: 12rpx;
+  background: linear-gradient(135deg, #ffd700, #ffb800) !important;
+  color: #8b6914 !important;
+}
+
+.student-location,
+.student-company {
+  display: flex;
+  align-items: center;
   font-size: 24rpx;
   color: #969799;
   margin-top: 6rpx;
 }
 
-.arrow {
-  color: #c8c9cc;
+.student-location .van-icon,
+.student-company .van-icon {
+  margin-right: 6rpx;
 }
 
-.empty {
-  padding-top: 100rpx;
+.student-location text,
+.student-company text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.student-arrow {
+  flex-shrink: 0;
+  padding-left: 16rpx;
+}
+
+.student-arrow .van-icon {
+  font-size: 28rpx;
+}
+
+/* 索引栏 */
+.index-bar {
+  position: fixed;
+  right: 10rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 24rpx;
+  padding: 8rpx 4rpx;
+}
+
+.index-item {
+  width: 32rpx;
+  height: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18rpx;
+  color: #fff;
+  font-weight: 500;
+}
+
+.index-item:active {
+  color: #ee0a24;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120rpx 0;
+  color: #969799;
+}
+
+.empty-state .van-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.4;
+}
+
+.empty-state text {
+  font-size: 28rpx;
 }

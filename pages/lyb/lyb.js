@@ -165,6 +165,15 @@ Page({
     }
   },
 
+  // 图片预览
+  onPreviewImage(e) {
+    const { url } = e.currentTarget.dataset;
+    wx.previewImage({
+      urls: [url],
+      current: url
+    });
+  },
+
   // 删除评论
   async onDeleteComment(e) {
     const { id, messageId } = e.currentTarget.dataset;

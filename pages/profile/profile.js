@@ -1,27 +1,68 @@
 const { request } = require('../../utils/auth');
 
+// 头像渐变色
+const avatarColors = [
+  '#e74c3c,#f39c12',
+  '#9b59b6,#8e44ad',
+  '#3498db,#2980b9',
+  '#1abc9c,#16a085',
+  '#27ae60,#2ecc71',
+  '#f39c12,#e67e22',
+  '#e91e63,#c2185b',
+  '#00bcd4,#0097a7'
+];
+
 Page({
   data: {
     profile: null,
     loading: true,
     showEdit: false,
     editForm: {},
-    errors: {}
+    errors: {},
+    avatarColor: avatarColors[0],
+    unreadCount: 0
   },
 
   onLoad() {
     this.loadProfile();
   },
 
+  onShow() {
+    if (getApp().globalData.isBind) {
+      this.loadProfile();
+    }
+  },
+
   async loadProfile() {
     try {
       const res = await request('/profile');
       if (res.success && res.profile) {
-        this.setData({ profile: res.profile, loading: false });
+        // 根据姓名生成固定颜色
+        const nameStr = res.profile.name || '';
+        const colorIndex = nameStr.charCodeAt(0) % avatarColors.length;
+        this.setData({
+          profile: res.profile,
+          loading: false,
+          avatarColor: avatarColors[colorIndex]
+        });
       }
+      // 加载未读通知数
+      this.loadUnreadCount();
     } catch (e) {
+      console.error('loadProfile error:', e);
       wx.showToast({ title: '加载失败', icon: 'none' });
       this.setData({ loading: false });
+    }
+  },
+
+  async loadUnreadCount() {
+    try {
+      const res = await request('/notifications/count');
+      if (res.success) {
+        this.setData({ unreadCount: res.count || 0 });
+      }
+    } catch (e) {
+      console.error('loadUnreadCount error:', e);
     }
   },
 
@@ -30,14 +71,21 @@ Page({
     this.setData({
       showEdit: true,
       editForm: {
+        custom_intro: profile.custom_intro || '',
+        gender: profile.gender || '',
+        birthday: profile.birthday || '',
         phone: profile.phone || '',
         wechat: profile.wechat || '',
         qq: profile.qq || '',
         email: profile.email || '',
+        industry: profile.industry || '',
         company: profile.company || '',
         position: profile.position || '',
         hobby: profile.hobby || '',
-        dream: profile.dream || ''
+        dream: profile.dream || '',
+        github: profile.github || '',
+        douyin: profile.douyin || '',
+        xiaohongshu: profile.xiaohongshu || ''
       },
       errors: {}
     });
@@ -57,19 +105,16 @@ Page({
     const errors = {};
     let isValid = true;
 
-    // 手机号验证（可选，如果填写则验证格式）
     if (editForm.phone && !/^1[3-9]\d{9}$/.test(editForm.phone)) {
       errors.phone = '请输入正确的手机号';
       isValid = false;
     }
 
-    // 邮箱验证（可选，如果填写则验证格式）
     if (editForm.email && !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(editForm.email)) {
       errors.email = '请输入正确的邮箱';
       isValid = false;
     }
 
-    // QQ验证（可选，如果填写则验证格式，5-11位数字）
     if (editForm.qq && !/^[1-9]\d{4,10}$/.test(editForm.qq)) {
       errors.qq = '请输入正确的QQ号';
       isValid = false;
@@ -99,6 +144,18 @@ Page({
 
   onCancel() {
     this.setData({ showEdit: false, errors: {} });
+  },
+
+  goToMessages() {
+    wx.switchTab({ url: '/pages/lyb/lyb' });
+  },
+
+  goToNotifications() {
+    wx.navigateTo({ url: '/pages/notifications/notifications' });
+  },
+
+  goToDeleted() {
+    wx.navigateTo({ url: '/pages/deleted/deleted' });
   },
 
   onLogout() {

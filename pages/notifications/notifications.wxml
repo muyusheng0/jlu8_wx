@@ -1,0 +1,47 @@
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="header-content">
+      <text class="title">消息通知</text>
+      <text class="subtitle">{{notifications.length}} 条通知</text>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <van-loading wx:if="{{loading}}" vertical />
+
+  <!-- 通知列表 -->
+  <view class="notification-list" wx:if="{{!loading && notifications.length > 0}}">
+    <view class="notification-card {{item.read ? 'read' : 'unread'}}" wx:for="{{notifications}}" wx:key="id">
+      <view class="notification-icon">
+        <van-icon wx:if="{{item.type === 'comment'}}" name="comment-o" size="24px" color="#fff" />
+        <van-icon wx:elif="{{item.type === 'like'}}" name="like-o" size="24px" color="#fff" />
+        <van-icon wx:elif="{{item.type === 'system'}}" name="setting-o" size="24px" color="#fff" />
+        <van-icon wx:else name="bell" size="24px" color="#fff" />
+      </view>
+      <view class="notification-content">
+        <view class="notification-header">
+          <text class="notification-title">{{item.title || '新通知'}}</text>
+          <text class="notification-time">{{item.time}}</text>
+        </view>
+        <text class="notification-message">{{item.content}}</text>
+      </view>
+      <view class="unread-dot" wx:if="{{!item.read}}"></view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{!loading && notifications.length === 0}}" class="empty-state">
+    <van-icon name="bell" size="60px" />
+    <text>暂无通知</text>
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="bottom-actions" wx:if="{{!loading && notifications.length > 0}}">
+    <van-button type="default" block round bind:click="markAllRead">
+      <van-icon name="checked" size="16px" /> 全部已读
+    </van-button>
+  </view>
+</view>
+
+<van-toast id="van-toast" />

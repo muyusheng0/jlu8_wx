@@ -1,113 +1,177 @@
 .container {
-  padding: 30rpx;
-  background: #f7f8fa;
+  padding: 0;
+  background: linear-gradient(180deg, #f5f5f5 0%, #ffffff 100%);
   min-height: 100vh;
 }
 
 /* 输入区域 */
 .input-area {
   background: #fff;
-  border-radius: 16rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
   padding: 30rpx;
-  margin-bottom: 30rpx;
+  margin: 20rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.06);
+}
+
+.input-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.input-title {
+  font-size: 30rpx;
+  color: #323233;
+  font-weight: 600;
+  margin-left: 10rpx;
 }
 
 .input-field {
-  background: #f7f8fa;
-  border-radius: 12rpx;
-  padding: 20rpx !important;
+  background: #f7f8fa !important;
+  border-radius: 16rpx !important;
+  padding: 24rpx !important;
+  font-size: 28rpx !important;
+}
+
+.input-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20rpx;
+}
+
+.char-count {
+  font-size: 24rpx;
+  color: #c8c9cc;
 }
 
 .submit-btn {
-  margin-top: 20rpx;
-  width: 100%;
-  background: linear-gradient(135deg, #07c160, #10b981) !important;
+  background: linear-gradient(135deg, #ff6034, #ee0a24) !important;
   border: none !important;
 }
 
 /* 留言列表 */
 .message-list {
-  padding: 0;
+  padding: 0 20rpx 30rpx;
 }
 
-.message-card {
-  margin-bottom: 24rpx;
-  border-radius: 16rpx !important;
-  overflow: hidden;
-}
-
-.card-class {
-  border-radius: 16rpx !important;
-}
-
-.card-title {
-  width: 100%;
-}
-
-.message-header {
+.list-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 100%;
+  padding: 20rpx 10rpx;
 }
 
-.nickname {
-  font-size: 28rpx;
+.list-title {
+  font-size: 34rpx;
+  color: #2c3e50;
+  font-weight: bold;
+  margin-left: 10rpx;
+}
+
+.list-count {
+  font-size: 24rpx;
+  color: #969799;
+  margin-left: 16rpx;
+}
+
+/* 留言卡片 */
+.message-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+}
+
+/* 用户信息 */
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.user-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-right: 20rpx;
+}
+
+.user-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 30rpx;
   color: #323233;
   font-weight: 600;
 }
 
-.time {
+.user-time {
   font-size: 22rpx;
   color: #969799;
+  margin-top: 4rpx;
 }
 
-.card-content {
-  margin-top: 16rpx;
-}
-
-.content {
+/* 留言内容 */
+.message-content {
   font-size: 28rpx;
   color: #323233;
-  line-height: 1.6;
-  display: block;
+  line-height: 1.7;
+  margin-bottom: 20rpx;
   word-break: break-all;
+}
+
+/* 图片 */
+.message-image {
+  margin-bottom: 20rpx;
+}
+
+.content-image {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 12rpx;
+  object-fit: cover;
 }
 
 /* 操作栏 */
 .action-bar {
   display: flex;
-  gap: 48rpx;
-  margin-top: 24rpx;
+  gap: 60rpx;
   padding-top: 20rpx;
-  border-top: 1px solid #ebedf0;
+  border-top: 1rpx solid #f5f5f5;
 }
 
 .action-btn {
   display: flex;
   align-items: center;
   gap: 8rpx;
-  color: #646566;
-  font-size: 24rpx;
-  padding: 8rpx 0;
+  font-size: 26rpx;
+  color: #969799;
+  padding: 10rpx 0;
 }
 
 .action-btn .van-icon {
-  font-size: 34rpx;
+  font-size: 36rpx;
 }
 
-.like-count,
-.comment-count {
-  margin-left: 4rpx;
-  font-size: 24rpx;
+.action-liked {
+  color: #ee0a24;
 }
 
 /* 评论弹窗 */
 .comment-popup {
   display: flex;
   flex-direction: column;
-  max-height: 60vh;
+  max-height: 70vh;
   background: #fff;
 }
 
@@ -116,69 +180,115 @@
   justify-content: space-between;
   align-items: center;
   padding: 30rpx;
-  border-bottom: 1px solid #ebedf0;
+  border-bottom: 1rpx solid #f5f5f5;
 }
 
 .popup-title {
-  font-size: 30rpx;
-  font-weight: 600;
+  font-size: 34rpx;
+  font-weight: bold;
   color: #323233;
 }
 
-.popup-header .van-icon {
+.popup-close {
+  padding: 10rpx;
+}
+
+.popup-close .van-icon {
   font-size: 36rpx;
   color: #969799;
 }
 
 .comment-list {
   flex: 1;
-  max-height: 40vh;
+  max-height: 45vh;
   overflow-y: auto;
-  padding-bottom: 20rpx;
+  padding: 20rpx 30rpx;
 }
 
-.comment-cell {
-  padding: 24rpx 30rpx !important;
-  border-bottom: 1px solid #f7f8fa;
+.comment-item {
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
 }
 
-.comment-cell .van-cell__title {
-  font-size: 26rpx !important;
-  color: #323233 !important;
-  font-weight: 500;
+.comment-item:last-child {
+  border-bottom: none;
 }
 
-.comment-cell .van-cell__label {
-  font-size: 26rpx !important;
-  color: #646566 !important;
-  margin-top: 8rpx !important;
-  line-height: 1.5 !important;
-}
-
-.comment-actions {
+.comment-user {
   display: flex;
   align-items: center;
-  gap: 16rpx;
+  margin-bottom: 12rpx;
+}
+
+.comment-avatar {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: bold;
+  margin-right: 16rpx;
+}
+
+.comment-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-name {
+  font-size: 26rpx;
+  color: #323233;
+  font-weight: 500;
 }
 
 .comment-time {
   font-size: 20rpx;
+  color: #969799;
+  margin-top: 2rpx;
+}
+
+.comment-content {
+  font-size: 26rpx;
+  color: #646566;
+  line-height: 1.6;
+  margin-left: 72rpx;
+  display: block;
+  word-break: break-all;
+}
+
+.comment-actions {
+  margin-left: 72rpx;
+  margin-top: 10rpx;
+}
+
+.comment-delete {
+  font-size: 22rpx;
   color: #c8c9cc;
 }
 
-.delete-btn {
-  color: #c8c9cc !important;
-  font-size: 32rpx !important;
-}
-
-.delete-btn:active {
-  color: #ee0a24 !important;
+.comment-delete:active {
+  color: #ee0a24;
 }
 
 .no-comments {
-  text-align: center;
-  padding: 60rpx 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80rpx 0;
   color: #969799;
+}
+
+.no-comments .van-icon {
+  font-size: 60rpx;
+  margin-bottom: 16rpx;
+  opacity: 0.5;
+}
+
+.no-comments text {
   font-size: 26rpx;
 }
 
@@ -189,7 +299,7 @@
   gap: 16rpx;
   padding: 20rpx 30rpx;
   padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
-  border-top: 1px solid #ebedf0;
+  border-top: 1rpx solid #f5f5f5;
   background: #fff;
 }
 
@@ -201,6 +311,25 @@
 
 .comment-submit-btn {
   flex-shrink: 0;
-  background: #07c160 !important;
+  background: linear-gradient(135deg, #ff6034, #ee0a24) !important;
   border: none !important;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120rpx 0;
+  color: #969799;
+}
+
+.empty-state .van-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.4;
+}
+
+.empty-state text {
+  font-size: 28rpx;
 }

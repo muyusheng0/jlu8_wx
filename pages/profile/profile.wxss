@@ -1,28 +1,39 @@
 .container {
   padding: 0;
-  background: linear-gradient(180deg, #f7f8fa 0%, #ffffff 100%);
+  background: linear-gradient(180deg, #f5f5f5 0%, #ffffff 100%);
   min-height: 100vh;
 }
 
 /* 头像卡片 */
 .profile-card {
   background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-  padding: 80rpx 40rpx 60rpx;
+  padding: 80rpx 40rpx 100rpx;
   text-align: center;
   color: #fff;
   position: relative;
+  overflow: hidden;
+}
+
+.card-wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60rpx;
+  background: #f5f5f5;
+  border-radius: 50% 50% 0 0;
 }
 
 .avatar-wrap {
   position: relative;
   display: inline-block;
+  margin-bottom: 20rpx;
 }
 
 .avatar {
   width: 160rpx;
   height: 160rpx;
   border-radius: 50%;
-  background: linear-gradient(135deg, #e74c3c, #f39c12);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,28 +41,27 @@
   font-size: 64rpx;
   font-weight: bold;
   margin: 0 auto;
-  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.2);
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.3);
 }
 
 .edit-avatar-btn {
   position: absolute;
   bottom: 0;
   right: -10rpx;
-  width: 48rpx;
-  height: 48rpx;
+  width: 56rpx;
+  height: 56rpx;
   border-radius: 50%;
-  background: linear-gradient(135deg, #e74c3c, #f39c12);
+  background: linear-gradient(135deg, #ff6034, #ee0a24);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.2);
+  box-shadow: 0 4rpx 12rpx rgba(238, 10, 36, 0.4);
 }
 
 .name {
   display: block;
   font-size: 44rpx;
   font-weight: bold;
-  margin-top: 24rpx;
   letter-spacing: 2rpx;
 }
 
@@ -75,15 +85,88 @@
   margin-left: 6rpx;
 }
 
+.custom-intro {
+  margin-top: 16rpx;
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.9);
+  font-style: italic;
+}
+
+.badge {
+  position: absolute;
+  top: -8rpx;
+  right: -8rpx;
+  background: #ee0a24;
+  color: #fff;
+  font-size: 18rpx;
+  min-width: 32rpx;
+  height: 32rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6rpx;
+  box-sizing: border-box;
+}
+
+/* 快捷操作 */
+.quick-actions {
+  padding: 0 24rpx;
+  margin-top: -40rpx;
+  position: relative;
+  z-index: 2;
+}
+
+.action-item {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 28rpx 30rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  margin-bottom: 20rpx;
+}
+
+.action-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
+}
+
+.action-text {
+  flex: 1;
+  font-size: 30rpx;
+  color: #323233;
+  font-weight: 500;
+}
+
 /* 分区 */
 .section {
   margin: 24rpx 24rpx 0;
 }
 
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16rpx;
+  padding-left: 8rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  color: #2c3e50;
+  font-weight: bold;
+  margin-left: 10rpx;
+}
+
 .section .van-cell-group {
   border-radius: 16rpx;
   overflow: hidden;
-  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
 }
 
 .section .van-cell {
@@ -96,7 +179,7 @@
 }
 
 .edit-btn {
-  background: linear-gradient(135deg, #e74c3c, #f39c12) !important;
+  background: linear-gradient(135deg, #ff6034, #ee0a24) !important;
   border: none !important;
   font-weight: bold;
 }
@@ -116,7 +199,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 32rpx 32rpx 24rpx;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1rpx solid #f0f0f0;
 }
 
 .popup-cancel {
@@ -132,7 +215,7 @@
 
 .popup-save {
   font-size: 28rpx;
-  color: #e74c3c;
+  color: #ee0a24;
   font-weight: bold;
 }
 
@@ -152,11 +235,11 @@
 .popup-footer {
   padding: 24rpx 32rpx;
   padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
-  border-top: 1px solid #f0f0f0;
+  border-top: 1rpx solid #f0f0f0;
 }
 
 .save-btn {
-  background: linear-gradient(135deg, #e74c3c, #f39c12) !important;
+  background: linear-gradient(135deg, #ff6034, #ee0a24) !important;
   border: none !important;
   font-weight: bold;
 }

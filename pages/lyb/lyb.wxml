@@ -1,6 +1,10 @@
 <view class="container">
   <!-- 输入区域 -->
   <view class="input-area">
+    <view class="input-header">
+      <van-icon name="edit" size="18px" color="#ee0a24" />
+      <text class="input-title">发表留言</text>
+    </view>
     <van-field
       value="{{newContent}}"
       placeholder="写下想说的话..."
@@ -10,43 +14,61 @@
       border="{{false}}"
       show-confirm-bar="{{false}}"
       class="input-field"
+      maxlength="500"
     />
-    <van-button type="primary" size="small" bind:click="onSubmit" round class="submit-btn">发表留言</van-button>
+    <view class="input-footer">
+      <text class="char-count">{{newContent.length}}/500</text>
+      <van-button type="primary" size="small" bind:click="onSubmit" round class="submit-btn">
+        <van-icon name="send" size="16px" /> 发布
+      </van-button>
+    </view>
   </view>
 
   <!-- 留言列表 -->
   <view class="message-list">
-    <van-card
-      wx:for="{{messages}}"
-      wx:key="id"
-      class="message-card"
-      custom-class="card-class"
-    >
-      <!-- 卡片内容 -->
-      <view slot="title" class="card-title">
-        <view class="message-header">
-          <text class="nickname">{{item.nickname}}</text>
-          <text class="time">{{item.time}}</text>
+    <view class="list-header">
+      <van-icon name="comment-o" size="18px" color="#ee0a24" />
+      <text class="list-title">全部留言</text>
+      <text class="list-count">共{{messages.length}}条</text>
+    </view>
+
+    <view class="message-card" wx:for="{{messages}}" wx:key="id" animation="{{item.animat}}">
+      <!-- 用户信息 -->
+      <view class="user-info">
+        <view class="user-avatar">{{item.nickname[0]}}</view>
+        <view class="user-detail">
+          <text class="user-name">{{item.nickname}}</text>
+          <text class="user-time">{{item.time}}</text>
         </view>
       </view>
 
-      <view slot="desc" class="card-content">
-        <text class="content">{{item.content}}</text>
+      <!-- 留言内容 -->
+      <view class="message-content">
+        <text>{{item.content}}</text>
+      </view>
 
-        <!-- 操作栏 -->
-        <view class="action-bar">
-          <view class="action-btn" bindtap="onLike" data-id="{{item.id}}">
-            <van-icon name="{{likeStatus[item.id] && likeStatus[item.id].liked ? 'like' : 'like-o'}}"
-                      color="{{likeStatus[item.id] && likeStatus[item.id].liked ? '#ee0a24' : '#999'}}" />
-            <text class="like-count">{{likeStatus[item.id] ? likeStatus[item.id].count : item.like_count || 0}}</text>
-          </view>
-          <view class="action-btn" bindtap="toggleCommentPopup" data-id="{{item.id}}">
-            <van-icon name="comment-o" />
-            <text class="comment-count">{{item.comment_count || 0}}</text>
-          </view>
+      <!-- 图片 -->
+      <view class="message-image" wx:if="{{item.image}}">
+        <image src="{{item.image}}" mode="aspectFill" class="content-image" bindtap="onPreviewImage" data-url="{{item.image}}" />
+      </view>
+
+      <!-- 操作栏 -->
+      <view class="action-bar">
+        <view class="action-btn {{likeStatus[item.id] && likeStatus[item.id].liked ? 'action-liked' : ''}}" bindtap="onLike" data-id="{{item.id}}">
+          <van-icon name="{{likeStatus[item.id] && likeStatus[item.id].liked ? 'like' : 'like-o'}}" />
+          <text>{{likeStatus[item.id] ? likeStatus[item.id].count : 0}}</text>
+        </view>
+        <view class="action-btn" bindtap="toggleCommentPopup" data-id="{{item.id}}">
+          <van-icon name="comment-o" />
+          <text>{{item.comment_count || 0}}</text>
         </view>
       </view>
-    </van-card>
+    </view>
+
+    <view wx:if="{{messages.length === 0}}" class="empty-state">
+      <van-icon name="comment-o" size="60px" />
+      <text>暂无留言，快来抢沙发</text>
+    </view>
   </view>
 
   <!-- 评论弹窗 -->
@@ -55,37 +77,34 @@
     position="bottom"
     round
     bind:close="onCloseCommentPopup"
-    custom-style="max-height: 60vh;"
+    custom-style="max-height: 70vh;"
   >
     <view class="comment-popup">
       <view class="popup-header">
         <text class="popup-title">评论</text>
-        <van-icon name="cross" bindtap="onCloseCommentPopup" />
+        <view class="popup-close" bindtap="onCloseCommentPopup">
+          <van-icon name="cross" />
+        </view>
       </view>
 
       <!-- 评论列表 -->
       <scroll-view scroll-y class="comment-list">
-        <van-cell
-          wx:for="{{currentComments}}"
-          wx:key="id"
-          title="{{item.nickname}}"
-          label="{{item.content}}"
-          class="comment-cell"
-        >
-          <view slot="right-icon" class="comment-actions">
-            <text class="comment-time">{{item.time}}</text>
-            <van-icon
-              wx:if="{{item.can_delete}}"
-              name="delete-o"
-              class="delete-btn"
-              bindtap="onDeleteComment"
-              data-id="{{item.id}}"
-              data-message-id="{{item.message_id}}"
-            />
+        <view wx:if="{{currentComments.length > 0}}" wx:for="{{currentComments}}" wx:key="id" class="comment-item">
+          <view class="comment-user">
+            <view class="comment-avatar">{{item.nickname[0]}}</view>
+            <view class="comment-user-info">
+              <text class="comment-name">{{item.nickname}}</text>
+              <text class="comment-time">{{item.time}}</text>
+            </view>
           </view>
-        </van-cell>
+          <text class="comment-content">{{item.content}}</text>
+          <view class="comment-actions" wx:if="{{item.can_delete}}">
+            <text class="comment-delete" bindtap="onDeleteComment" data-id="{{item.id}}" data-message-id="{{item.message_id}}">删除</text>
+          </view>
+        </view>
         <view wx:if="{{currentComments.length === 0}}" class="no-comments">
-          暂无评论，快来抢沙发吧
+          <van-icon name="chat-o" size="40px" />
+          <text>暂无评论，快来抢沙发</text>
         </view>
       </scroll-view>
 

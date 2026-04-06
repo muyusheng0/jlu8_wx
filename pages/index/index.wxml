@@ -1,44 +1,110 @@
 <view class="container">
+  <!-- 头部区域 -->
   <view class="header">
-    <text class="title">吉大自动化八班</text>
-    <text class="subtitle">同学录 · 时光不老我们不散</text>
+    <view class="header-content">
+      <view class="logo-area">
+        <view class="logo-icon">08</view>
+        <view class="logo-text">
+          <text class="title">吉大自动化八班</text>
+          <text class="subtitle">同学录 · 时光不老我们不散</text>
+        </view>
+      </view>
+    </view>
+    <view class="header-wave"></view>
   </view>
 
-  <view class="content">
+  <!-- 统计卡片 -->
+  <view class="stats-section">
+    <view class="stats-card">
+      <view class="stats-item">
+        <text class="stats-num">{{studentCount}}</text>
+        <text class="stats-label">同学总数</text>
+      </view>
+      <view class="stats-divider"></view>
+      <view class="stats-item">
+        <text class="stats-num">{{messageCount}}</text>
+        <text class="stats-label">留言总数</text>
+      </view>
+      <view class="stats-divider"></view>
+      <view class="stats-item">
+        <text class="stats-num">{{photoCount}}</text>
+        <text class="stats-label">照片总数</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能入口 -->
+  <view class="menu-section">
+    <view class="menu-grid">
+      <view class="menu-item" bindtap="goToTXL">
+        <view class="menu-icon bg-gradient-warm">
+          <van-icon name="friends-o" size="28px" color="#fff" />
+        </view>
+        <text class="menu-text">通讯录</text>
+      </view>
+      <view class="menu-item" bindtap="goToLYB">
+        <view class="menu-icon bg-gradient-green">
+          <van-icon name="comment-o" size="28px" color="#fff" />
+        </view>
+        <text class="menu-text">留言板</text>
+      </view>
+      <view class="menu-item" bindtap="goToGallery">
+        <view class="menu-icon bg-gradient-dark">
+          <van-icon name="photo-o" size="28px" color="#fff" />
+        </view>
+        <text class="menu-text">相册</text>
+      </view>
+      <view class="menu-item" bindtap="goToVideo">
+        <view class="menu-icon" style="background: linear-gradient(135deg, #9c27b0, #e040fb);">
+          <van-icon name="video-o" size="28px" color="#fff" />
+        </view>
+        <text class="menu-text">视频</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最新留言 -->
+  <view class="section">
+    <view class="section-header">
+      <view class="section-title-wrap">
+        <van-icon name="clock" size="18px" color="#ee0a24" />
+        <text class="section-title">最新留言</text>
+      </view>
+      <view class="section-more" bindtap="goToLYB">
+        <text>查看更多</text>
+        <van-icon name="arrow" size="14px" color="#969799" />
+      </view>
+    </view>
+
     <van-card
+      wx:for="{{recentMessages}}"
+      wx:key="id"
       centered
       lazy-load
-      custom-class="stats-card"
+      custom-class="message-card"
+      title-class="message-title"
+      desc-class="message-desc"
     >
-      <view slot="tags">
-        <van-tag type="danger" size="large">同学总数</van-tag>
+      <view slot="title">
+        <view class="message-header">
+          <van-tag type="primary" size="medium">{{item.nickname}}</van-tag>
+          <text class="message-time">{{item.time}}</text>
+        </view>
       </view>
-      <view slot="price">
-        <text class="stat-num">{{studentCount}}</text>
-      </view>
-      <view slot="bottom">
-        <text class="stat-label">位同学已加入</text>
+      <view slot="desc">
+        <text class="message-content">{{item.content}}</text>
+        <view class="message-footer" wx:if="{{item.image}}">
+          <van-icon name="photo-o" size="12px" color="#969799" />
+          <text>附图</text>
+        </view>
       </view>
     </van-card>
 
-    <view class="section">
-      <text class="section-title">最新留言</text>
-      <van-card
-        wx:for="{{recentMessages}}"
-        wx:key="id"
-        centered
-        lazy-load
-        custom-class="message-card"
-        title-class="message-title"
-        desc-class="message-desc"
-      >
-        <view slot="title">
-          <van-tag type="primary" size="medium">{{item.nickname}}</van-tag>
-        </view>
-        <view slot="desc">
-          <text class="message-content">{{item.content}}</text>
-        </view>
-      </van-card>
+    <view wx:if="{{recentMessages.length === 0}}" class="empty-state">
+      <van-icon name="comment-o" size="48px" />
+      <text>暂无留言，快去留言吧</text>
     </view>
   </view>
 </view>
+
+<van-toast id="van-toast" />

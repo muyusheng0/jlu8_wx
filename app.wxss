@@ -1,6 +1,6 @@
-/* 全局样式 */
+/* 全局样式 - 基于Vant的美化主题 */
 page {
-  background-color: #faf8f5;
+  background-color: #f5f5f5;
   font-size: 28rpx;
   color: #333;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -8,58 +8,182 @@ page {
 
 .container {
   padding: 30rpx;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* 主题渐变色 */
+.theme-gradient {
+  background: linear-gradient(135deg, #ff6034, #ee0a24) !important;
+}
+
+.bg-gradient-dark {
+  background: linear-gradient(135deg, #2c3e50, #34495e) !important;
+}
+
+.bg-gradient-warm {
+  background: linear-gradient(135deg, #e74c3c, #f39c12) !important;
+}
+
+.bg-gradient-green {
+  background: linear-gradient(135deg, #07c160, #10b981) !important;
 }
 
 /* 卡片样式 */
 .card {
   background-color: #fff;
-  border-radius: 12rpx;
+  border-radius: 16rpx;
   box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
   padding: 24rpx;
   margin-bottom: 20rpx;
 }
 
+.card-elevated {
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.12);
+}
+
+/* 圆角按钮 */
+.btn-round {
+  border-radius: 36rpx !important;
+}
+
 /* 主按钮样式 */
 .btn-primary {
-  background: linear-gradient(135deg, #e74c3c, #f39c12);
+  background: linear-gradient(135deg, #ff6034, #ee0a24) !important;
   color: #fff;
-  border-radius: 8rpx;
+  border-radius: 36rpx;
   padding: 24rpx 32rpx;
+  border: none !important;
+  font-weight: 500;
 }
 
 .btn-primary::after {
   border: none;
 }
 
+/* 次要按钮 */
+.btn-secondary {
+  background: #fff !important;
+  color: #ee0a24 !important;
+  border: 2rpx solid #ee0a24 !important;
+  border-radius: 36rpx;
+}
+
 /* 输入框样式 */
 .input-field {
   background-color: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 8rpx;
+  border: 1px solid #ebedf0;
+  border-radius: 12rpx;
   padding: 20rpx 24rpx;
 }
 
 .input-field:focus {
-  border-color: #e74c3c;
-  outline: none;
+  border-color: #ee0a24;
 }
 
 /* 头像样式 */
 .avatar {
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: bold;
+  background: linear-gradient(135deg, #2c3e50, #34495e);
 }
 
 .avatar-sm {
   width: 80rpx;
   height: 80rpx;
+  font-size: 28rpx;
 }
 
 .avatar-md {
   width: 120rpx;
   height: 120rpx;
+  font-size: 40rpx;
 }
 
 .avatar-lg {
   width: 150rpx;
   height: 150rpx;
+  font-size: 56rpx;
+}
+
+.avatar-xl {
+  width: 180rpx;
+  height: 180rpx;
+  font-size: 64rpx;
+}
+
+/* 标签样式 */
+.tag-hot {
+  background: linear-gradient(135deg, #ff6034, #ee0a24) !important;
+  color: #fff !important;
+}
+
+.tag-admin {
+  background: linear-gradient(135deg, #ffd700, #ffb800) !important;
+  color: #8b6914 !important;
+}
+
+/* 分割线 */
+.divider {
+  height: 1rpx;
+  background: #ebedf0;
+  margin: 20rpx 0;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 0;
+  color: #969799;
+}
+
+.empty-state .van-icon {
+  font-size: 96rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.5;
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.2s ease-out;
+}
+
+/* 列表项hover效果 */
+.list-item-hover {
+  transition: background-color 0.2s;
+}
+
+.list-item-hover:active {
+  background-color: #f7f8fa;
+}
+
+/* 底部安全区 */
+.safe-area-bottom {
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
 }

@@ -1,53 +1,68 @@
 <view class="container">
+  <!-- 头部 -->
   <view class="header">
-    <text class="title">视频</text>
+    <view class="header-content">
+      <view class="header-icon">
+        <van-icon name="video-o" size="32px" color="#fff" />
+      </view>
+      <view class="header-text">
+        <text class="title">精彩视频</text>
+        <text class="subtitle">回忆那些美好时光</text>
+      </view>
+    </view>
   </view>
 
   <van-loading wx:if="{{loading}}" vertical />
 
-  <van-cell-group wx:if="{{!loading && videos.length > 0}}" class="video-group">
-    <van-cell
-      wx:for="{{videos}}"
-      wx:key="id"
-      custom-class="video-cell"
-    >
-      <!-- 视频播放区域 -->
-      <view slot="icon" class="video-cover" bindtap="onPlay" data-url="{{item.url}}">
+  <view class="video-list" wx:if="{{!loading && videos.length > 0}}">
+    <view wx:for="{{videos}}" wx:key="id" class="video-card">
+      <!-- 视频封面 -->
+      <view class="video-cover" bindtap="onVideoTap" data-url="{{item.url}}" data-id="{{item.id}}">
         <video
           src="{{item.url}}"
-          poster="{{item.cover || '/images/default-video.png'}}"
+          poster="{{item.cover}}"
           object-fit="cover"
           controls
           show-center-play-btn
           enable-play-gesture
           class="video-player"
+          wx:if="{{item.playing}}"
         ></video>
-        <view class="play-overlay" wx:if="{{item.playing !== true}}">
-          <van-icon name="play-circle" size="48rpx" color="#fff" />
+        <image
+          wx:else
+          src="{{item.cover || '/images/default-video.png'}}"
+          mode="aspectFill"
+          class="video-poster"
+        />
+        <view class="play-overlay" wx:if="{{!item.playing}}">
+          <view class="play-btn">
+            <van-icon name="play" size="24px" color="#fff" />
+          </view>
         </view>
+        <view class="video-duration" wx:if="{{item.duration}}">{{item.duration}}</view>
       </view>
 
       <!-- 视频信息 -->
-      <view slot="title" class="video-content">
-        <text class="video-title">{{item.title}}</text>
-        <view class="video-meta">
-          <text class="video-time" wx:if="{{item.created_at}}">{{item.created_at}}</text>
+      <view class="video-info">
+        <view class="video-main">
+          <text class="video-title">{{item.title}}</text>
+          <view class="video-meta">
+            <van-icon name="user-o" size="12px" />
+            <text>{{item.owner || '匿名'}}</text>
+          </view>
+        </view>
+        <view class="video-actions">
+          <view class="action-btn {{item.liked ? 'action-liked' : ''}}" bindtap="onLike" data-id="{{item.id}}">
+            <van-icon name="{{item.liked ? 'like' : 'like-o'}}" />
+            <text>{{item.likeCount || 0}}</text>
+          </view>
         </view>
       </view>
+    </view>
+  </view>
 
-      <!-- 点赞按钮 -->
-      <view slot="right-icon" class="like-wrapper" catchtap="onLike" data-id="{{item.id}}">
-        <van-icon
-          name="{{item.liked ? 'like' : 'like-o'}}"
-          color="{{item.liked ? '#ee0a24' : '#999'}}"
-          size="18px"
-        />
-        <text class="like-count">{{item.likeCount || 0}}</text>
-      </view>
-    </van-cell>
-  </van-cell-group>
-
-  <view wx:if="{{!loading && videos.length === 0}}" class="empty">
+  <view wx:if="{{!loading && videos.length === 0}}" class="empty-state">
+    <van-icon name="video-o" size="60px" />
     <text>暂无视频</text>
   </view>
 </view>
