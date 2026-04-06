@@ -1,3 +1,18 @@
 <view class="container">
-  <text>相册页 - 功能开发中</text>
+  <view class="header">
+    <text class="title">相册</text>
+  </view>
+
+  <view class="photo-grid" wx:if="{{photos.length > 0}}">
+    <view class="photo-item" wx:for="{{photos}}" wx:key="id" bindtap="onPreview" data-url="{{item.url}}">
+      <image class="photo-image" src="{{item.url}}" mode="aspectFill" />
+      <view class="photo-info">
+        <text class="photo-title">{{item.title}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{photos.length === 0}}">
+    <text>暂无照片</text>
+  </view>
 </view>
