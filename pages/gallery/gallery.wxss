@@ -41,6 +41,24 @@
   border-radius: 8rpx 8rpx 0 0;
 }
 
+.photo-wrapper {
+  position: relative;
+}
+
+.like-btn {
+  position: absolute;
+  top: 10rpx;
+  right: 10rpx;
+  background: rgba(0,0,0,0.3);
+  border-radius: 20rpx;
+  padding: 8rpx 16rpx;
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+  color: #fff;
+  font-size: 22rpx;
+}
+
 .photo-info {
   padding: 16rpx;
 }

@@ -3,11 +3,25 @@
     <text class="title">视频</text>
   </view>
 
-  <view class="video-grid" wx:if="{{videos.length > 0}}">
-    <view class="video-item" wx:for="{{videos}}" wx:key="id" bindtap="onPlay" data-id="{{item.id}}">
-      <view class="cover">
-        <image class="cover-image" src="{{item.cover || '/images/default-video.png'}}" mode="aspectFill" />
-        <view class="play-icon">▶</view>
+  <van-loading wx:if="{{loading}}" />
+
+  <view class="video-grid" wx:if="{{!loading && videos.length > 0}}">
+    <view class="video-item" wx:for="{{videos}}" wx:key="id">
+      <view class="video-cover" bindtap="onPlay" data-url="{{item.url}}">
+        <van-image
+          src="{{item.cover || '/images/default-video.png'}}"
+          fit="cover"
+          width="340rpx"
+          height="200rpx"
+        />
+        <view class="play-icon">
+          <van-icon name="play-circle" size="60rpx" color="#fff" />
+        </view>
+        <view class="like-btn" catchtap="onLike" data-id="{{item.id}}">
+          <van-icon name="{{item.liked ? 'like' : 'like-o'}}"
+                    color="{{item.liked ? '#e74c3c' : '#fff'}}" />
+          <text class="like-count">{{item.likeCount || 0}}</text>
+        </view>
       </view>
       <view class="video-info">
         <text class="video-title">{{item.title}}</text>
@@ -15,7 +29,7 @@
     </view>
   </view>
 
-  <view class="empty-state" wx:if="{{videos.length === 0}}">
-    <text>暂无视频</text>
-  </view>
+  <van-empty wx:if="{{!loading && videos.length === 0}}" description="暂无视频" />
 </view>
+
+<van-toast id="van-toast" />

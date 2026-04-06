@@ -1,16 +1,53 @@
 <view class="container">
+  <!-- 输入区域 -->
   <view class="input-area">
-    <textarea class="textarea" placeholder="写下想说的话..." bindinput="onContentInput" value="{{newContent}}" maxlength="500" />
-    <button class="btn" bindtap="onSubmit">发表</button>
+    <van-field
+      value="{{newContent}}"
+      placeholder="写下想说的话..."
+      bind:change="onContentInput"
+      type="textarea"
+      autosize
+    />
+    <van-button type="primary" size="small" bind:click="onSubmit">发表</van-button>
   </view>
 
-  <view class="messages">
+  <!-- 留言列表 -->
+  <view class="message-list">
     <view class="message-item" wx:for="{{messages}}" wx:key="id">
       <view class="message-header">
         <text class="nickname">{{item.nickname}}</text>
         <text class="time">{{item.time}}</text>
       </view>
       <text class="content">{{item.content}}</text>
+
+      <!-- 操作栏 -->
+      <view class="action-bar">
+        <view class="action-btn" bindtap="onLike" data-id="{{item.id}}">
+          <van-icon name="{{likeStatus[item.id] && likeStatus[item.id].liked ? 'like' : 'like-o'}}"
+                    color="{{likeStatus[item.id] && likeStatus[item.id].liked ? '#e74c3c' : '#999'}}" />
+          <text class="like-count">{{likeStatus[item.id] ? likeStatus[item.id].count : 0}}</text>
+        </view>
+        <view class="action-btn" bindtap="toggleComments" data-id="{{item.id}}">
+          <van-icon name="comment-o" />
+          <text>评论</text>
+        </view>
+      </view>
+
+      <!-- 评论区域 -->
+      <view class="comment-section" wx:if="{{showComments[item.id]}}">
+        <view class="comment-item" wx:for="{{comments[item.id]}}" wx:key="id">
+          <text class="comment-nickname">{{item.nickname}}:</text>
+          <text class="comment-content">{{item.content}}</text>
+        </view>
+        <van-field
+          placeholder="写下评论..."
+          bind:confirm="onComment"
+          data-id="{{item.id}}"
+          size="small"
+        />
+      </view>
     </view>
   </view>
 </view>
+
+<van-toast id="van-toast" />

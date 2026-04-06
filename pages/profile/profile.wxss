@@ -86,3 +86,25 @@
 .logout-btn::after {
   border: none;
 }
+
+.btn-group {
+  padding: 30rpx;
+  margin-top: 30rpx;
+}
+
+.edit-popup {
+  background: #fff;
+  min-height: 600rpx;
+}
+
+.edit-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 30rpx;
+  border-bottom: 1px solid #eee;
+}
+
+.edit-title {
+  font-size: 32rpx;
+  font-weight: bold;
+}

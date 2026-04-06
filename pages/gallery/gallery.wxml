@@ -3,16 +3,31 @@
     <text class="title">相册</text>
   </view>
 
-  <view class="photo-grid" wx:if="{{photos.length > 0}}">
-    <view class="photo-item" wx:for="{{photos}}" wx:key="id" bindtap="onPreview" data-url="{{item.url}}">
-      <image class="photo-image" src="{{item.url}}" mode="aspectFill" />
+  <van-loading wx:if="{{loading}}" />
+
+  <view class="photo-grid" wx:if="{{!loading && photos.length > 0}}">
+    <view class="photo-item" wx:for="{{photos}}" wx:key="id">
+      <view class="photo-wrapper" bindtap="onPreview" data-url="{{item.url}}" data-urls="{{previewUrls}}">
+        <van-image
+          src="{{item.url}}"
+          fit="cover"
+          width="340rpx"
+          height="300rpx"
+          radius="8rpx"
+        />
+        <view class="like-btn" catchtap="onLike" data-id="{{item.id}}">
+          <van-icon name="{{item.liked ? 'like' : 'like-o'}}"
+                    color="{{item.liked ? '#e74c3c' : '#fff'}}" />
+          <text class="like-count">{{item.likeCount || 0}}</text>
+        </view>
+      </view>
       <view class="photo-info">
-        <text class="photo-title">{{item.title}}</text>
+        <text class="photo-title">{{item.title || item.filename}}</text>
       </view>
     </view>
   </view>
 
-  <view class="empty-state" wx:if="{{photos.length === 0}}">
-    <text>暂无照片</text>
-  </view>
+  <van-empty wx:if="{{!loading && photos.length === 0}}" description="暂无照片" />
 </view>
+
+<van-toast id="van-toast" />

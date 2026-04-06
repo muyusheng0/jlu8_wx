@@ -78,3 +78,53 @@
   color: #333;
   line-height: 1.6;
 }
+
+.action-bar {
+  display: flex;
+  gap: 40rpx;
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1px solid #f0f0f0;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  color: #999;
+  font-size: 24rpx;
+}
+
+.action-btn .van-icon {
+  font-size: 32rpx;
+}
+
+.like-count {
+  margin-left: 4rpx;
+}
+
+.comment-section {
+  background: #faf8f5;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  margin-top: 20rpx;
+}
+
+.comment-item {
+  padding: 10rpx 0;
+  font-size: 26rpx;
+}
+
+.comment-nickname {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.comment-content {
+  color: #333;
+  margin-left: 10rpx;
+}
+
+.message-list {
+  padding: 0;
+}
