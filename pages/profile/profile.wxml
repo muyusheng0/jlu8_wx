@@ -1,6 +1,6 @@
 <view class="container">
-  <view class="profile-card" wx:if="{{profile}}">
-    <image class="avatar" src="{{profile.avatar || '/images/default-avatar.png'}}" mode="aspectFill" />
+  <view class="profile-card">
+    <view class="avatar">{{profile.name[0]}}</view>
     <text class="name">{{profile.name}}</text>
     <text class="info">{{profile.city || profile.hometown_name}}</text>
   </view>

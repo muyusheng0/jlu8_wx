@@ -4,7 +4,7 @@
   min-height: 100vh;
 }
 
-.input-card {
+.input-area {
   background: #fff;
   border-radius: 12rpx;
   box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.08);
@@ -28,7 +28,7 @@
   outline: none;
 }
 
-.submit-btn {
+.btn {
   background: linear-gradient(135deg, #e74c3c, #f39c12);
   color: #fff;
   border: none;
@@ -39,7 +39,7 @@
   width: 100%;
 }
 
-.submit-btn::after {
+.btn::after {
   border: none;
 }
 
@@ -47,7 +47,7 @@
   padding: 0;
 }
 
-.message-card {
+.message-item {
   background: #fff;
   border-radius: 12rpx;
   box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.08);
