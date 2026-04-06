@@ -1,19 +1,28 @@
 .container {
   padding: 30rpx;
-  background: #faf8f5;
+  background: linear-gradient(180deg, #f7f8fa 0%, #faf8f5 100%);
   min-height: 100vh;
 }
 
 .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 30rpx;
+  padding: 0 10rpx;
 }
 
 .title {
-  font-size: 32rpx;
+  font-size: 36rpx;
   color: #2c3e50;
-  font-weight: bold;
-  padding-left: 20rpx;
-  border-left: 4rpx solid #e74c3c;
+  font-weight: 600;
+  padding-left: 16rpx;
+  border-left: 6rpx solid #ee0a24;
+}
+
+.subtitle {
+  font-size: 24rpx;
+  color: #969799;
 }
 
 .photo-grid {
@@ -23,57 +32,83 @@
 }
 
 .photo-item {
-  width: 48%;
-  margin-bottom: 20rpx;
+  width: 49%;
+  margin-bottom: 24rpx;
   background: #fff;
-  border-radius: 8rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.08);
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 24rpx rgba(0, 0, 0, 0.06);
   overflow: hidden;
+  transition: all 0.3s ease;
 }
 
 .photo-item:active {
-  box-shadow: 0 8rpx 30rpx rgba(0,0,0,0.15);
-}
-
-.photo-image {
-  width: 100%;
-  height: 300rpx;
-  border-radius: 8rpx 8rpx 0 0;
+  transform: scale(0.98);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.12);
 }
 
 .photo-wrapper {
   position: relative;
+  width: 100%;
+}
+
+.photo-wrapper .van-image {
+  display: block;
+  width: 100%;
 }
 
 .like-btn {
   position: absolute;
-  top: 10rpx;
-  right: 10rpx;
-  background: rgba(0,0,0,0.3);
-  border-radius: 20rpx;
+  top: 12rpx;
+  right: 12rpx;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8rpx);
+  border-radius: 24rpx;
   padding: 8rpx 16rpx;
   display: flex;
   align-items: center;
-  gap: 4rpx;
+  gap: 6rpx;
   color: #fff;
-  font-size: 22rpx;
+  font-size: 24rpx;
+  transition: all 0.2s ease;
+}
+
+.like-btn:active {
+  background: rgba(0, 0, 0, 0.6);
+  transform: scale(1.1);
+}
+
+.like-count {
+  font-weight: 500;
+  min-width: 24rpx;
+  text-align: center;
 }
 
 .photo-info {
-  padding: 16rpx;
+  padding: 16rpx 20rpx 20rpx;
 }
 
 .photo-title {
   font-size: 26rpx;
-  color: #333;
+  color: #323233;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: block;
 }
 
-.empty-state {
-  text-align: center;
+.image-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: #f7f8fa;
+  color: #969799;
+  font-size: 24rpx;
+}
+
+.van-loading {
+  display: flex !important;
+  justify-content: center;
   padding: 100rpx 0;
-  color: #999;
-  font-size: 28rpx;
 }

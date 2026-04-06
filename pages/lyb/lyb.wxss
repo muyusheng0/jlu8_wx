@@ -1,130 +1,206 @@
 .container {
   padding: 30rpx;
-  background: #faf8f5;
+  background: #f7f8fa;
   min-height: 100vh;
 }
 
+/* 输入区域 */
 .input-area {
   background: #fff;
-  border-radius: 12rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.08);
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
   padding: 30rpx;
   margin-bottom: 30rpx;
 }
 
-.textarea {
-  width: 100%;
-  height: 160rpx;
-  border: 1px solid #e0e0e0;
-  border-radius: 8rpx;
-  padding: 20rpx;
-  box-sizing: border-box;
-  font-size: 28rpx;
-  background: #faf8f5;
+.input-field {
+  background: #f7f8fa;
+  border-radius: 12rpx;
+  padding: 20rpx !important;
 }
 
-.textarea:focus {
-  border-color: #e74c3c;
-  outline: none;
-}
-
-.btn {
-  background: linear-gradient(135deg, #e74c3c, #f39c12);
-  color: #fff;
-  border: none;
-  border-radius: 8rpx;
-  padding: 24rpx;
-  font-size: 28rpx;
+.submit-btn {
   margin-top: 20rpx;
   width: 100%;
+  background: linear-gradient(135deg, #07c160, #10b981) !important;
+  border: none !important;
 }
 
-.btn::after {
-  border: none;
-}
-
-.messages {
+/* 留言列表 */
+.message-list {
   padding: 0;
 }
 
-.message-item {
-  background: #fff;
-  border-radius: 12rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.08);
-  padding: 30rpx;
-  margin-bottom: 20rpx;
+.message-card {
+  margin-bottom: 24rpx;
+  border-radius: 16rpx !important;
+  overflow: hidden;
+}
+
+.card-class {
+  border-radius: 16rpx !important;
+}
+
+.card-title {
+  width: 100%;
 }
 
 .message-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15rpx;
+  width: 100%;
 }
 
 .nickname {
   font-size: 28rpx;
-  color: #e74c3c;
-  font-weight: bold;
+  color: #323233;
+  font-weight: 600;
 }
 
 .time {
   font-size: 22rpx;
-  color: #999;
+  color: #969799;
+}
+
+.card-content {
+  margin-top: 16rpx;
 }
 
 .content {
   font-size: 28rpx;
-  color: #333;
+  color: #323233;
   line-height: 1.6;
+  display: block;
+  word-break: break-all;
 }
 
+/* 操作栏 */
 .action-bar {
   display: flex;
-  gap: 40rpx;
-  margin-top: 20rpx;
+  gap: 48rpx;
+  margin-top: 24rpx;
   padding-top: 20rpx;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid #ebedf0;
 }
 
 .action-btn {
   display: flex;
   align-items: center;
   gap: 8rpx;
-  color: #999;
+  color: #646566;
   font-size: 24rpx;
+  padding: 8rpx 0;
 }
 
 .action-btn .van-icon {
-  font-size: 32rpx;
+  font-size: 34rpx;
 }
 
-.like-count {
+.like-count,
+.comment-count {
   margin-left: 4rpx;
+  font-size: 24rpx;
 }
 
-.comment-section {
-  background: #faf8f5;
-  border-radius: 8rpx;
-  padding: 20rpx;
-  margin-top: 20rpx;
+/* 评论弹窗 */
+.comment-popup {
+  display: flex;
+  flex-direction: column;
+  max-height: 60vh;
+  background: #fff;
 }
 
-.comment-item {
-  padding: 10rpx 0;
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1px solid #ebedf0;
+}
+
+.popup-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #323233;
+}
+
+.popup-header .van-icon {
+  font-size: 36rpx;
+  color: #969799;
+}
+
+.comment-list {
+  flex: 1;
+  max-height: 40vh;
+  overflow-y: auto;
+  padding-bottom: 20rpx;
+}
+
+.comment-cell {
+  padding: 24rpx 30rpx !important;
+  border-bottom: 1px solid #f7f8fa;
+}
+
+.comment-cell .van-cell__title {
+  font-size: 26rpx !important;
+  color: #323233 !important;
+  font-weight: 500;
+}
+
+.comment-cell .van-cell__label {
+  font-size: 26rpx !important;
+  color: #646566 !important;
+  margin-top: 8rpx !important;
+  line-height: 1.5 !important;
+}
+
+.comment-actions {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.comment-time {
+  font-size: 20rpx;
+  color: #c8c9cc;
+}
+
+.delete-btn {
+  color: #c8c9cc !important;
+  font-size: 32rpx !important;
+}
+
+.delete-btn:active {
+  color: #ee0a24 !important;
+}
+
+.no-comments {
+  text-align: center;
+  padding: 60rpx 0;
+  color: #969799;
   font-size: 26rpx;
 }
 
-.comment-nickname {
-  color: #e74c3c;
-  font-weight: bold;
+/* 评论输入 */
+.comment-input-area {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 20rpx 30rpx;
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  border-top: 1px solid #ebedf0;
+  background: #fff;
 }
 
-.comment-content {
-  color: #333;
-  margin-left: 10rpx;
+.comment-field {
+  flex: 1;
+  background: #f7f8fa !important;
+  border-radius: 36rpx !important;
 }
 
-.message-list {
-  padding: 0;
+.comment-submit-btn {
+  flex-shrink: 0;
+  background: #07c160 !important;
+  border: none !important;
 }

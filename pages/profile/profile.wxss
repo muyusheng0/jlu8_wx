@@ -1,110 +1,175 @@
 .container {
-  padding: 30rpx;
-  background: #faf8f5;
+  padding: 0;
+  background: linear-gradient(180deg, #f7f8fa 0%, #ffffff 100%);
   min-height: 100vh;
 }
 
+/* 头像卡片 */
 .profile-card {
-  background: linear-gradient(135deg, #2c3e50, #34495e);
-  padding: 60rpx 30rpx;
-  border-radius: 0 0 40rpx 40rpx;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  padding: 80rpx 40rpx 60rpx;
   text-align: center;
   color: #fff;
-  margin: -30rpx -30rpx 30rpx -30rpx;
-  padding-top: 80rpx;
-  padding-bottom: 80rpx;
+  position: relative;
+}
+
+.avatar-wrap {
+  position: relative;
+  display: inline-block;
 }
 
 .avatar {
-  width: 150rpx;
-  height: 150rpx;
+  width: 160rpx;
+  height: 160rpx;
   border-radius: 50%;
   background: linear-gradient(135deg, #e74c3c, #f39c12);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: 60rpx;
+  font-size: 64rpx;
   font-weight: bold;
-  margin: 0 auto 20rpx;
+  margin: 0 auto;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.2);
+}
+
+.edit-avatar-btn {
+  position: absolute;
+  bottom: 0;
+  right: -10rpx;
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e74c3c, #f39c12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.2);
 }
 
 .name {
   display: block;
-  font-size: 40rpx;
+  font-size: 44rpx;
   font-weight: bold;
-  margin-top: 20rpx;
+  margin-top: 24rpx;
+  letter-spacing: 2rpx;
 }
 
-.info {
+.student-id {
   display: block;
-  font-size: 28rpx;
-  margin-top: 10rpx;
-  opacity: 0.8;
+  font-size: 26rpx;
+  margin-top: 12rpx;
+  opacity: 0.7;
 }
 
-.info-list {
-  background: #fff;
-  border-radius: 12rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.08);
-  overflow: hidden;
-  margin-bottom: 30rpx;
-}
-
-.info-item {
+.location-wrap {
   display: flex;
-  justify-content: space-between;
-  padding: 30rpx;
-  border-bottom: 1px solid #f0f0f0;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16rpx;
 }
 
-.info-item:last-child {
-  border-bottom: none;
+.location {
+  font-size: 26rpx;
+  opacity: 0.8;
+  margin-left: 6rpx;
 }
 
-.label {
-  font-size: 28rpx;
-  color: #666;
+/* 分区 */
+.section {
+  margin: 24rpx 24rpx 0;
 }
 
-.value {
-  font-size: 28rpx;
-  color: #333;
+.section .van-cell-group {
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+}
+
+.section .van-cell {
+  padding: 32rpx 28rpx;
+}
+
+/* 按钮区域 */
+.btn-section {
+  padding: 48rpx 32rpx;
+}
+
+.edit-btn {
+  background: linear-gradient(135deg, #e74c3c, #f39c12) !important;
+  border: none !important;
+  font-weight: bold;
 }
 
 .logout-btn {
-  background: linear-gradient(135deg, #e74c3c, #f39c12);
-  color: #fff;
-  border-radius: 8rpx;
-  padding: 24rpx;
-  text-align: center;
-  font-size: 28rpx;
-  width: 100%;
-  border: none;
+  margin-top: 24rpx;
+  color: #969799 !important;
 }
 
-.logout-btn::after {
-  border: none;
-}
-
-.btn-group {
-  padding: 30rpx;
-  margin-top: 30rpx;
-}
-
+/* 弹窗样式 */
 .edit-popup {
-  background: #fff;
-  min-height: 600rpx;
+  max-height: 85vh !important;
 }
 
-.edit-header {
+.popup-header {
   display: flex;
   justify-content: space-between;
-  padding: 30rpx;
-  border-bottom: 1px solid #eee;
+  align-items: center;
+  padding: 32rpx 32rpx 24rpx;
+  border-bottom: 1px solid #f0f0f0;
 }
 
-.edit-title {
-  font-size: 32rpx;
+.popup-cancel {
+  font-size: 28rpx;
+  color: #969799;
+}
+
+.popup-title {
+  font-size: 34rpx;
   font-weight: bold;
+  color: #323233;
+}
+
+.popup-save {
+  font-size: 28rpx;
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.popup-content {
+  max-height: 60vh;
+  padding: 16rpx 0;
+}
+
+.popup-content .van-cell {
+  padding: 28rpx 32rpx;
+}
+
+.popup-content .van-field {
+  padding: 20rpx 32rpx;
+}
+
+.popup-footer {
+  padding: 24rpx 32rpx;
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
+  border-top: 1px solid #f0f0f0;
+}
+
+.save-btn {
+  background: linear-gradient(135deg, #e74c3c, #f39c12) !important;
+  border: none !important;
+  font-weight: bold;
+}
+
+/* van-field 错误状态 */
+.van-field__error-message {
+  color: #ee0a24;
+}
+
+/* 加载状态 */
+.van-loading {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  padding-top: 200rpx;
 }

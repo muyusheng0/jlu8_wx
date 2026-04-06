@@ -7,47 +7,112 @@
       bind:change="onContentInput"
       type="textarea"
       autosize
+      border="{{false}}"
+      show-confirm-bar="{{false}}"
+      class="input-field"
     />
-    <van-button type="primary" size="small" bind:click="onSubmit">发表</van-button>
+    <van-button type="primary" size="small" bind:click="onSubmit" round class="submit-btn">发表留言</van-button>
   </view>
 
   <!-- 留言列表 -->
   <view class="message-list">
-    <view class="message-item" wx:for="{{messages}}" wx:key="id">
-      <view class="message-header">
-        <text class="nickname">{{item.nickname}}</text>
-        <text class="time">{{item.time}}</text>
-      </view>
-      <text class="content">{{item.content}}</text>
-
-      <!-- 操作栏 -->
-      <view class="action-bar">
-        <view class="action-btn" bindtap="onLike" data-id="{{item.id}}">
-          <van-icon name="{{likeStatus[item.id] && likeStatus[item.id].liked ? 'like' : 'like-o'}}"
-                    color="{{likeStatus[item.id] && likeStatus[item.id].liked ? '#e74c3c' : '#999'}}" />
-          <text class="like-count">{{likeStatus[item.id] ? likeStatus[item.id].count : 0}}</text>
-        </view>
-        <view class="action-btn" bindtap="toggleComments" data-id="{{item.id}}">
-          <van-icon name="comment-o" />
-          <text>评论</text>
+    <van-card
+      wx:for="{{messages}}"
+      wx:key="id"
+      class="message-card"
+      custom-class="card-class"
+    >
+      <!-- 卡片内容 -->
+      <view slot="title" class="card-title">
+        <view class="message-header">
+          <text class="nickname">{{item.nickname}}</text>
+          <text class="time">{{item.time}}</text>
         </view>
       </view>
 
-      <!-- 评论区域 -->
-      <view class="comment-section" wx:if="{{showComments[item.id]}}">
-        <view class="comment-item" wx:for="{{comments[item.id]}}" wx:key="id">
-          <text class="comment-nickname">{{item.nickname}}:</text>
-          <text class="comment-content">{{item.content}}</text>
+      <view slot="desc" class="card-content">
+        <text class="content">{{item.content}}</text>
+
+        <!-- 操作栏 -->
+        <view class="action-bar">
+          <view class="action-btn" bindtap="onLike" data-id="{{item.id}}">
+            <van-icon name="{{likeStatus[item.id] && likeStatus[item.id].liked ? 'like' : 'like-o'}}"
+                      color="{{likeStatus[item.id] && likeStatus[item.id].liked ? '#ee0a24' : '#999'}}" />
+            <text class="like-count">{{likeStatus[item.id] ? likeStatus[item.id].count : item.like_count || 0}}</text>
+          </view>
+          <view class="action-btn" bindtap="toggleCommentPopup" data-id="{{item.id}}">
+            <van-icon name="comment-o" />
+            <text class="comment-count">{{item.comment_count || 0}}</text>
+          </view>
         </view>
+      </view>
+    </van-card>
+  </view>
+
+  <!-- 评论弹窗 -->
+  <van-popup
+    show="{{commentPopupShow}}"
+    position="bottom"
+    round
+    bind:close="onCloseCommentPopup"
+    custom-style="max-height: 60vh;"
+  >
+    <view class="comment-popup">
+      <view class="popup-header">
+        <text class="popup-title">评论</text>
+        <van-icon name="cross" bindtap="onCloseCommentPopup" />
+      </view>
+
+      <!-- 评论列表 -->
+      <scroll-view scroll-y class="comment-list">
+        <van-cell
+          wx:for="{{currentComments}}"
+          wx:key="id"
+          title="{{item.nickname}}"
+          label="{{item.content}}"
+          class="comment-cell"
+        >
+          <view slot="right-icon" class="comment-actions">
+            <text class="comment-time">{{item.time}}</text>
+            <van-icon
+              wx:if="{{item.can_delete}}"
+              name="delete-o"
+              class="delete-btn"
+              bindtap="onDeleteComment"
+              data-id="{{item.id}}"
+              data-message-id="{{item.message_id}}"
+            />
+          </view>
+        </van-cell>
+        <view wx:if="{{currentComments.length === 0}}" class="no-comments">
+          暂无评论，快来抢沙发吧
+        </view>
+      </scroll-view>
+
+      <!-- 评论输入 -->
+      <view class="comment-input-area">
         <van-field
+          value="{{commentContent}}"
           placeholder="写下评论..."
-          bind:confirm="onComment"
-          data-id="{{item.id}}"
+          bind:change="onCommentInput"
+          bind:confirm="onSubmitComment"
           size="small"
+          round
+          clearable
+          class="comment-field"
         />
+        <van-button
+          type="primary"
+          size="small"
+          round
+          bind:click="onSubmitComment"
+          disabled="{{!commentContent.trim()}}"
+          class="comment-submit-btn"
+        >发送</van-button>
       </view>
     </view>
-  </view>
+  </van-popup>
 </view>
 
 <van-toast id="van-toast" />
+<van-notify id="van-notify" />

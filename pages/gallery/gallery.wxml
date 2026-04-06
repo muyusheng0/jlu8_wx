@@ -1,9 +1,10 @@
 <view class="container">
   <view class="header">
     <text class="title">相册</text>
+    <text class="subtitle">{{photos.length}} 张照片</text>
   </view>
 
-  <van-loading wx:if="{{loading}}" />
+  <van-loading wx:if="{{loading}}" vertical />
 
   <view class="photo-grid" wx:if="{{!loading && photos.length > 0}}">
     <view class="photo-item" wx:for="{{photos}}" wx:key="id">
@@ -11,23 +12,29 @@
         <van-image
           src="{{item.url}}"
           fit="cover"
-          width="340rpx"
-          height="300rpx"
-          radius="8rpx"
-        />
+          width="100%"
+          height="340rpx"
+          radius="12rpx"
+          use-loading-slot
+          use-error-slot
+        >
+          <van-loading slot="loading" type="spinner" size="20px" />
+          <text slot="error" class="image-error">加载失败</text>
+        </van-image>
         <view class="like-btn" catchtap="onLike" data-id="{{item.id}}">
           <van-icon name="{{item.liked ? 'like' : 'like-o'}}"
-                    color="{{item.liked ? '#e74c3c' : '#fff'}}" />
+                    color="{{item.liked ? '#ee0a24' : '#fff'}}"
+                    size="18px" />
           <text class="like-count">{{item.likeCount || 0}}</text>
         </view>
       </view>
-      <view class="photo-info">
-        <text class="photo-title">{{item.title || item.filename}}</text>
+      <view class="photo-info" wx:if="{{item.title}}">
+        <text class="photo-title">{{item.title}}</text>
       </view>
     </view>
   </view>
 
-  <van-empty wx:if="{{!loading && photos.length === 0}}" description="暂无照片" />
+  <van-empty wx:if="{{!loading && photos.length === 0}}" description="暂无照片" image="https://img.yzcdn.cn/vant/custom-empty-image.png" />
 </view>
 
 <van-toast id="van-toast" />

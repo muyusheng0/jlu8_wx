@@ -5,7 +5,8 @@ Page({
     profile: null,
     loading: true,
     showEdit: false,
-    editForm: {}
+    editForm: {},
+    errors: {}
   },
 
   onLoad() {
@@ -37,7 +38,8 @@ Page({
         position: profile.position || '',
         hobby: profile.hobby || '',
         dream: profile.dream || ''
-      }
+      },
+      errors: {}
     });
   },
 
@@ -45,11 +47,44 @@ Page({
     const { field } = e.currentTarget.dataset;
     const { value } = e.detail;
     this.setData({
-      editForm: { ...this.data.editForm, [field]: value }
+      editForm: { ...this.data.editForm, [field]: value },
+      errors: { ...this.data.errors, [field]: '' }
     });
   },
 
+  validateForm() {
+    const { editForm } = this.data;
+    const errors = {};
+    let isValid = true;
+
+    // 手机号验证（可选，如果填写则验证格式）
+    if (editForm.phone && !/^1[3-9]\d{9}$/.test(editForm.phone)) {
+      errors.phone = '请输入正确的手机号';
+      isValid = false;
+    }
+
+    // 邮箱验证（可选，如果填写则验证格式）
+    if (editForm.email && !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(editForm.email)) {
+      errors.email = '请输入正确的邮箱';
+      isValid = false;
+    }
+
+    // QQ验证（可选，如果填写则验证格式，5-11位数字）
+    if (editForm.qq && !/^[1-9]\d{4,10}$/.test(editForm.qq)) {
+      errors.qq = '请输入正确的QQ号';
+      isValid = false;
+    }
+
+    this.setData({ errors });
+    return isValid;
+  },
+
   async onSave() {
+    if (!this.validateForm()) {
+      wx.showToast({ title: '请检查输入格式', icon: 'none' });
+      return;
+    }
+
     const { editForm } = this.data;
 
     try {
@@ -63,7 +98,7 @@ Page({
   },
 
   onCancel() {
-    this.setData({ showEdit: false });
+    this.setData({ showEdit: false, errors: {} });
   },
 
   onLogout() {

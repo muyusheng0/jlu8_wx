@@ -4,21 +4,41 @@
     <text class="subtitle">同学录 · 时光不老我们不散</text>
   </view>
 
-  <view class="stats-card">
-    <view class="stat-item">
-      <text class="stat-icon">👥</text>
-      <text class="stat-num">{{studentCount}}</text>
-      <text class="stat-label">位同学</text>
-    </view>
-  </view>
-
-  <view class="section">
-    <text class="section-title">最新留言</text>
-    <view class="message-list">
-      <view class="message-card" wx:for="{{recentMessages}}" wx:key="id">
-        <text class="message-nickname">{{item.nickname}}</text>
-        <text class="message-content">{{item.content}}</text>
+  <view class="content">
+    <van-card
+      centered
+      lazy-load
+      custom-class="stats-card"
+    >
+      <view slot="tags">
+        <van-tag type="danger" size="large">同学总数</van-tag>
       </view>
+      <view slot="price">
+        <text class="stat-num">{{studentCount}}</text>
+      </view>
+      <view slot="bottom">
+        <text class="stat-label">位同学已加入</text>
+      </view>
+    </van-card>
+
+    <view class="section">
+      <text class="section-title">最新留言</text>
+      <van-card
+        wx:for="{{recentMessages}}"
+        wx:key="id"
+        centered
+        lazy-load
+        custom-class="message-card"
+        title-class="message-title"
+        desc-class="message-desc"
+      >
+        <view slot="title">
+          <van-tag type="primary" size="medium">{{item.nickname}}</van-tag>
+        </view>
+        <view slot="desc">
+          <text class="message-content">{{item.content}}</text>
+        </view>
+      </van-card>
     </view>
   </view>
 </view>

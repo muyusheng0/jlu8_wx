@@ -1,46 +1,91 @@
 .container {
-  padding: 30rpx;
-  background: #faf8f5;
+  padding: 0;
+  background: linear-gradient(180deg, #f0f2f5 0%, #faf8f5 100%);
   min-height: 100vh;
 }
 
 .profile-card {
-  background: linear-gradient(135deg, #2c3e50, #34495e);
-  padding: 60rpx 30rpx;
-  border-radius: 0 0 40rpx 40rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 80rpx 30rpx 60rpx;
+  border-radius: 0 0 60rpx 60rpx;
   text-align: center;
   color: #fff;
-  margin: -30rpx -30rpx 30rpx -30rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(10%, 10%); }
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 160rpx;
+  height: 160rpx;
+  margin: 0 auto 24rpx;
 }
 
 .avatar {
-  width: 150rpx;
-  height: 150rpx;
+  width: 160rpx;
+  height: 160rpx;
   border-radius: 50%;
-  background: linear-gradient(135deg, #e74c3c, #f39c12);
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: 60rpx;
+  font-size: 64rpx;
   font-weight: bold;
-  margin: 0 auto 20rpx;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 8rpx 32rpx rgba(0,0,0,0.2);
+}
+
+.avatar-ring {
+  position: absolute;
+  top: -8rpx;
+  left: -8rpx;
+  right: -8rpx;
+  bottom: -8rpx;
+  border-radius: 50%;
+  border: 4rpx solid rgba(255,255,255,0.5);
+  z-index: 0;
 }
 
 .name {
   display: block;
-  font-size: 40rpx;
+  font-size: 44rpx;
   font-weight: bold;
+  letter-spacing: 4rpx;
+  margin-bottom: 12rpx;
+  text-shadow: 0 2rpx 8rpx rgba(0,0,0,0.15);
 }
 
 .location {
   display: block;
   font-size: 28rpx;
-  margin-top: 10rpx;
-  opacity: 0.8;
+  opacity: 0.9;
+  letter-spacing: 2rpx;
+}
+
+.section {
+  padding: 0 24rpx;
+  margin-top: 24rpx;
 }
 
 .btn-group {
-  padding: 30rpx;
-  margin-top: 30rpx;
+  padding: 40rpx 60rpx;
+  margin-top: 20rpx;
 }

@@ -11,20 +11,22 @@ Page({
     this.loadPhotos();
   },
 
+  onShow() {
+    // 每次显示页面时刷新点赞状态
+    if (this.data.photos.length > 0) {
+      this.refreshLikeStatus();
+    }
+  },
+
   async loadPhotos() {
+    this.setData({ loading: true });
     try {
       const res = await request('/photos');
       const photos = res.photos || [];
-      // 获取每张照片的点赞状态
-      const photoList = await Promise.all(photos.map(async (p) => {
-        try {
-          const likeRes = await request(`/media/photo/${p.id}/like`);
-          return { ...p, likeCount: likeRes.count, liked: likeRes.liked };
-        } catch {
-          return { ...p, likeCount: 0, liked: false };
-        }
-      }));
-      // 生成预览URL列表
+      // 并行获取所有照片的点赞状态
+      const photoList = await Promise.all(
+        photos.map(p => this.getPhotoLikeStatus(p))
+      );
       const previewUrls = photoList.map(p => p.url);
       this.setData({ photos: photoList, previewUrls, loading: false });
     } catch (e) {
@@ -33,25 +35,47 @@ Page({
     }
   },
 
+  async getPhotoLikeStatus(photo) {
+    try {
+      const likeRes = await request(`/media/photo/${photo.id}/like`);
+      return { ...photo, likeCount: likeRes.count, liked: likeRes.liked };
+    } catch {
+      return { ...photo, likeCount: 0, liked: false };
+    }
+  },
+
+  async refreshLikeStatus() {
+    try {
+      const photoList = await Promise.all(
+        this.data.photos.map(p => this.getPhotoLikeStatus(p))
+      );
+      this.setData({ photos: photoList });
+    } catch (e) {
+      // 静默失败，不影响用户操作
+    }
+  },
+
   async onLike(e) {
+    e.stopPropagation?.();
     const { id } = e.currentTarget.dataset;
     const photos = this.data.photos;
     const photo = photos.find(p => p.id === id);
     if (!photo) return;
 
+    // 乐观更新 UI
+    const newPhotos = photos.map(p =>
+      p.id === id
+        ? { ...p, liked: !p.liked, likeCount: p.liked ? p.likeCount - 1 : p.likeCount + 1 }
+        : p
+    );
+    this.setData({ photos: newPhotos });
+
     try {
-      if (photo.liked) {
-        await request(`/media/photo/${id}/like`, { media_type: 'photo', media_id: id }, 'DELETE');
-      } else {
-        await request(`/media/photo/${id}/like`, { media_type: 'photo', media_id: id }, 'POST');
-      }
-      // 更新状态
-      const likeRes = await request(`/media/photo/${id}/like`);
-      const newPhotos = photos.map(p =>
-        p.id === id ? { ...p, likeCount: likeRes.count, liked: likeRes.liked } : p
-      );
-      this.setData({ photos: newPhotos });
+      const method = photo.liked ? 'DELETE' : 'POST';
+      await request(`/media/photo/${id}/like`, { media_type: 'photo', media_id: id }, method);
     } catch (e) {
+      // 回滚 UI
+      this.setData({ photos });
       wx.showToast({ title: e.message || '操作失败', icon: 'none' });
     }
   },

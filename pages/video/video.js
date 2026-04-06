@@ -18,9 +18,9 @@ Page({
       const videoList = await Promise.all(videos.map(async (v) => {
         try {
           const likeRes = await request(`/media/video/${v.id}/like`);
-          return { ...v, likeCount: likeRes.count, liked: likeRes.liked };
+          return { ...v, likeCount: likeRes.count, liked: likeRes.liked, playing: false };
         } catch {
-          return { ...v, likeCount: 0, liked: false };
+          return { ...v, likeCount: 0, liked: false, playing: false };
         }
       }));
       this.setData({ videos: videoList, loading: false });
@@ -38,9 +38,9 @@ Page({
 
     try {
       if (video.liked) {
-        await request(`/media/video/${id}/like`, {media_type: 'video', media_id: id}, 'DELETE');
+        await request(`/media/video/${id}/like`, { media_type: 'video', media_id: id }, 'DELETE');
       } else {
-        await request(`/media/video/${id}/like`, {media_type: 'video', media_id: id}, 'POST');
+        await request(`/media/video/${id}/like`, { media_type: 'video', media_id: id }, 'POST');
       }
       const likeRes = await request(`/media/video/${id}/like`);
       const newVideos = videos.map(v =>
@@ -55,9 +55,25 @@ Page({
   onPlay(e) {
     const { url } = e.currentTarget.dataset;
     if (url) {
-      wx.navigateTo({
-        url: `/pages/video-play/video-play?url=${encodeURIComponent(url)}`
-      });
+      // 使用原生 video 组件在当前页面播放
+      const { id } = e.currentTarget.dataset;
+      const videos = this.data.videos.map(v => ({
+        ...v,
+        playing: v.id === id
+      }));
+      this.setData({ videos });
     }
+  },
+
+  onVideoTap(e) {
+    const { url, id } = e.currentTarget.dataset;
+    if (!url) return;
+
+    // 停止其他视频播放
+    const videos = this.data.videos.map(v => ({
+      ...v,
+      playing: v.id === id ? !v.playing : false
+    }));
+    this.setData({ videos });
   }
 });

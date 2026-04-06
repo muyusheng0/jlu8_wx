@@ -3,7 +3,12 @@ const { request } = require('../../utils/auth.js');
 Page({
   data: {
     student: null,
-    loading: true
+    loading: true,
+    showPhoneSheet: false,
+    phoneActions: [
+      { name: '拨打电话', icon: 'phone-o' },
+      { name: '复制号码', icon: '复制' }
+    ]
   },
   onLoad(options) {
     const { id } = options;
@@ -22,10 +27,27 @@ Page({
       this.setData({ loading: false });
     }
   },
-  onCall() {
+  showPhoneAction() {
+    this.setData({ showPhoneSheet: true });
+  },
+  onPhoneSheetClose() {
+    this.setData({ showPhoneSheet: false });
+  },
+  onPhoneActionSelect(event) {
     const { phone } = this.data.student;
-    if (phone) {
+    const index = event.detail.index;
+    if (index === 0) {
+      // 拨打电话
       wx.makePhoneCall({ phoneNumber: phone });
+    } else if (index === 1) {
+      // 复制号码
+      wx.setClipboardData({
+        data: phone,
+        success: () => {
+          wx.showToast({ title: '号码已复制', icon: 'success' });
+        }
+      });
     }
+    this.onPhoneSheetClose();
   }
 });

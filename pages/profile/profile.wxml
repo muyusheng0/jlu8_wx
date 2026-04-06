@@ -4,54 +4,135 @@
   <block wx:if="{{!loading && profile}}">
     <!-- 头像卡片 -->
     <view class="profile-card">
-      <view class="avatar">{{profile.name[0]}}</view>
+      <view class="avatar-wrap">
+        <view class="avatar">{{profile.name[0]}}</view>
+        <view class="edit-avatar-btn" bindtap="onEdit">
+          <van-icon name="edit" size="28rpx" color="#fff" />
+        </view>
+      </view>
       <text class="name">{{profile.name}}</text>
-      <text class="location">{{profile.city || profile.hometown_name}}</text>
+      <text class="student-id">学号: {{profile.id}}</text>
+      <view class="location-wrap" wx:if="{{profile.city || profile.hometown_name}}">
+        <van-icon name="location-o" size="26rpx" color="rgba(255,255,255,0.8)" />
+        <text class="location">{{profile.city || profile.hometown_name}}</text>
+      </view>
     </view>
 
     <!-- 个人信息 -->
-    <van-cell-group title="基本信息">
-      <van-cell title="学号" value="{{profile.id}}" />
-      <van-cell title="电话" value="{{profile.phone || '未填写'}}" is-link bind:click="onEdit" data-field="phone" />
-      <van-cell title="微信号" value="{{profile.wechat || '未填写'}}" is-link bind:click="onEdit" data-field="wechat" />
-      <van-cell title="QQ" value="{{profile.qq || '未填写'}}" is-link bind:click="onEdit" data-field="qq" />
-      <van-cell title="邮箱" value="{{profile.email || '未填写'}}" is-link bind:click="onEdit" data-field="email" />
-    </van-cell-group>
+    <view class="section">
+      <van-cell-group border="{{false}}" inset>
+        <van-cell title="联系电话" value="{{profile.phone || '未填写'}}" is-link bind:click="onEdit" data-field="phone" />
+        <van-cell title="微信号" value="{{profile.wechat || '未填写'}}" is-link bind:click="onEdit" data-field="wechat" />
+        <van-cell title="QQ" value="{{profile.qq || '未填写'}}" is-link bind:click="onEdit" data-field="qq" />
+        <van-cell title="电子邮箱" value="{{profile.email || '未填写'}}" is-link bind:click="onEdit" data-field="email" />
+      </van-cell-group>
+    </view>
 
-    <van-cell-group title="工作信息">
-      <van-cell title="公司" value="{{profile.company || '未填写'}}" is-link bind:click="onEdit" data-field="company" />
-      <van-cell title="职位" value="{{profile.position || '未填写'}}" is-link bind:click="onEdit" data-field="position" />
-    </van-cell-group>
+    <view class="section">
+      <van-cell-group border="{{false}}" inset>
+        <van-cell title="工作单位" value="{{profile.company || '未填写'}}" is-link bind:click="onEdit" data-field="company" />
+        <van-cell title="职位" value="{{profile.position || '未填写'}}" is-link bind:click="onEdit" data-field="position" />
+      </van-cell-group>
+    </view>
 
-    <van-cell-group title="个人简介">
-      <van-cell title="爱好" value="{{profile.hobby || '未填写'}}" is-link bind:click="onEdit" data-field="hobby" />
-      <van-cell title="梦想" value="{{profile.dream || '未填写'}}" is-link bind:click="onEdit" data-field="dream" />
-    </van-cell-group>
+    <view class="section">
+      <van-cell-group border="{{false}}" inset>
+        <van-cell title="兴趣爱好" value="{{profile.hobby || '未填写'}}" is-link bind:click="onEdit" data-field="hobby" />
+        <van-cell title="梦想" value="{{profile.dream || '未填写'}}" is-link bind:click="onEdit" data-field="dream" />
+      </van-cell-group>
+    </view>
 
-    <view class="btn-group">
-      <van-button type="primary" block bind:click="onEdit">编辑资料</van-button>
-      <van-button plain block bind:click="onLogout" style="margin-top: 20rpx;">退出登录</van-button>
+    <!-- 操作按钮 -->
+    <view class="btn-section">
+      <van-button type="primary" block round bind:click="onEdit" custom-class="edit-btn">
+        <van-icon name="edit" style="margin-right: 8rpx;" />编辑资料
+      </van-button>
+      <van-button plain hairline type="default" block round bind:click="onLogout" custom-class="logout-btn">
+        退出登录
+      </van-button>
     </view>
   </block>
 
   <!-- 编辑弹窗 -->
-  <van-popup show="{{showEdit}}" position="bottom" bind:close="onCancel">
-    <view class="edit-popup">
-      <view class="edit-header">
-        <text bindtap="onCancel">取消</text>
-        <text class="edit-title">编辑资料</text>
-        <text bindtap="onSave">保存</text>
-      </view>
-      <van-cell-group>
-        <van-field label="电话" value="{{editForm.phone}}" data-field="phone" bind:change="onEditField" placeholder="请输入电话" />
-        <van-field label="微信号" value="{{editForm.wechat}}" data-field="wechat" bind:change="onEditField" placeholder="请输入微信号" />
-        <van-field label="QQ" value="{{editForm.qq}}" data-field="qq" bind:change="onEditField" placeholder="请输入QQ号" />
-        <van-field label="邮箱" value="{{editForm.email}}" data-field="email" bind:change="onEditField" placeholder="请输入邮箱" />
-        <van-field label="公司" value="{{editForm.company}}" data-field="company" bind:change="onEditField" placeholder="请输入公司" />
-        <van-field label="职位" value="{{editForm.position}}" data-field="position" bind:change="onEditField" placeholder="请输入职位" />
-        <van-field label="爱好" value="{{editForm.hobby}}" data-field="hobby" bind:change="onEditField" placeholder="请输入爱好" />
-        <van-field label="梦想" value="{{editForm.dream}}" data-field="dream" bind:change="onEditField" placeholder="请输入梦想" />
+  <van-popup show="{{showEdit}}" position="bottom" round custom-class="edit-popup">
+    <view class="popup-header">
+      <text class="popup-cancel" bindtap="onCancel">取消</text>
+      <text class="popup-title">编辑资料</text>
+      <text class="popup-save" bindtap="onSave">保存</text>
+    </view>
+
+    <scroll-view scroll-y class="popup-content">
+      <van-cell-group border="{{false}}">
+        <van-field
+          label="联系电话"
+          value="{{editForm.phone}}"
+          data-field="phone"
+          bind:change="onEditField"
+          placeholder="请输入手机号"
+          type="number"
+          maxlength="11"
+          error="{{errors.phone}}"
+        />
+        <van-field
+          label="微信号"
+          value="{{editForm.wechat}}"
+          data-field="wechat"
+          bind:change="onEditField"
+          placeholder="请输入微信号"
+        />
+        <van-field
+          label="QQ"
+          value="{{editForm.qq}}"
+          data-field="qq"
+          bind:change="onEditField"
+          placeholder="请输入QQ号"
+          type="number"
+          maxlength="11"
+          error="{{errors.qq}}"
+        />
+        <van-field
+          label="电子邮箱"
+          value="{{editForm.email}}"
+          data-field="email"
+          bind:change="onEditField"
+          placeholder="请输入邮箱"
+          error="{{errors.email}}"
+        />
+        <van-field
+          label="工作单位"
+          value="{{editForm.company}}"
+          data-field="company"
+          bind:change="onEditField"
+          placeholder="请输入公司名称"
+        />
+        <van-field
+          label="职位"
+          value="{{editForm.position}}"
+          data-field="position"
+          bind:change="onEditField"
+          placeholder="请输入职位"
+        />
+        <van-field
+          label="兴趣爱好"
+          value="{{editForm.hobby}}"
+          data-field="hobby"
+          bind:change="onEditField"
+          placeholder="请输入兴趣爱好"
+        />
+        <van-field
+          label="梦想"
+          value="{{editForm.dream}}"
+          data-field="dream"
+          bind:change="onEditField"
+          placeholder="请输入你的梦想"
+        />
       </van-cell-group>
+    </scroll-view>
+
+    <view class="popup-footer">
+      <van-button type="primary" block round bind:click="onSave" custom-class="save-btn">
+        保存修改
+      </van-button>
     </view>
   </van-popup>
 </view>

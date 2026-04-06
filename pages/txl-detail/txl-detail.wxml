@@ -4,36 +4,56 @@
   <block wx:if="{{student}}">
     <!-- 头像卡片 -->
     <view class="profile-card">
-      <view class="avatar">{{student.name[0]}}</view>
+      <view class="avatar-wrapper">
+        <view class="avatar">{{student.name[0]}}</view>
+        <view class="avatar-ring"></view>
+      </view>
       <text class="name">{{student.name}}</text>
-      <text class="location">{{student.city || student.hometown_name}}</text>
+      <text class="location">{{student.city || student.hometown_name || '暂无位置信息'}}</text>
     </view>
 
     <!-- 联系方式 -->
-    <van-cell-group title="联系方式">
-      <van-cell title="电话" value="{{student.phone || '未填写'}}" is-link bind:click="onCall" />
-      <van-cell title="微信" value="{{student.wechat || '未填写'}}" />
-      <van-cell title="QQ" value="{{student.qq || '未填写'}}" />
-      <van-cell title="邮箱" value="{{student.email || '未填写'}}" />
-    </van-cell-group>
+    <view class="section">
+      <van-cell-group title="联系方式">
+        <van-cell title="电话" value="{{student.phone || '未填写'}}" is-link bind:click="showPhoneAction" wx:if="{{student.phone}}" />
+        <van-cell title="电话" value="未填写" wx:if="{{!student.phone}}" />
+        <van-cell title="微信" value="{{student.wechat || '未填写'}}" />
+        <van-cell title="QQ" value="{{student.qq || '未填写'}}" />
+        <van-cell title="邮箱" value="{{student.email || '未填写'}}" />
+      </van-cell-group>
+    </view>
 
     <!-- 工作信息 -->
-    <van-cell-group title="工作信息">
-      <van-cell title="公司" value="{{student.company || '未填写'}}" />
-      <van-cell title="职位" value="{{student.position || '未填写'}}" />
-    </van-cell-group>
+    <view class="section">
+      <van-cell-group title="工作信息">
+        <van-cell title="公司" value="{{student.company || '未填写'}}" />
+        <van-cell title="职位" value="{{student.position || '未填写'}}" />
+      </van-cell-group>
+    </view>
 
     <!-- 个人简介 -->
-    <van-cell-group title="个人简介">
-      <van-cell title="爱好" value="{{student.hobby || '未填写'}}" />
-      <van-cell title="梦想" value="{{student.dream || '未填写'}}" />
-    </van-cell-group>
+    <view class="section">
+      <van-cell-group title="个人简介">
+        <van-cell title="爱好" value="{{student.hobby || '未填写'}}" />
+        <van-cell title="梦想" value="{{student.dream || '未填写'}}" />
+      </van-cell-group>
+    </view>
 
     <!-- 底部按钮 -->
     <view class="btn-group" wx:if="{{student.phone}}">
-      <van-button type="primary" block bind:click="onCall">拨打电话</van-button>
+      <van-button type="primary" size="large" round bind:click="showPhoneAction">联系同学</van-button>
     </view>
   </block>
 </view>
 
+<!-- 拨号操作面板 -->
+<van-action-sheet
+  show="{{ showPhoneSheet }}"
+  actions="{{ phoneActions }}"
+  bind:close="onPhoneSheetClose"
+  bind:select="onPhoneActionSelect"
+  cancel-text="取消"
+/>
+
+<van-dialog id="van-dialog" />
 <van-toast id="van-toast" />
