@@ -49,5 +49,16 @@ Page({
       });
     }
     this.onPhoneSheetClose();
+  },
+  openLink(e) {
+    const url = e.currentTarget.dataset.url;
+    if (url) {
+      wx.setClipboardData({
+        data: url,
+        success: () => {
+          wx.showToast({ title: '链接已复制', icon: 'success' });
+        }
+      });
+    }
   }
 });
