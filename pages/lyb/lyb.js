@@ -1,5 +1,7 @@
 const { request } = require('../../utils/auth');
 
+const app = getApp();
+
 Page({
   data: {
     messages: [],
@@ -11,17 +13,62 @@ Page({
     commentPopupShow: false,
     currentMessageId: null,
     commentContent: '',
-    currentComments: []
+    currentComments: [],
+    // 用户信息
+    currentUser: null,
+    isAdmin: false,
+    // 上传中的图片
+    uploadingImage: false,
+    newImageUrl: '',
+    // 语音录制
+    isRecording: false,
+    recordingDuration: 0,
+    recordingTimer: null,
+    tempVoicePath: '',
+    // 正在播放的语音
+    playingVoiceId: null,
+    audioContext: null
   },
 
   onLoad() {
     this.loadMessages();
+    this.loadUserProfile();
+  },
+
+  onUnload() {
+    if (this.data.recordingTimer) {
+      clearInterval(this.data.recordingTimer);
+    }
+    if (this.data.audioContext) {
+      this.data.audioContext.stop();
+    }
+  },
+
+  async loadUserProfile() {
+    try {
+      const res = await request('/profile');
+      if (res.success) {
+        this.setData({
+          currentUser: res.profile,
+          isAdmin: res.profile.is_admin || res.profile.is_super_admin
+        });
+      }
+    } catch (e) {
+      console.error('loadUserProfile error:', e);
+    }
   },
 
   async loadMessages() {
     try {
       const res = await request('/messages');
-      this.setData({ messages: res.messages || [] });
+      const app = getApp();
+      const baseUrl = app.globalData.apiBase.replace('/api/wx', '');
+      const messages = (res.messages || []).map(m => ({
+        ...m,
+        image: m.image ? (m.image.startsWith('http') ? m.image : baseUrl + m.image) : '',
+        voice: m.voice ? (m.voice.startsWith('http') ? m.voice : baseUrl + m.voice) : ''
+      }));
+      this.setData({ messages });
       // 加载点赞状态
       this.loadLikeStatus();
     } catch (e) {
@@ -49,16 +96,219 @@ Page({
     this.setData({ newContent: e.detail.value });
   },
 
+  // 选择图片
+  onChooseImage() {
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: (res) => {
+        const tempFilePath = res.tempFilePaths[0];
+        this.setData({ uploadingImage: true });
+        this.uploadMessageImage(tempFilePath);
+      }
+    });
+  },
+
+  // 上传留言图片
+  uploadMessageImage(tempFilePath) {
+    const token = getApp().globalData.token;
+    wx.uploadFile({
+      url: `${app.globalData.apiBase.replace('/api/wx', '')}/api/wx/messages/image`,
+      filePath: tempFilePath,
+      name: 'file',
+      header: {
+        'Authorization': token ? `Bearer ${token}` : ''
+      },
+      success: (res) => {
+        try {
+          const data = JSON.parse(res.data);
+          if (data.success) {
+            this.setData({
+              uploadingImage: false,
+              newImageUrl: data.url
+            });
+            wx.showToast({ title: '图片上传成功' });
+          } else {
+            this.setData({ uploadingImage: false });
+            wx.showToast({ title: data.error || '上传失败', icon: 'none' });
+          }
+        } catch (e) {
+          this.setData({ uploadingImage: false });
+          wx.showToast({ title: '上传失败', icon: 'none' });
+        }
+      },
+      fail: () => {
+        this.setData({ uploadingImage: false });
+        wx.showToast({ title: '上传失败', icon: 'none' });
+      }
+    });
+  },
+
+  // 删除已选择的图片
+  onRemoveImage() {
+    this.setData({ newImageUrl: '' });
+  },
+
+  // 开始录音
+  onStartRecord() {
+    if (this.data.isRecording) return;
+
+    wx.startRecord({
+      success: (res) => {
+        this.setData({
+          tempVoicePath: res.tempFilePath,
+          isRecording: true,
+          recordingDuration: 0
+        });
+
+        // 开始计时
+        const timer = setInterval(() => {
+          this.setData({
+            recordingDuration: this.data.recordingDuration + 1
+          });
+          // 最多录制60秒
+          if (this.data.recordingDuration >= 60) {
+            this.onStopRecord();
+          }
+        }, 1000);
+        this.setData({ recordingTimer: timer });
+      },
+      fail: (err) => {
+        wx.showToast({ title: '录音失败，请检查权限', icon: 'none' });
+      }
+    });
+
+    // 监听录音中断
+    wx.onVoiceRecordEnd({
+      complete: (res) => {
+        this.setData({
+          tempVoicePath: res.tempFilePath,
+          isRecording: false
+        });
+        if (this.data.recordingTimer) {
+          clearInterval(this.data.recordingTimer);
+        }
+        // 自动发送
+        this.uploadVoiceMessage(res.tempFilePath);
+      }
+    });
+  },
+
+  // 停止录音
+  onStopRecord() {
+    if (!this.data.isRecording) return;
+
+    wx.stopRecord();
+    if (this.data.recordingTimer) {
+      clearInterval(this.data.recordingTimer);
+    }
+    this.setData({
+      isRecording: false,
+      recordingTimer: null
+    });
+
+    // 上传录音
+    if (this.data.tempVoicePath) {
+      this.uploadVoiceMessage(this.data.tempVoicePath);
+    }
+  },
+
+  // 取消录音
+  onCancelRecord() {
+    if (!this.data.isRecording) return;
+
+    wx.stopRecord();
+    if (this.data.recordingTimer) {
+      clearInterval(this.data.recordingTimer);
+    }
+    this.setData({
+      isRecording: false,
+      recordingDuration: 0,
+      tempVoicePath: '',
+      recordingTimer: null
+    });
+  },
+
+  // 上传语音留言
+  uploadVoiceMessage(tempFilePath) {
+    const token = getApp().globalData.token;
+    wx.showLoading({ title: '上传中...' });
+
+    wx.uploadFile({
+      url: `${app.globalData.apiBase.replace('/api/wx', '')}/api/wx/messages/voice`,
+      filePath: tempFilePath,
+      name: 'file',
+      header: {
+        'Authorization': token ? `Bearer ${token}` : ''
+      },
+      success: (res) => {
+        wx.hideLoading();
+        try {
+          const data = JSON.parse(res.data);
+          if (data.success) {
+            wx.showToast({ title: '语音留言成功' });
+            this.setData({ tempVoicePath: '', recordingDuration: 0 });
+            this.loadMessages();
+          } else {
+            wx.showToast({ title: data.error || '上传失败', icon: 'none' });
+          }
+        } catch (e) {
+          wx.showToast({ title: '上传失败', icon: 'none' });
+        }
+      },
+      fail: () => {
+        wx.hideLoading();
+        wx.showToast({ title: '上传失败', icon: 'none' });
+      }
+    });
+  },
+
+  // 播放语音留言
+  onPlayVoice(e) {
+    const { url, id } = e.currentTarget.dataset;
+
+    // 如果正在播放同一个语音，则停止
+    if (this.data.playingVoiceId === id) {
+      wx.stopVoice();
+      this.setData({ playingVoiceId: null });
+      return;
+    }
+
+    // 停止之前的播放
+    if (this.data.playingVoiceId) {
+      wx.stopVoice();
+    }
+
+    wx.playVoice({
+      filePath: url,
+      success: () => {
+        this.setData({ playingVoiceId: id });
+      },
+      fail: () => {
+        wx.showToast({ title: '播放失败', icon: 'none' });
+      }
+    });
+
+    // 监听播放结束
+    wx.onVoicePlayEnd(() => {
+      this.setData({ playingVoiceId: null });
+    });
+  },
+
   async onSubmit() {
-    const { newContent } = this.data;
+    const { newContent, newImageUrl } = this.data;
     if (!newContent.trim()) {
       wx.showToast({ title: '内容不能为空', icon: 'none' });
       return;
     }
 
     try {
-      await request('/messages', { content: newContent }, 'POST');
-      this.setData({ newContent: '' });
+      await request('/messages', {
+        content: newContent,
+        image: newImageUrl
+      }, 'POST');
+      this.setData({ newContent: '', newImageUrl: '' });
       this.loadMessages();
       wx.showToast({ title: '发表成功' });
     } catch (e) {
@@ -86,6 +336,26 @@ Page({
     } catch (e) {
       wx.showToast({ title: e.message || '操作失败', icon: 'none' });
     }
+  },
+
+  // 删除留言
+  onDeleteMessage(e) {
+    const { id } = e.currentTarget.dataset;
+    wx.showModal({
+      title: '提示',
+      content: '确定删除这条留言？',
+      success: async (res) => {
+        if (res.confirm) {
+          try {
+            await request(`/messages/${id}`, {}, 'DELETE');
+            wx.showToast({ title: '删除成功' });
+            this.loadMessages();
+          } catch (e) {
+            wx.showToast({ title: e.message || '删除失败', icon: 'none' });
+          }
+        }
+      }
+    });
   },
 
   // 打开评论弹窗

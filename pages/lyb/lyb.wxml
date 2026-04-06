@@ -16,9 +16,37 @@
       class="input-field"
       maxlength="500"
     />
+
+    <!-- 已选择的图片预览 -->
+    <view class="image-preview" wx:if="{{newImageUrl}}">
+      <image src="{{newImageUrl}}" mode="aspectFill" />
+      <view class="remove-image" bindtap="onRemoveImage">
+        <van-icon name="cross" size="14px" color="#fff" />
+      </view>
+    </view>
+
+    <!-- 录音状态显示 -->
+    <view class="recording-status" wx:if="{{isRecording}}">
+      <view class="recording-indicator"></view>
+      <text>录音中... {{recordingDuration}}秒</text>
+      <text class="recording-tip">点击"停止"发送</text>
+    </view>
+
     <view class="input-footer">
+      <view class="input-actions">
+        <view class="action-btn" bindtap="onChooseImage">
+          <van-icon name="photograph" size="20px" color="#969799" />
+        </view>
+        <!-- 录音按钮 -->
+        <view class="voice-record-btn {{isRecording ? 'recording' : ''}}" bindtap="onStartRecord" wx:if="{{!isRecording}}">
+          <van-icon name="audio" size="20px" color="#969799" />
+        </view>
+        <view class="voice-record-btn recording" bindtap="onStopRecord" wx:if="{{isRecording}}">
+          <van-icon name="stop-circle" size="20px" color="#ee0a24" />
+        </view>
+      </view>
       <text class="char-count">{{newContent.length}}/500</text>
-      <van-button type="primary" size="small" bind:click="onSubmit" round class="submit-btn">
+      <van-button type="primary" size="small" bind:click="onSubmit" round class="submit-btn" loading="{{uploadingImage}}">
         <van-icon name="send" size="16px" /> 发布
       </van-button>
     </view>
@@ -32,7 +60,7 @@
       <text class="list-count">共{{messages.length}}条</text>
     </view>
 
-    <view class="message-card" wx:for="{{messages}}" wx:key="id" animation="{{item.animat}}">
+    <view class="message-card" wx:for="{{messages}}" wx:key="id">
       <!-- 用户信息 -->
       <view class="user-info">
         <view class="user-avatar">{{item.nickname[0]}}</view>
@@ -40,11 +68,30 @@
           <text class="user-name">{{item.nickname}}</text>
           <text class="user-time">{{item.time}}</text>
         </view>
+        <!-- 删除按钮（所有者或管理员可见） -->
+        <view class="delete-btn" wx:if="{{currentUser && (currentUser.name === item.nickname || isAdmin)}}" bindtap="onDeleteMessage" data-id="{{item.id}}">
+          <van-icon name="delete" size="16px" color="#969799" />
+        </view>
       </view>
 
       <!-- 留言内容 -->
-      <view class="message-content">
+      <view class="message-content" wx:if="{{item.content}}">
         <text>{{item.content}}</text>
+      </view>
+
+      <!-- 语音留言 -->
+      <view class="voice-message" wx:if="{{item.voice}}" bindtap="onPlayVoice" data-url="{{item.voice}}" data-id="{{item.id}}">
+        <view class="voice-icon {{playingVoiceId === item.id ? 'playing' : ''}}">
+          <van-icon name="{{playingVoiceId === item.id ? 'music-o' : 'audio'}}" size="24px" color="#fff" />
+        </view>
+        <view class="voice-wave">
+          <view class="wave-bar"></view>
+          <view class="wave-bar"></view>
+          <view class="wave-bar"></view>
+          <view class="wave-bar"></view>
+          <view class="wave-bar"></view>
+        </view>
+        <text class="voice-text">{{playingVoiceId === item.id ? '播放中' : '点击播放'}}</text>
       </view>
 
       <!-- 图片 -->
