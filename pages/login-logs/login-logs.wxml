@@ -15,7 +15,7 @@
   </view>
 
   <view class="empty-state" wx:if="{{!loading && logs.length === 0}}">
-    <van-icon name="log" size="48px" color="#c8c9cc" />
+    <view class="empty-icon">🔐</view>
     <text>暂无登录记录</text>
   </view>
 </view>
