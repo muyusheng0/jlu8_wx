@@ -12,7 +12,7 @@
 
   <!-- 通知列表 -->
   <view class="notification-list" wx:if="{{!loading && notifications.length > 0}}">
-    <view class="notification-card {{item.read ? 'read' : 'unread'}}" wx:for="{{notifications}}" wx:key="id">
+    <view class="notification-card {{item.read ? 'read' : 'unread'}}" wx:for="{{notifications}}" wx:key="id" bindtap="onNotificationTap" data-index="{{index}}">
       <view class="notification-icon">
         <van-icon wx:if="{{item.type === 'comment'}}" name="comment-o" size="24px" color="#fff" />
         <van-icon wx:elif="{{item.type === 'like'}}" name="like-o" size="24px" color="#fff" />
