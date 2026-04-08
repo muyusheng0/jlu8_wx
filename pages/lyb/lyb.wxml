@@ -124,8 +124,9 @@
     </view>
 
     <view wx:if="{{messages.length === 0}}" class="empty-state">
-      <van-icon name="comment-o" size="60px" />
-      <text>暂无留言，快来抢沙发</text>
+      <view class="empty-icon">💬</view>
+      <text>还没有留言</text>
+      <text class="empty-hint">快来写下第一句吧~</text>
     </view>
   </view>
 
