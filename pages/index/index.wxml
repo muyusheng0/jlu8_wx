@@ -158,29 +158,29 @@
     </view>
     <view class="section-hint">👇 点击查看更多留言</view>
 
-    <van-card
-      wx:for="{{recentMessages}}"
-      wx:key="id"
-      centered
-      lazy-load
-      custom-class="message-card"
-      title-class="message-title"
-      desc-class="message-desc"
-    >
-      <view slot="title">
-        <view class="message-header">
-          <van-tag type="primary" size="medium">{{item.nickname}}</van-tag>
-          <text class="message-time">{{item.time}}</text>
+    <view wx:for="{{recentMessages}}" wx:key="id" bindtap="goToLYB">
+      <van-card
+        centered
+        lazy-load
+        custom-class="message-card"
+        title-class="message-title"
+        desc-class="message-desc"
+      >
+        <view slot="title">
+          <view class="message-header">
+            <van-tag type="primary" size="medium">{{item.nickname}}</van-tag>
+            <text class="message-time">{{item.time}}</text>
+          </view>
         </view>
-      </view>
-      <view slot="desc">
-        <text class="message-content">{{item.content}}</text>
-        <view class="message-footer" wx:if="{{item.image}}">
-          <van-icon name="photo-o" size="12px" color="#969799" />
-          <text>附图</text>
+        <view slot="desc">
+          <text class="message-content">{{item.content}}</text>
+          <view class="message-footer" wx:if="{{item.image}}">
+            <van-icon name="photo-o" size="12px" color="#969799" />
+            <text>附图</text>
+          </view>
         </view>
-      </view>
-    </van-card>
+      </van-card>
+    </view>
 
     <view wx:if="{{recentMessages.length === 0}}" class="empty-state">
       <view class="empty-icon">💬</view>
