@@ -77,10 +77,6 @@
         <text class="section-title">最新动态</text>
         <view class="unread-badge" wx:if="{{unreadActivityCount > 0}}">{{unreadActivityCount > 99 ? '99+' : unreadActivityCount}}</view>
       </view>
-      <view class="section-more">
-        <text>查看更多</text>
-        <van-icon name="arrow" size="14px" color="#969799" />
-      </view>
     </view>
     <view class="section-hint">👇 点击卡片查看详情</view>
 
