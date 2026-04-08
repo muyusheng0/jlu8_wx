@@ -82,6 +82,7 @@
         <van-icon name="arrow" size="14px" color="#969799" />
       </view>
     </view>
+    <view class="section-hint">👇 点击卡片查看详情</view>
 
     <!-- 轮播 -->
     <swiper class="activity-swiper" autoplay interval="4000" circular bindchange="onSwiperChange">
