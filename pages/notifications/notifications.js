@@ -66,6 +66,8 @@ Page({
     } else if (type === 'voice_shout') {
       // 跳转到通讯录
       wx.switchTab({ url: '/pages/txl/txl' });
+    } else if (type === 'system') {
+      // 系统通知无需跳转，仅标记已读
     }
   },
 
