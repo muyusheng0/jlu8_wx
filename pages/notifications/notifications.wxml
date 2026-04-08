@@ -33,7 +33,7 @@
 
   <!-- 空状态 -->
   <view wx:if="{{!loading && notifications.length === 0}}" class="empty-state">
-    <van-icon name="bell" size="60px" />
+    <view class="empty-icon">🔔</view>
     <text>暂无通知</text>
   </view>
 
