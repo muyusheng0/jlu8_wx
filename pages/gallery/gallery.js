@@ -82,6 +82,10 @@ Page({
 
   async onLike(e) {
     e.stopPropagation?.();
+    if (!getApp().globalData.isBind) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
+    }
     const { id } = e.currentTarget.dataset;
     const photos = this.data.photos;
     const photo = photos.find(p => p.id === id);
