@@ -153,6 +153,10 @@ Page({
 
   // 开始录音
   onStartRecord() {
+    if (!getApp().globalData.isBind) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
+    }
     if (this.data.isRecording) return;
 
     wx.startRecord({
