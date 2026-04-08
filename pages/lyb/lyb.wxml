@@ -62,6 +62,7 @@
 
   <!-- 留言列表 -->
   <view class="message-list">
+    <view class="section-hint">👇 点击查看更多留言</view>
     <view class="list-header">
       <van-icon name="comment-o" size="18px" color="#ee0a24" />
       <text class="list-title">全部留言</text>

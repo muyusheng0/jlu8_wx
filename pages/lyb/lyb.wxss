@@ -175,6 +175,13 @@
   padding: 0 20rpx 30rpx;
 }
 
+.section-hint {
+  font-size: 24rpx;
+  color: #969799;
+  margin-top: 8rpx;
+  margin-bottom: 16rpx;
+}
+
 .list-header {
   display: flex;
   align-items: center;

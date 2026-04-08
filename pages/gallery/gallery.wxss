@@ -54,6 +54,14 @@
   color: #969799;
 }
 
+.upload-tip {
+  text-align: center;
+  font-size: 24rpx;
+  color: #969799;
+  padding: 16rpx 30rpx;
+  margin: 0 20rpx;
+}
+
 .upload-btn {
   display: flex;
   align-items: center;

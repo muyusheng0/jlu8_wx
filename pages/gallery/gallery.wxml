@@ -13,6 +13,8 @@
 
   <van-loading wx:if="{{loading}}" vertical />
 
+  <view class="upload-tip" wx:if="{{!loading && photos.length > 0}}">上传照片需验证身份</view>
+
   <view class="photo-grid" wx:if="{{!loading && photos.length > 0}}">
     <view class="photo-item" wx:for="{{photos}}" wx:key="id">
       <view class="photo-wrapper" bindtap="onPreview" data-url="{{item.url}}" data-urls="{{previewUrls}}">
