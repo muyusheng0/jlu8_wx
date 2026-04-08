@@ -53,11 +53,12 @@
   </view>
 
   <view wx:if="{{!loading && photos.length === 0}}" class="empty-state">
-    <van-icon name="photo-o" size="60px" />
-    <text>暂无照片</text>
+    <view class="empty-icon">📷</view>
+    <text>还没有上传照片</text>
+    <text class="empty-hint">快来分享你的第一张吧~</text>
     <view class="empty-upload" bindtap="onUploadPhoto">
       <van-icon name="plus" size="24px" />
-      <text>上传第一张照片</text>
+      <text>上传照片</text>
     </view>
   </view>
 </view>

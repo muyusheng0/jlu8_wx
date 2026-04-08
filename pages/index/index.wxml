@@ -3,14 +3,20 @@
   <view class="header">
     <view class="header-content">
       <view class="logo-area">
-        <view class="logo-icon">08</view>
+        <view class="logo-icon">📖</view>
         <view class="logo-text">
           <text class="title">吉大自动化八班</text>
-          <text class="subtitle">同学录 · 时光不老我们不散</text>
+          <text class="subtitle">时光不老 · 我们不散</text>
         </view>
       </view>
     </view>
     <view class="header-wave"></view>
+  </view>
+
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">同学录</text>
+    <text class="page-subtitle">珍藏回忆，联络你我</text>
   </view>
 
   <!-- 统计卡片 -->

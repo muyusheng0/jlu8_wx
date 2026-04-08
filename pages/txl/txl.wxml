@@ -7,6 +7,11 @@
     </view>
   </view>
 
+  <!-- 页面副标题 -->
+  <view class="page-intro">
+    <text>👆 点击卡片查看详情或发起喊话</text>
+  </view>
+
   <!-- 搜索区域 -->
   <view class="search-area">
     <van-search

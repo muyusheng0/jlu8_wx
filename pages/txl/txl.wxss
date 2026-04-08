@@ -40,6 +40,22 @@
   margin-top: 8rpx;
 }
 
+.page-intro {
+  text-align: center;
+  padding: 16rpx 30rpx;
+  background: #fff;
+  margin: -20rpx 20rpx 20rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+  position: relative;
+  z-index: 10;
+}
+
+.page-intro text {
+  font-size: 24rpx;
+  color: #969799;
+}
+
 .search-area {
   background: #fff;
   padding: 16rpx 20rpx;

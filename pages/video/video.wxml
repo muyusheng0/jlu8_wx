@@ -6,8 +6,8 @@
         <van-icon name="video-o" size="32px" color="#fff" />
       </view>
       <view class="header-text">
-        <text class="title">精彩视频</text>
-        <text class="subtitle">回忆那些美好时光</text>
+        <text class="title">🎬 影像回忆</text>
+        <text class="subtitle">珍藏视频，记录青春</text>
       </view>
     </view>
     <view class="upload-btn" bindtap="onUploadVideo">

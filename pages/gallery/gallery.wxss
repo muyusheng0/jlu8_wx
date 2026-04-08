@@ -40,6 +40,20 @@
   margin-top: 10rpx;
 }
 
+.photo-count {
+  text-align: center;
+  padding: 16rpx 30rpx;
+  margin: 20rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+
+.photo-count text {
+  font-size: 26rpx;
+  color: #969799;
+}
+
 .upload-btn {
   display: flex;
   align-items: center;
@@ -188,10 +202,15 @@
   color: #969799;
 }
 
-.empty-state .van-icon {
+.empty-icon {
   font-size: 80rpx;
   margin-bottom: 20rpx;
-  opacity: 0.4;
+}
+
+.empty-hint {
+  font-size: 26rpx;
+  color: #c8c9cc;
+  margin-top: 8rpx;
 }
 
 .empty-state text {
