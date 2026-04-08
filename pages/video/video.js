@@ -68,6 +68,10 @@ Page({
   },
 
   async onLike(e) {
+    if (!getApp().globalData.isBind) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
+    }
     const { id } = e.currentTarget.dataset;
     const videos = this.data.videos;
     const video = videos.find(v => v.id === id);
