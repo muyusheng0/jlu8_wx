@@ -125,6 +125,9 @@
         <van-cell title="管理员设置" is-link bind:click="goToAdminSettings">
           <van-icon slot="icon" name="shield-o" size="18px" color="#ee0a24" />
         </van-cell>
+        <van-cell title="新闻爬取设置" is-link bind:click="goToNewsConfig">
+          <van-icon slot="icon" name="newspaper-o" size="18px" color="#ee0a24" />
+        </van-cell>
       </van-cell-group>
     </view>
 

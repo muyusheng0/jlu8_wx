@@ -204,6 +204,10 @@ Page({
     wx.navigateTo({ url: '/pages/admin-settings/admin-settings' });
   },
 
+  goToNewsConfig() {
+    wx.navigateTo({ url: '/pages/admin-news/admin-news' });
+  },
+
   onLogout() {
     wx.showModal({
       title: '提示',
