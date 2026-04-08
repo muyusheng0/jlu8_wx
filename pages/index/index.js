@@ -92,5 +92,31 @@ Page({
       current: url,
       urls: urlList
     });
+  },
+
+  // 点击动态卡片跳转
+  onActivityTap(e) {
+    const { index } = e.currentTarget.dataset;
+    const activity = this.data.activities[index];
+    if (!activity) return;
+
+    const type = activity.type;
+    if (type === 'profile_update') {
+      // 跳转到通讯录滚动到该同学
+      wx.switchTab({ url: '/pages/txl/txl' });
+      // TODO: 传递参数让通讯录滚动到对应同学
+    } else if (type === 'message') {
+      // 跳转到留言板
+      wx.switchTab({ url: '/pages/lyb/lyb' });
+    } else if (type === 'photo') {
+      // 跳转到相册
+      wx.navigateTo({ url: '/pages/gallery/gallery' });
+    } else if (type === 'video') {
+      // 跳转到视频
+      wx.navigateTo({ url: '/pages/video/video' });
+    } else if (type === 'voice_shout') {
+      // 跳转到通讯录
+      wx.switchTab({ url: '/pages/txl/txl' });
+    }
   }
 });

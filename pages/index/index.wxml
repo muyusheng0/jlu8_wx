@@ -79,7 +79,7 @@
     <!-- 轮播 -->
     <swiper class="activity-swiper" autoplay interval="4000" circular bindchange="onSwiperChange">
       <swiper-item wx:for="{{activities}}" wx:key="index">
-        <view class="activity-card {{item.type}}">
+        <view class="activity-card {{item.type}}" bindtap="onActivityTap" data-index="{{index}}">
           <view class="activity-icon">
             <van-icon wx:if="{{item.type === 'birthday'}}" name="cake" size="32px" color="#fff" />
             <van-icon wx:elif="{{item.type === 'message'}}" name="comment-o" size="32px" color="#fff" />
