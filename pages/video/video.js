@@ -137,6 +137,10 @@ Page({
 
   // 上传视频
   onUploadVideo() {
+    if (!getApp().globalData.isBind) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
+    }
     wx.chooseVideo({
       sourceType: ['album', 'camera'],
       maxDuration: 60,

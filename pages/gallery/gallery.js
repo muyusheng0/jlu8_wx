@@ -153,6 +153,10 @@ Page({
 
   // 选择并上传照片
   onUploadPhoto() {
+    if (!getApp().globalData.isBind) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
+    }
     wx.chooseImage({
       count: 9, // 最多选择9张
       sizeType: ['compressed'],
