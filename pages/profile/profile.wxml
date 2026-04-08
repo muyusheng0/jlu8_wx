@@ -248,6 +248,21 @@
       </van-button>
     </view>
   </van-popup>
+
+  <!-- 关于我们 -->
+  <view class="section about-section">
+    <view class="section-header">
+      <van-icon name="info-o" size="18px" color="#ee0a24" />
+      <text class="section-title">关于我们</text>
+    </view>
+    <view class="about-content">
+      <text class="about-text">吉大自动化八班，一个由32位同学组成的大家庭。我们相识于2015年那个金秋，在吉林大学南岭校区自动化专业共同度过了四年的大学时光。</text>
+      <view class="about-footer">
+        <text>吉大自动化八班 © 2026</text>
+        <text>青春不散场，友谊永长存</text>
+      </view>
+    </view>
+  </view>
 </view>
 
 <van-toast id="van-toast" />
