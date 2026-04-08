@@ -184,8 +184,9 @@
     </van-card>
 
     <view wx:if="{{recentMessages.length === 0}}" class="empty-state">
-      <van-icon name="comment-o" size="48px" />
-      <text>暂无留言，快去留言吧</text>
+      <view class="empty-icon">💬</view>
+      <text>暂无留言</text>
+      <text class="empty-hint">快去留言吧~</text>
     </view>
   </view>
 </view>
