@@ -413,6 +413,10 @@ Page({
 
   // 提交评论
   async onSubmitComment() {
+    if (!getApp().globalData.isBind) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
+    }
     const { commentContent, currentMessageId } = this.data;
     if (!commentContent.trim()) {
       wx.showToast({ title: '评论内容不能为空', icon: 'none' });
