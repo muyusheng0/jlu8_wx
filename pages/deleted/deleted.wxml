@@ -35,6 +35,11 @@
         <text>{{item.content || '(无内容)'}}</text>
       </view>
 
+      <!-- 语音喊话预览 -->
+      <view class="voice-preview" wx:if="{{item.type === 'voice_shout' && item.extra}}">
+        <audio src="{{item.extra}}" controls />
+      </view>
+
       <!-- 图片预览 -->
       <view class="item-image" wx:if="{{item.extra && item.type === 'message'}}">
         <image src="{{item.extra}}" mode="aspectFill" class="preview-image" bindtap="onPreviewImage" data-url="{{item.extra}}" />

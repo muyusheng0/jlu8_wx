@@ -383,3 +383,18 @@
 .empty-state text {
   font-size: 28rpx;
 }
+
+/* 时光轴照片 */
+.timeline-photos {
+  display: flex;
+  gap: 8rpx;
+  margin-top: 16rpx;
+  flex-wrap: wrap;
+}
+
+.timeline-photo {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 8rpx;
+  object-fit: cover;
+}

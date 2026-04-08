@@ -174,3 +174,15 @@
   justify-content: center;
   padding: 100rpx 0;
 }
+
+/* 语音预览 */
+.voice-preview {
+  margin-top: 16rpx;
+  padding: 16rpx;
+  background: #f7f8fa;
+  border-radius: 12rpx;
+}
+
+.voice-preview audio {
+  width: 100%;
+}

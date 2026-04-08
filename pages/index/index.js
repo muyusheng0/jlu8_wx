@@ -77,5 +77,20 @@ Page({
 
   goToVideo() {
     wx.navigateTo({ url: '/pages/video/video' });
+  },
+
+  // 获取照片URL数组用于预览
+  getPhotoUrls(photos) {
+    return photos.map(p => p.url).join(',');
+  },
+
+  // 预览照片
+  previewPhoto(e) {
+    const { url, urls } = e.currentTarget.dataset;
+    const urlList = urls.split(',');
+    wx.previewImage({
+      current: url,
+      urls: urlList
+    });
   }
 });

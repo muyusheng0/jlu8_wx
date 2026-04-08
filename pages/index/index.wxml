@@ -121,6 +121,19 @@
         <view class="timeline-content">
           <text class="timeline-year">{{item.year}}</text>
           <text class="timeline-event">{{item.event}}</text>
+          <!-- 照片 -->
+          <view class="timeline-photos" wx:if="{{item.photos && item.photos.length > 0}}">
+            <image
+              wx:for="{{item.photos}}"
+              wx:key="id"
+              src="{{item.url}}"
+              mode="aspectFill"
+              class="timeline-photo"
+              bindtap="previewPhoto"
+              data-url="{{item.url}}"
+              data-urls="{{getPhotoUrls(item.photos)}}"
+            />
+          </view>
         </view>
       </view>
     </view>
