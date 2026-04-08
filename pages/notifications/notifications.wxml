@@ -16,6 +16,7 @@
       <view class="notification-icon">
         <van-icon wx:if="{{item.type === 'comment'}}" name="comment-o" size="24px" color="#fff" />
         <van-icon wx:elif="{{item.type === 'like'}}" name="like-o" size="24px" color="#fff" />
+        <van-icon wx:elif="{{item.type === 'voice_shout'}}" name="volume-o" size="24px" color="#fff" />
         <van-icon wx:elif="{{item.type === 'system'}}" name="setting-o" size="24px" color="#fff" />
         <van-icon wx:else name="bell" size="24px" color="#fff" />
       </view>
