@@ -13,7 +13,8 @@
     "pages/notifications/notifications",
     "pages/activity-admin/activity-admin",
     "pages/login-logs/login-logs",
-    "pages/admin-settings/admin-settings"
+    "pages/admin-settings/admin-settings",
+    "pages/admin-news/admin-news"
   ],
   "window": {
     "navigationBarBackgroundColor": "#2c3e50",

@@ -1,0 +1,29 @@
+<view class="container">
+  <van-loading wx:if="{{loading}}" />
+
+  <block wx:elif="{{config}}">
+    <van-cell-group title="爬取时间">
+      <van-field label="小时" type="number" value="{{config.crawl_hour}}" placeholder="0-23" bind:change="onCrawlHourChange" />
+      <van-field label="分钟" type="number" value="{{config.crawl_minute}}" placeholder="0-59" bind:change="onCrawlMinuteChange" />
+    </van-cell-group>
+
+    <van-cell-group title="关键词" style="margin-top: 1rem;">
+      <van-field label="关键词" type="textarea" autosize value="{{config.keywords}}" placeholder="逗号分隔" bind:change="onKeywordsChange" />
+    </van-cell-group>
+
+    <view class="hint" style="margin-top: 0.5rem; padding: 0 1rem; color: #999; font-size: 12px;">
+      关键词用逗号分隔，只有包含关键词的新闻才会被保存
+    </view>
+
+    <view class="actions" style="margin-top: 1.5rem; padding: 0 1rem;">
+      <van-button type="primary" block loading="{{saving}}" bind:tap="onSave">保存设置</van-button>
+      <van-button type="info" block loading="{{crawling}}" bind:tap="onTriggerCrawl" style="margin-top: 1rem;">立即爬取</van-button>
+    </view>
+
+    <view wx:if="{{lastResult}}" class="result" style="margin-top: 1rem; padding: 1rem; background: #f5f5f5; border-radius: 8px;">
+      <text>{{lastResult}}</text>
+    </view>
+  </block>
+
+  <van-toast id="van-toast" />
+</view>
