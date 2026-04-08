@@ -159,6 +159,7 @@
         <van-icon name="arrow" size="14px" color="#969799" />
       </view>
     </view>
+    <view class="section-hint">👇 点击查看更多留言</view>
 
     <van-card
       wx:for="{{recentMessages}}"
