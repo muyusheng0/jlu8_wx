@@ -298,6 +298,10 @@ Page({
   },
 
   async onSubmit() {
+    if (!getApp().globalData.isBind) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
+    }
     const { newContent, newImageUrl } = this.data;
     if (!newContent.trim()) {
       wx.showToast({ title: '内容不能为空', icon: 'none' });
@@ -319,6 +323,10 @@ Page({
 
   // 点赞
   async onLike(e) {
+    if (!getApp().globalData.isBind) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
+    }
     const { id } = e.currentTarget.dataset;
     const status = this.data.likeStatus[id] || {};
     const liked = status.liked;
@@ -361,6 +369,10 @@ Page({
 
   // 打开评论弹窗
   async toggleCommentPopup(e) {
+    if (!getApp().globalData.isBind) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
+    }
     const { id } = e.currentTarget.dataset;
     const show = !this.data.commentPopupShow;
 
