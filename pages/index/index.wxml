@@ -69,6 +69,7 @@
       <view class="section-title-wrap">
         <van-icon name="clock" size="18px" color="#ee0a24" />
         <text class="section-title">最新动态</text>
+        <view class="unread-badge" wx:if="{{unreadActivityCount > 0}}">{{unreadActivityCount > 99 ? '99+' : unreadActivityCount}}</view>
       </view>
       <view class="section-more">
         <text>查看更多</text>

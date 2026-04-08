@@ -177,6 +177,22 @@
   color: #969799;
 }
 
+/* 未读动态徽章 */
+.unread-badge {
+  background: #ee0a24;
+  color: #fff;
+  font-size: 20rpx;
+  min-width: 36rpx;
+  height: 36rpx;
+  border-radius: 18rpx;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 12rpx;
+  padding: 0 8rpx;
+  box-sizing: border-box;
+}
+
 /* 最新动态轮播 */
 .activity-swiper {
   height: 200rpx;

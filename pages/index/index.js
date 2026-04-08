@@ -8,7 +8,8 @@ Page({
     recentMessages: [],
     activities: [],
     timeline: [],
-    currentSwiper: 0
+    currentSwiper: 0,
+    unreadActivityCount: 0
   },
 
   onLoad() {
@@ -49,11 +50,23 @@ Page({
         activities: activitiesRes.activities || [],
         timeline: timelineRes.timeline || []
       });
+      this.loadUnreadActivityCount();
     } catch (e) {
       console.error('loadData error:', e);
       wx.showToast({ title: '加载失败', icon: 'none' });
     } finally {
       wx.hideLoading();
+    }
+  },
+
+  async loadUnreadActivityCount() {
+    try {
+      const res = await request('/notifications/count');
+      if (res.success) {
+        this.setData({ unreadActivityCount: res.count || 0 });
+      }
+    } catch (e) {
+      console.error('loadUnreadActivityCount error:', e);
     }
   },
 
