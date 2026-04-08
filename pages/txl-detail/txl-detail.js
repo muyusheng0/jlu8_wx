@@ -9,6 +9,7 @@ Page({
     voiceShouts: [],
     recording: false,
     recordingTime: 0,
+    map: null,
     phoneActions: [
       { name: '拨打电话', icon: 'phone-o' },
       { name: '复制号码', icon: '复制' }
@@ -32,6 +33,29 @@ Page({
         }
         const student = { ...res.student, avatar };
         this.setData({ student, loading: false });
+        // 解析GPS坐标初始化地图
+        if (student.gps_coords) {
+          try {
+            const parts = student.gps_coords.split(',');
+            const lat = parseFloat(parts[0].trim());
+            const lon = parseFloat(parts[1].trim());
+            this.setData({
+              map: {
+                latitude: lat,
+                longitude: lon,
+                scale: 15,
+                markers: [{
+                  id: 1,
+                  latitude: lat,
+                  longitude: lon,
+                  title: student.name
+                }]
+              }
+            });
+          } catch (e) {
+            console.error('parse gps error:', e);
+          }
+        }
         this.loadVoiceShouts(student.name);
       }
     } catch (e) {
