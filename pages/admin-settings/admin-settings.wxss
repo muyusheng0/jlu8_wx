@@ -43,3 +43,14 @@
   color: #c8c9cc;
   font-size: 28rpx;
 }
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-hint {
+  font-size: 26rpx;
+  color: #c8c9cc;
+  margin-top: 8rpx;
+}

@@ -80,7 +80,7 @@
     </view>
 
     <view wx:if="{{ filteredStudents.length === 0 }}" class="empty-state">
-      <van-icon name="friends-o" size="60px" />
+      <view class="empty-icon">👥</view>
       <text>未找到匹配的联系人</text>
     </view>
   </view>
