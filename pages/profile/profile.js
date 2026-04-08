@@ -75,6 +75,10 @@ Page({
 
   // 上传头像
   onUploadAvatar() {
+    if (!getApp().globalData.isBind) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
+    }
     wx.chooseImage({
       count: 1,
       sizeType: ['compressed'],
