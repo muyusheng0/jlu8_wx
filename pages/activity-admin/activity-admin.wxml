@@ -20,7 +20,7 @@
   </view>
 
   <view class="empty-state" wx:if="{{!loading && activities.length === 0}}">
-    <van-icon name="orders-o" size="48px" color="#c8c9cc" />
+    <view class="empty-icon">📋</view>
     <text>暂无动态</text>
   </view>
 </view>
