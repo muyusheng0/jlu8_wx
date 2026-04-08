@@ -106,6 +106,10 @@ Page({
     }
   },
   onVoiceShout() {
+    if (!getApp().globalData.isBind) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
+    }
     this.setData({ showVoiceSheet: true });
   },
   onVoiceSheetClose() {
