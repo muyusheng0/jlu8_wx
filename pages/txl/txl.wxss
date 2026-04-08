@@ -203,10 +203,15 @@
   color: #969799;
 }
 
-.empty-state .van-icon {
+.empty-icon {
   font-size: 80rpx;
   margin-bottom: 20rpx;
-  opacity: 0.4;
+}
+
+.empty-hint {
+  font-size: 26rpx;
+  color: #c8c9cc;
+  margin-top: 8rpx;
 }
 
 .empty-state text {
