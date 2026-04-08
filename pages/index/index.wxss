@@ -200,6 +200,12 @@
   color: #969799;
 }
 
+.section-hint {
+  font-size: 24rpx;
+  color: #969799;
+  margin-top: 8rpx;
+}
+
 /* 未读动态徽章 */
 .unread-badge {
   background: #ee0a24;

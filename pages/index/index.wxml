@@ -118,6 +118,7 @@
         <text class="section-title">我们的时光</text>
       </view>
     </view>
+    <view class="section-hint">👆 可在媒体相册中上传照片</view>
 
     <view class="timeline">
       <view class="timeline-item" wx:for="{{timeline}}" wx:key="index">
