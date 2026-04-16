@@ -12,9 +12,28 @@
     </view>
   </view>
 
-  <!-- 功能卡片 -->
-  <view class="content-area">
-    <!-- 相册卡片 -->
+  <!-- 标签切换 -->
+  <view class="media-tabs">
+    <view class="media-tab {{currentTab === 'photos' ? 'active' : ''}}" bindtap="switchTab" data-tab="photos">
+      <van-icon name="photo-o" size="16px" />
+      <text>相册</text>
+    </view>
+    <view class="media-tab {{currentTab === 'videos' ? 'active' : ''}}" bindtap="switchTab" data-tab="videos">
+      <van-icon name="video-o" size="16px" />
+      <text>视频</text>
+    </view>
+    <view class="media-tab {{currentTab === 'alumni' ? 'active' : ''}}" bindtap="switchTab" data-tab="alumni">
+      <van-icon name="friends-o" size="16px" />
+      <text>校友会</text>
+    </view>
+    <view class="media-tab {{currentTab === 'news' ? 'active' : ''}}" bindtap="switchTab" data-tab="news">
+      <van-icon name="newspaper-o" size="16px" />
+      <text>新闻</text>
+    </view>
+  </view>
+
+  <!-- 相册区域 -->
+  <view class="content-area" wx:if="{{currentTab === 'photos'}}">
     <view class="media-card" bindtap="goToGallery">
       <view class="media-bg" style="background: linear-gradient(135deg, #2c3e50, #34495e);"></view>
       <view class="media-content">
@@ -34,8 +53,10 @@
         <van-icon name="arrow" size="24px" color="#fff" />
       </view>
     </view>
+  </view>
 
-    <!-- 视频卡片 -->
+  <!-- 视频区域 -->
+  <view class="content-area" wx:if="{{currentTab === 'videos'}}">
     <view class="media-card" bindtap="goToVideo">
       <view class="media-bg" style="background: linear-gradient(135deg, #9c27b0, #e040fb);"></view>
       <view class="media-content">
@@ -57,16 +78,29 @@
     </view>
   </view>
 
-  <!-- 最近照片预览 -->
-  <view class="section" wx:if="{{recentPhotos.length > 0}}">
-    <view class="section-header">
-      <van-icon name="clock" size="18px" color="#ee0a24" />
-      <text class="section-title">最新照片</text>
+  <!-- 校友会区域 -->
+  <view class="content-area" wx:if="{{currentTab === 'alumni'}}">
+    <view class="empty-state">
+      <view class="empty-icon">🎓</view>
+      <text>校友会功能</text>
+      <text class="empty-hint">即将上线</text>
     </view>
-    <view class="photo-preview">
-      <view class="photo-item" wx:for="{{recentPhotos}}" wx:key="id" bindtap="previewPhoto" data-url="{{item.url}}">
-        <image src="{{item.url}}" mode="aspectFill" class="photo-img" />
+  </view>
+
+  <!-- 新闻区域 -->
+  <view class="content-area" wx:if="{{currentTab === 'news'}}">
+    <view class="news-list" wx:if="{{news.length > 0}}">
+      <view class="news-item" wx:for="{{news}}" wx:key="id" bindtap="onNewsTap" data-url="{{item.url}}">
+        <image src="{{item.image}}" mode="aspectFill" class="news-image" wx:if="{{item.image}}" />
+        <view class="news-info">
+          <text class="news-title">{{item.title}}</text>
+          <text class="news-time">{{item.time}}</text>
+        </view>
       </view>
+    </view>
+    <view class="empty-state" wx:else>
+      <view class="empty-icon">📰</view>
+      <text>暂无新闻</text>
     </view>
   </view>
 

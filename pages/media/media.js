@@ -9,9 +9,11 @@ const getFullUrl = (path) => {
 
 Page({
   data: {
+    currentTab: 'photos',
     photoCount: 0,
     videoCount: 0,
     recentPhotos: [],
+    news: [],
     darkMode: false,
     musicPlaying: false
   },
@@ -31,9 +33,10 @@ Page({
 
   async loadData() {
     try {
-      const [photoRes, videoRes] = await Promise.all([
+      const [photoRes, videoRes, newsRes] = await Promise.all([
         request('/photos'),
-        request('/videos')
+        request('/videos'),
+        request('/news')
       ]);
 
       const photos = photoRes.photos || [];
@@ -45,10 +48,36 @@ Page({
       this.setData({
         photoCount: photos.length,
         videoCount: (videoRes.videos || []).length,
-        recentPhotos: recentPhotos
+        recentPhotos: recentPhotos,
+        news: (newsRes.news || []).slice(0, 20)
       });
     } catch (e) {
       console.error('loadData error:', e);
+    }
+  },
+
+  switchTab(e) {
+    const tab = e.currentTarget.dataset.tab;
+    this.setData({ currentTab: tab });
+    if (tab === 'news' && this.data.news.length === 0) {
+      this.loadNews();
+    }
+  },
+
+  async loadNews() {
+    try {
+      const res = await request('/news');
+      this.setData({ news: (res.news || []).slice(0, 20) });
+    } catch (e) {
+      console.error('loadNews error:', e);
+    }
+  },
+
+  onNewsTap(e) {
+    const { url } = e.currentTarget.dataset;
+    if (url) {
+      wx.setClipboardData({ data: url });
+      wx.showToast({ title: '链接已复制', icon: 'none' });
     }
   },
 

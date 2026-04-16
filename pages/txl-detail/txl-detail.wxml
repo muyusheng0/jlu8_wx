@@ -17,15 +17,28 @@
     </view>
 
     <!-- 联系方式 -->
-    <view class="section" wx:if="{{student.phone}}">
+    <view class="section">
       <van-cell-group title="联系方式">
-        <van-cell title="电话" value="{{student.phone}}" is-link bind:click="showPhoneAction" />
+        <van-cell title="电话" value="{{student.phone || '未填写'}}" is-link bind:click="showPhoneAction" wx:if="{{student.phone}}" />
+        <van-cell title="邮箱" value="{{student.email || '未填写'}}" wx:if="{{student.email}}" />
+        <van-cell title="QQ" value="{{student.qq || '未填写'}}" wx:if="{{student.qq}}" />
+        <van-cell title="微信" value="{{student.wechat || '未填写'}}" wx:if="{{student.wechat}}" />
+      </van-cell-group>
+    </view>
+
+    <!-- 基本信息 -->
+    <view class="section">
+      <van-cell-group title="基本信息">
+        <van-cell title="性别" value="{{student.gender || '未填写'}}" wx:if="{{student.gender}}" />
+        <van-cell title="生日" value="{{student.birthday || '未填写'}}" wx:if="{{student.birthday}}" />
+        <van-cell title="位置" value="{{(student.hometown_name || '') + ' ' + (student.city || '')}}" wx:if="{{student.hometown_name || student.city}}" />
       </van-cell-group>
     </view>
 
     <!-- 工作信息 -->
     <view class="section">
       <van-cell-group title="工作信息">
+        <van-cell title="工作" value="{{student.work || '未填写'}}" wx:if="{{student.work}}" />
         <van-cell title="行业" value="{{student.industry || '未填写'}}" wx:if="{{student.industry}}" />
         <van-cell title="公司" value="{{student.company || '未填写'}}" wx:if="{{student.company}}" />
         <van-cell title="职位" value="{{student.position || '未填写'}}" wx:if="{{student.position}}" />
@@ -41,11 +54,12 @@
     </view>
 
     <!-- 社交账号 -->
-    <view class="section" wx:if="{{student.github || student.douyin || student.xiaohongshu}}">
+    <view class="section">
       <van-cell-group title="社交账号">
         <van-cell title="GitHub" value="{{student.github || '未填写'}}" is-link bind:click="openLink" data-url="{{student.github}}" wx:if="{{student.github}}" />
         <van-cell title="抖音" value="{{student.douyin || '未填写'}}" is-link bind:click="openLink" data-url="{{student.douyin}}" wx:if="{{student.douyin}}" />
         <van-cell title="小红书" value="{{student.xiaohongshu || '未填写'}}" is-link bind:click="openLink" data-url="{{student.xiaohongshu}}" wx:if="{{student.xiaohongshu}}" />
+        <van-cell title="微博" value="{{student.weibo || '未填写'}}" wx:if="{{student.weibo}}" />
       </van-cell-group>
     </view>
 
