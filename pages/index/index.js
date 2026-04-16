@@ -5,7 +5,6 @@ Page({
     studentCount: 0,
     messageCount: 0,
     photoCount: 0,
-    recentMessages: [],
     activities: [],
     timeline: [],
     currentSwiper: 0,
@@ -40,9 +39,8 @@ Page({
   async loadData() {
     wx.showLoading({ title: '加载中...' });
     try {
-      const [txlRes, msgRes, photoRes, activitiesRes, timelineRes] = await Promise.all([
+      const [txlRes, photoRes, activitiesRes, timelineRes] = await Promise.all([
         request('/txl'),
-        request('/messages'),
         request('/photos'),
         request('/activities'),
         request('/timeline')
@@ -50,9 +48,8 @@ Page({
 
       this.setData({
         studentCount: txlRes.students ? txlRes.students.length : 0,
-        messageCount: msgRes.messages ? msgRes.messages.length : 0,
+        messageCount: 0,
         photoCount: photoRes.photos ? photoRes.photos.length : 0,
-        recentMessages: msgRes.messages ? msgRes.messages.slice(0, 3) : [],
         activities: activitiesRes.activities || [],
         timeline: timelineRes.timeline || []
       });

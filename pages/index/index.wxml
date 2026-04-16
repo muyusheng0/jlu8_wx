@@ -144,51 +144,6 @@
     </view>
   </view>
 
-  <!-- 最新留言 -->
-  <view class="section">
-    <view class="section-header">
-      <view class="section-title-wrap">
-        <van-icon name="comment-o" size="18px" color="#ee0a24" />
-        <text class="section-title">最新留言</text>
-      </view>
-      <view class="section-more" bindtap="goToLYB">
-        <text>查看更多</text>
-        <van-icon name="arrow" size="14px" color="#969799" />
-      </view>
-    </view>
-    <view class="section-hint">👇 点击查看更多留言</view>
-
-    <view wx:for="{{recentMessages}}" wx:key="id" bindtap="goToLYB">
-      <van-card
-        centered
-        lazy-load
-        custom-class="message-card"
-        title-class="message-title"
-        desc-class="message-desc"
-      >
-        <view slot="title">
-          <view class="message-header">
-            <van-tag type="primary" size="medium">{{item.nickname}}</van-tag>
-            <text class="message-time">{{item.time}}</text>
-          </view>
-        </view>
-        <view slot="desc">
-          <text class="message-content">{{item.content}}</text>
-          <view class="message-footer" wx:if="{{item.image}}">
-            <van-icon name="photo-o" size="12px" color="#969799" />
-            <text>附图</text>
-          </view>
-        </view>
-      </van-card>
-    </view>
-
-    <view wx:if="{{recentMessages.length === 0}}" class="empty-state">
-      <view class="empty-icon">💬</view>
-      <text>暂无留言</text>
-      <text class="empty-hint">快去留言吧~</text>
-    </view>
-  </view>
-
   <!-- 悬浮功能按钮 -->
   <view class="float-btns">
     <!-- 夜间模式切换 -->
