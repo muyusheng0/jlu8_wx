@@ -83,6 +83,19 @@
         show-confirm-bar="{{false}}"
         class="ai-input"
       />
+      <!-- 参考图上传 -->
+      <view class="ai-ref-upload" bindtap="onChooseRefImage">
+        <van-icon name="photograph" size="20px" color="#969799" />
+        <text wx:if="{{!aiRefImageUrl}}">添加参考图</text>
+        <text wx:if="{{aiRefImageUrl}}">已选择参考图</text>
+      </view>
+      <!-- 参考图预览 -->
+      <view class="ai-ref-preview" wx:if="{{aiRefImageUrl}}">
+        <image src="{{aiRefImageUrl}}" mode="aspectFill" />
+        <view class="ai-ref-remove" bindtap="onRemoveRefImage">
+          <van-icon name="cross" size="14px" color="#fff" />
+        </view>
+      </view>
       <!-- 比例选择 -->
       <view class="ai-aspect-select">
         <text class="ai-aspect-label">比例:</text>

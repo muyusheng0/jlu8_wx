@@ -36,6 +36,7 @@ Page({
     aiAspectRatio: '1:1',
     aiGenerating: false,
     aiImageUrl: '',
+    aiRefImageUrl: '',
     // 夜间模式
     darkMode: false,
     musicPlaying: false
@@ -596,12 +597,30 @@ Page({
     this.setData({ aiAspectRatio: ratio });
   },
 
+  // 选择参考图
+  onChooseRefImage() {
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: (res) => {
+        const tempFilePath = res.tempFilePaths[0];
+        this.setData({ aiRefImageUrl: tempFilePath });
+      }
+    });
+  },
+
+  // 移除参考图
+  onRemoveRefImage() {
+    this.setData({ aiRefImageUrl: '' });
+  },
+
   async generateAiImage() {
     if (!getApp().globalData.isBind) {
       wx.showToast({ title: '请先登录', icon: 'none' });
       return;
     }
-    const { aiPrompt } = this.data;
+    const { aiPrompt, aiRefImageUrl } = this.data;
     if (!aiPrompt.trim()) {
       wx.showToast({ title: '请输入图片描述', icon: 'none' });
       return;
@@ -609,9 +628,18 @@ Page({
 
     this.setData({ aiGenerating: true });
     try {
+      let refImageBase64 = '';
+      if (aiRefImageUrl) {
+        // 将参考图转为base64
+        const fs = wx.getFileSystemManager();
+        const base64 = fs.readFileSync(aiRefImageUrl.replace('wxfile://', ''), 'base64');
+        refImageBase64 = 'data:image/jpeg;base64,' + base64;
+      }
+
       const res = await request('/ai/image/generate', {
         prompt: aiPrompt,
-        aspect_ratio: this.data.aiAspectRatio
+        aspect_ratio: this.data.aiAspectRatio,
+        ref_image: refImageBase64
       }, 'POST');
       this.setData({ aiGenerating: false });
       if (res.success) {
@@ -628,7 +656,7 @@ Page({
 
   insertAiImage() {
     if (this.data.aiImageUrl) {
-      this.setData({ newImageUrl: this.data.aiImageUrl, showAiPanel: false, aiImageUrl: '', aiPrompt: '' });
+      this.setData({ newImageUrl: this.data.aiImageUrl, showAiPanel: false, aiImageUrl: '', aiPrompt: '', aiRefImageUrl: '' });
       wx.showToast({ title: '已插入图片' });
     }
   },
