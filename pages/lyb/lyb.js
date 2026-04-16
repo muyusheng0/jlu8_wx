@@ -27,10 +27,20 @@ Page({
     tempVoicePath: '',
     // 正在播放的语音
     playingVoiceId: null,
-    audioContext: null
+    audioContext: null,
+    // 评论自动展开（类微信朋友圈）
+    expandedComments: {},  // {messageId: true/false}
+    // 夜间模式
+    darkMode: false,
+    musicPlaying: false
   },
 
   onLoad() {
+    const app = getApp();
+    this.setData({
+      darkMode: app.globalData.darkMode,
+      musicPlaying: app.globalData.musicPlaying
+    });
     this.loadMessages();
     this.loadUserProfile();
   },
@@ -72,9 +82,29 @@ Page({
       this.setData({ messages });
       // 加载点赞状态
       this.loadLikeStatus();
+      // 加载评论状态（有评论的自动展开）
+      this.loadCommentsStatus(messages);
     } catch (e) {
       wx.showToast({ title: '加载失败', icon: 'none' });
     }
+  },
+
+  // 加载评论状态（有评论的自动展开）
+  async loadCommentsStatus(messages) {
+    const newExpanded = { ...this.data.expandedComments };
+    for (const msg of messages) {
+      if (msg.comment_count > 0) {
+        try {
+          const res = await request(`/comments/${msg.id}`);
+          if (res.comments && res.comments.length > 0) {
+            newExpanded[msg.id] = true;  // 自动展开有评论的留言
+          }
+        } catch (e) {
+          // 忽略错误
+        }
+      }
+    }
+    this.setData({ expandedComments: newExpanded });
   },
 
   // 加载所有消息的点赞状态
@@ -371,34 +401,79 @@ Page({
     });
   },
 
-  // 打开评论弹窗
+  // 打开/切换评论（内嵌展开，如微信朋友圈）
   async toggleCommentPopup(e) {
     if (!getApp().globalData.isBind) {
       wx.showToast({ title: '请先登录', icon: 'none' });
       return;
     }
     const { id } = e.currentTarget.dataset;
-    const show = !this.data.commentPopupShow;
 
-    if (show) {
-      // 加载评论
-      try {
-        const res = await request(`/comments/${id}`);
-        this.setData({
-          commentPopupShow: true,
-          currentMessageId: id,
-          currentComments: res.comments || []
-        });
-      } catch (e) {
-        this.setData({
-          commentPopupShow: true,
-          currentMessageId: id,
-          currentComments: []
-        });
-        wx.showToast({ title: '加载评论失败', icon: 'none' });
-      }
-    } else {
-      this.setData({ commentPopupShow: false });
+    // 如果已经展开的是同一条留言，则收起
+    if (this.data.currentMessageId === id && this.data.expandedComments[id]) {
+      const newExpanded = { ...this.data.expandedComments };
+      newExpanded[id] = false;
+      this.setData({
+        expandedComments: newExpanded,
+        currentMessageId: null,
+        currentComments: []
+      });
+      return;
+    }
+
+    // 加载评论并展开
+    try {
+      const res = await request(`/comments/${id}`);
+      const newExpanded = { ...this.data.expandedComments };
+      newExpanded[id] = true;
+      this.setData({
+        currentMessageId: id,
+        currentComments: res.comments || [],
+        expandedComments: newExpanded
+      });
+    } catch (e) {
+      wx.showToast({ title: '加载评论失败', icon: 'none' });
+    }
+  },
+
+  // 提交内嵌评论
+  async onSubmitInlineComment(e) {
+    if (!getApp().globalData.isBind) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
+    }
+    const { commentContent, currentMessageId } = this.data;
+    if (!commentContent.trim()) {
+      wx.showToast({ title: '评论内容不能为空', icon: 'none' });
+      return;
+    }
+
+    try {
+      await request('/comments', {
+        message_id: currentMessageId,
+        content: commentContent.trim()
+      }, 'POST');
+
+      this.setData({ commentContent: '' });
+
+      // 刷新评论列表
+      const res = await request(`/comments/${currentMessageId}`);
+      this.setData({
+        currentComments: res.comments || []
+      });
+
+      // 更新消息列表中的评论数
+      const messages = this.data.messages.map(msg => {
+        if (msg.id === currentMessageId) {
+          return { ...msg, comment_count: (msg.comment_count || 0) + 1 };
+        }
+        return msg;
+      });
+      this.setData({ messages });
+
+      wx.showToast({ title: '评论成功' });
+    } catch (e) {
+      wx.showToast({ title: e.message || '评论失败', icon: 'none' });
     }
   },
 
@@ -499,5 +574,33 @@ Page({
         }
       }
     });
+  },
+
+  // 夜间模式切换
+  toggleDarkMode() {
+    const app = getApp();
+    const newDarkMode = app.toggleDarkMode();
+    this.setData({ darkMode: newDarkMode });
+  },
+
+  // 音乐播放切换
+  toggleMusic() {
+    const app = getApp();
+    if (app.globalData.musicPlaying) {
+      app.pauseMusic();
+      this.setData({ musicPlaying: false });
+    } else {
+      if (!app.globalData.musicCurrent) {
+        app.playMusic(0);
+      } else {
+        app.resumeMusic();
+      }
+      this.setData({ musicPlaying: true });
+    }
+  },
+
+  // 夜间模式变化回调
+  onDarkModeChange(darkMode) {
+    this.setData({ darkMode });
   }
 });

@@ -49,3 +49,23 @@
   color: #c8c9cc;
   margin-top: 8rpx;
 }
+
+/* 夜间模式 */
+.container.dark-mode {
+  background: #1a1a2e;
+}
+
+.container.dark-mode .page-header {
+  background: #252542;
+  border-bottom-color: #333;
+}
+
+.container.dark-mode .page-title {
+  color: #e0e0e0;
+}
+
+.container.dark-mode .empty-state {
+  color: #6b6b7b;
+}
+
+/* 悬浮按钮 - 使用全局样式 */

@@ -14,10 +14,17 @@ Page({
     loading: true,
     previewUrls: [],
     currentUser: null,
-    isAdmin: false
+    isAdmin: false,
+    darkMode: false,
+    musicPlaying: false
   },
 
   onLoad() {
+    const app = getApp();
+    this.setData({
+      darkMode: app.globalData.darkMode,
+      musicPlaying: app.globalData.musicPlaying
+    });
     this.loadUserProfile();
     this.loadPhotos();
   },
@@ -217,5 +224,30 @@ Page({
         }
       });
     });
+  },
+
+  toggleDarkMode() {
+    const app = getApp();
+    const newDarkMode = app.toggleDarkMode();
+    this.setData({ darkMode: newDarkMode });
+  },
+
+  toggleMusic() {
+    const app = getApp();
+    if (app.globalData.musicPlaying) {
+      app.pauseMusic();
+      this.setData({ musicPlaying: false });
+    } else {
+      if (!app.globalData.musicCurrent) {
+        app.playMusic(0);
+      } else {
+        app.resumeMusic();
+      }
+      this.setData({ musicPlaying: true });
+    }
+  },
+
+  onDarkModeChange(darkMode) {
+    this.setData({ darkMode });
   }
 });

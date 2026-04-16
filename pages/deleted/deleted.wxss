@@ -191,3 +191,48 @@
 .voice-preview audio {
   width: 100%;
 }
+
+/* 夜间模式 */
+.container.dark-mode {
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.container.dark-mode .header {
+  background: linear-gradient(135deg, #0f0f23, #1a1a2e);
+}
+
+.container.dark-mode .header::after {
+  background: #1a1a2e;
+}
+
+.container.dark-mode .item-card {
+  background: #252542;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.3);
+}
+
+.container.dark-mode .item-type {
+  color: #e0e0e0;
+}
+
+.container.dark-mode .item-content {
+  background: #1a1a2e;
+  color: #b0b0b0;
+}
+
+.container.dark-mode .item-actions {
+  border-top-color: #333;
+}
+
+.container.dark-mode .voice-preview {
+  background: #1a1a2e;
+}
+
+.container.dark-mode .empty-state {
+  color: #6b6b7b;
+}
+
+.container.dark-mode .van-cell {
+  background: #252542 !important;
+}
+
+/* 悬浮按钮 - 使用全局样式 */

@@ -57,3 +57,33 @@
 .btn::after {
   border: none;
 }
+
+/* 夜间模式 */
+.container.dark-mode {
+  background: #1a1a2e;
+}
+
+.container.dark-mode .title {
+  color: #e0e0e0;
+}
+
+.container.dark-mode .subtitle {
+  color: #b0b0b0;
+}
+
+.container.dark-mode .form-card {
+  background: #252542;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.3);
+}
+
+.container.dark-mode .input {
+  background: #1a1a2e;
+  border-color: #3a3a5a;
+  color: #e0e0e0;
+}
+
+.container.dark-mode .input:focus {
+  border-color: #e74c3c;
+}
+
+/* 悬浮按钮 - 使用全局样式 */

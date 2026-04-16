@@ -6,6 +6,164 @@ page {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
+/* 夜间模式样式 */
+.dark-mode {
+  background-color: #1a1a1a !important;
+  color: #e5e5e5 !important;
+}
+
+.dark-mode page {
+  background-color: #1a1a1a !important;
+  color: #e5e5e5 !important;
+}
+
+.dark-mode .container {
+  background-color: #1a1a1a;
+}
+
+.dark-mode .card {
+  background-color: #2d2d2d;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .header {
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d) !important;
+}
+
+.dark-mode .title,
+.dark-mode .subtitle,
+.dark-mode .page-title,
+.dark-mode .page-subtitle {
+  color: #e5e5e5 !important;
+}
+
+.dark-mode .list-title,
+.dark-mode .input-title,
+.dark-mode .section-title {
+  color: #e5e5e5 !important;
+}
+
+.dark-mode .message-card,
+.dark-mode .stats-card {
+  background-color: #2d2d2d;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .user-name,
+.dark-mode .message-content,
+.dark-mode .comment-content,
+.dark-mode .comment-name {
+  color: #e5e5e5 !important;
+}
+
+.dark-mode .user-time,
+.dark-mode .message-time,
+.dark-mode .comment-time,
+.dark-mode .activity-time {
+  color: #888 !important;
+}
+
+.dark-mode .char-count {
+  color: #888 !important;
+}
+
+.dark-mode .action-btn {
+  color: #888 !important;
+}
+
+.dark-mode .action-btn text {
+  color: #888 !important;
+}
+
+.dark-mode .action-liked {
+  color: #ee0a24 !important;
+}
+
+.dark-mode .input-field {
+  background-color: #3d3d3d !important;
+  border-color: #4d4d4d !important;
+  color: #e5e5e5 !important;
+}
+
+.dark-mode .section-hint {
+  color: #666 !important;
+}
+
+.dark-mode .empty-state {
+  color: #666 !important;
+}
+
+.dark-mode .divider {
+  background-color: #3d3d3d !important;
+}
+
+.dark-mode .list-count {
+  color: #888 !important;
+}
+
+.dark-mode .comment-popup {
+  background-color: #2d2d2d !important;
+}
+
+.dark-mode .popup-title {
+  color: #e5e5e5 !important;
+}
+
+.dark-mode .comment-field {
+  background-color: #3d3d3d !important;
+}
+
+.dark-mode .stats-label,
+.dark-mode .stats-num {
+  color: #e5e5e5 !important;
+}
+
+/* 音乐播放器悬浮按钮 */
+.music-float-btn {
+  position: fixed;
+  right: 30rpx;
+  bottom: calc(200rpx + env(safe-area-inset-bottom));
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ee0a24, #ff6034);
+  box-shadow: 0 8rpx 30rpx rgba(238, 10, 36, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  transition: all 0.3s;
+}
+
+.music-float-btn.playing {
+  animation: pulse 1.5s infinite;
+}
+
+.dark-mode .music-float-btn {
+  background: linear-gradient(135deg, #b8192b, #d94a2b);
+  box-shadow: 0 8rpx 30rpx rgba(184, 25, 43, 0.6);
+}
+
+/* 夜间模式切换按钮 */
+.dark-mode-btn {
+  position: fixed;
+  right: 30rpx;
+  bottom: calc(320rpx + env(safe-area-inset-bottom));
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 998;
+}
+
+.dark-mode .dark-mode-btn {
+  background: #2d2d2d;
+}
+
 .container {
   padding: 30rpx;
   min-height: 100vh;

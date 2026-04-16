@@ -11,10 +11,17 @@ Page({
   data: {
     photoCount: 0,
     videoCount: 0,
-    recentPhotos: []
+    recentPhotos: [],
+    darkMode: false,
+    musicPlaying: false
   },
 
   onLoad() {
+    const app = getApp();
+    this.setData({
+      darkMode: app.globalData.darkMode,
+      musicPlaying: app.globalData.musicPlaying
+    });
     this.loadData();
   },
 
@@ -59,5 +66,30 @@ Page({
       current: url,
       urls: this.data.recentPhotos.map(p => p.url)
     });
+  },
+
+  toggleDarkMode() {
+    const app = getApp();
+    const newDarkMode = app.toggleDarkMode();
+    this.setData({ darkMode: newDarkMode });
+  },
+
+  toggleMusic() {
+    const app = getApp();
+    if (app.globalData.musicPlaying) {
+      app.pauseMusic();
+      this.setData({ musicPlaying: false });
+    } else {
+      if (!app.globalData.musicCurrent) {
+        app.playMusic(0);
+      } else {
+        app.resumeMusic();
+      }
+      this.setData({ musicPlaying: true });
+    }
+  },
+
+  onDarkModeChange(darkMode) {
+    this.setData({ darkMode });
   }
 });

@@ -316,3 +316,91 @@
   font-size: 24rpx;
   color: #969799;
 }
+
+/* 夜间模式样式 */
+.dark-mode .container {
+  background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+.dark-mode .profile-card {
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d) !important;
+}
+
+.dark-mode .card-wave {
+  background: #1a1a1a !important;
+}
+
+.dark-mode .action-item {
+  background: #2d2d2d !important;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark-mode .action-text {
+  color: #e5e5e5 !important;
+}
+
+.dark-mode .section-title {
+  color: #e5e5e5 !important;
+}
+
+.dark-mode .section .van-cell-group {
+  background: #2d2d2d !important;
+}
+
+.dark-mode .about-content {
+  background: #2d2d2d !important;
+}
+
+.dark-mode .about-text {
+  color: #888 !important;
+}
+
+.dark-mode .about-footer {
+  border-top-color: #3d3d3d !important;
+}
+
+.dark-mode .about-footer text {
+  color: #666 !important;
+}
+
+.dark-mode .logout-btn {
+  color: #888 !important;
+}
+
+/* 悬浮按钮 */
+.float-btns {
+  position: fixed;
+  right: 30rpx;
+  bottom: calc(180rpx + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  z-index: 999;
+}
+
+.float-btn {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark-mode .float-btn {
+  background: #2d2d2d;
+}
+
+.float-btn.music-btn {
+  background: linear-gradient(135deg, #ee0a24, #ff6034);
+}
+
+.float-btn.music-btn.playing {
+  animation: pulse 1.5s infinite;
+}
+
+.dark-mode .float-btn.music-btn {
+  background: linear-gradient(135deg, #b8192b, #d94a2b);
+}

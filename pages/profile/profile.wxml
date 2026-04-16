@@ -1,4 +1,4 @@
-<view class="container">
+<view class="container {{darkMode ? 'dark-mode' : ''}}">
   <van-loading wx:if="{{loading}}" vertical />
 
   <block wx:if="{{!loading && profile}}">
@@ -60,6 +60,8 @@
         <van-cell title="性别" value="{{profile.gender || '未填写'}}" is-link bind:click="onEdit" data-field="gender" />
         <van-cell title="生日" value="{{profile.birthday || '未填写'}}" is-link bind:click="onEdit" data-field="birthday" />
         <van-cell title="联系电话" value="{{profile.phone || '未填写'}}" is-link bind:click="onEdit" data-field="phone" />
+        <van-cell title="电子邮箱" value="{{profile.email || '未填写'}}" is-link bind:click="onEdit" data-field="email" />
+        <van-cell title="QQ号" value="{{profile.qq || '未填写'}}" is-link bind:click="onEdit" data-field="qq" />
         <van-cell title="当前所在地" value="{{profile.city || profile.hometown_name || '未填写'}}" is-link bind:click="onEdit" data-field="city" />
       </van-cell-group>
     </view>
@@ -184,6 +186,22 @@
           error="{{errors.phone}}"
         />
         <van-field
+          label="电子邮箱"
+          value="{{editForm.email}}"
+          data-field="email"
+          bind:change="onEditField"
+          placeholder="请输入邮箱"
+          type="text"
+        />
+        <van-field
+          label="QQ号"
+          value="{{editForm.qq}}"
+          data-field="qq"
+          bind:change="onEditField"
+          placeholder="请输入QQ号"
+          type="number"
+        />
+        <van-field
           label="从事行业"
           value="{{editForm.industry}}"
           data-field="industry"
@@ -261,6 +279,16 @@
         <text>吉大自动化八班 © 2026</text>
         <text>青春不散场，友谊永长存</text>
       </view>
+    </view>
+  </view>
+
+  <!-- 悬浮功能按钮 -->
+  <view class="float-btns">
+    <view class="float-btn" bindtap="toggleDarkMode">
+      <van-icon name="{{darkMode ? 'sunny-o' : 'moon-o'}}" size="24px" color="{{darkMode ? '#ff6034' : '#666'}}" />
+    </view>
+    <view class="float-btn music-btn {{musicPlaying ? 'playing' : ''}}" bindtap="toggleMusic">
+      <van-icon name="{{musicPlaying ? 'pause' : 'music-o'}}" size="24px" color="#fff" />
     </view>
   </view>
 </view>

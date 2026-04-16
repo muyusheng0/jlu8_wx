@@ -540,3 +540,233 @@
 .empty-state text {
   font-size: 28rpx;
 }
+
+/* 内嵌评论区（如微信朋友圈） */
+.inline-comments {
+  border-top: 1rpx solid #f5f5f5;
+  padding: 16rpx 0;
+  margin-top: 16rpx;
+}
+
+.inline-comments .comments-list {
+  padding: 0;
+}
+
+.comment-item-inline {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 8rpx 0;
+  font-size: 26rpx;
+  line-height: 1.5;
+}
+
+.comment-inline-name {
+  color: #576b95;
+  font-weight: 500;
+  margin-right: 8rpx;
+}
+
+.comment-inline-content {
+  color: #333;
+  flex: 1;
+  word-break: break-all;
+}
+
+.comment-inline-delete {
+  color: #ee0a24;
+  margin-left: 16rpx;
+  font-size: 24rpx;
+}
+
+.inline-comment-input {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 12rpx 0;
+  margin-top: 12rpx;
+  border-top: 1rpx solid #f5f5f5;
+}
+
+.inline-input {
+  flex: 1;
+  height: 64rpx;
+  background: #f7f8fa;
+  border-radius: 32rpx;
+  padding: 0 24rpx;
+  font-size: 26rpx;
+  box-sizing: border-box;
+}
+
+.inline-submit-btn {
+  color: #ee0a24;
+  font-size: 28rpx;
+  font-weight: 500;
+  padding: 0 16rpx;
+}
+
+.expand-comments-hint {
+  padding: 12rpx 0;
+  font-size: 26rpx;
+  color: #576b95;
+  border-top: 1rpx dashed #f0f0f0;
+  margin-top: 12rpx;
+}
+
+/* 夜间模式内嵌评论 */
+.dark-mode .inline-comments {
+  border-top-color: #3d3d3d;
+}
+
+.dark-mode .comment-inline-name {
+  color: #6b9ed8;
+}
+
+.dark-mode .comment-inline-content {
+  color: #e5e5e5;
+}
+
+.dark-mode .inline-comment-input {
+  border-top-color: #3d3d3d;
+}
+
+.dark-mode .inline-input {
+  background: #3d3d3d;
+  color: #e5e5e5;
+}
+
+.dark-mode .expand-comments-hint {
+  color: #6b9ed8;
+  border-top-color: #3d3d3d;
+}
+
+/* 夜间模式样式 */
+.dark-mode .container {
+  background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+.dark-mode .header {
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d) !important;
+}
+
+.dark-mode .header::after {
+  background: #1a1a1a !important;
+}
+
+.dark-mode .input-area {
+  background: #2d2d2d !important;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark-mode .input-title,
+.dark-mode .list-title {
+  color: #e5e5e5 !important;
+}
+
+.dark-mode .char-count {
+  color: #888 !important;
+}
+
+.dark-mode .message-card {
+  background: #2d2d2d !important;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark-mode .user-name,
+.dark-mode .message-content {
+  color: #e5e5e5 !important;
+}
+
+.dark-mode .user-time {
+  color: #888 !important;
+}
+
+.dark-mode .action-bar {
+  border-top-color: #3d3d3d !important;
+}
+
+.dark-mode .action-btn {
+  color: #888 !important;
+}
+
+.dark-mode .list-count {
+  color: #888 !important;
+}
+
+.dark-mode .section-hint {
+  color: #666 !important;
+}
+
+.dark-mode .comment-popup {
+  background: #2d2d2d !important;
+}
+
+.dark-mode .popup-title {
+  color: #e5e5e5 !important;
+}
+
+.dark-mode .popup-header {
+  border-bottom-color: #3d3d3d !important;
+}
+
+.dark-mode .comment-item {
+  border-bottom-color: #3d3d3d !important;
+}
+
+.dark-mode .comment-name {
+  color: #e5e5e5 !important;
+}
+
+.dark-mode .comment-time {
+  color: #888 !important;
+}
+
+.dark-mode .comment-content {
+  color: #888 !important;
+}
+
+.dark-mode .comment-input-area {
+  border-top-color: #3d3d3d !important;
+  background: #2d2d2d !important;
+}
+
+.dark-mode .empty-state {
+  color: #666 !important;
+}
+
+/* 悬浮按钮 */
+.float-btns {
+  position: fixed;
+  right: 30rpx;
+  bottom: calc(180rpx + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  z-index: 999;
+}
+
+.float-btn {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark-mode .float-btn {
+  background: #2d2d2d;
+}
+
+.float-btn.music-btn {
+  background: linear-gradient(135deg, #ee0a24, #ff6034);
+}
+
+.float-btn.music-btn.playing {
+  animation: pulse 1.5s infinite;
+}
+
+.dark-mode .float-btn.music-btn {
+  background: linear-gradient(135deg, #b8192b, #d94a2b);
+}

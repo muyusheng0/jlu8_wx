@@ -3,10 +3,17 @@ const { request } = require('../../utils/auth');
 Page({
   data: {
     students: [],
-    loading: true
+    loading: true,
+    darkMode: false,
+    musicPlaying: false
   },
 
   onLoad() {
+    const app = getApp();
+    this.setData({
+      darkMode: app.globalData.darkMode,
+      musicPlaying: app.globalData.musicPlaying
+    });
     this.loadStudents();
   },
 
@@ -75,5 +82,37 @@ Page({
         }
       }
     });
+  },
+
+  toggleDarkMode() {
+    const app = getApp();
+    const newDarkMode = !app.globalData.darkMode;
+    app.globalData.darkMode = newDarkMode;
+    this.setData({ darkMode: newDarkMode });
+    this.onDarkModeChange(newDarkMode);
+  },
+
+  toggleMusic() {
+    const app = getApp();
+    const newMusicPlaying = !app.globalData.musicPlaying;
+    app.globalData.musicPlaying = newMusicPlaying;
+    this.setData({ musicPlaying: newMusicPlaying });
+    if (app.globalData.audioContext) {
+      if (newMusicPlaying) {
+        app.globalData.audioContext.play();
+      } else {
+        app.globalData.audioContext.pause();
+      }
+    }
+  },
+
+  onDarkModeChange(darkMode) {
+    if (darkMode) {
+      wx.setBackgroundColor({ backgroundColor: '#1a1a2e' });
+      wx.setNavigationBarColor({ frontColor: '#ffffff', backgroundColor: '#1a1a2e' });
+    } else {
+      wx.setBackgroundColor({ backgroundColor: '#f5f5f5' });
+      wx.setNavigationBarColor({ frontColor: '#000000', backgroundColor: '#f5f5f5' });
+    }
   }
 });

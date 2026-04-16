@@ -1,4 +1,4 @@
-<view class="container">
+<view class="container {{darkMode ? 'dark-mode' : ''}}">
   <!-- 头部 -->
   <view class="header">
     <view class="header-content">
@@ -122,6 +122,26 @@
           <text>{{item.comment_count || 0}}</text>
         </view>
       </view>
+
+      <!-- 内嵌评论区（如微信朋友圈） -->
+      <view class="inline-comments" wx:if="{{expandedComments[item.id] && currentMessageId === item.id}}">
+        <view class="comments-list">
+          <view wx:for="{{currentComments}}" wx:key="id" class="comment-item-inline">
+            <text class="comment-inline-name">{{item.nickname}}:</text>
+            <text class="comment-inline-content">{{item.content}}</text>
+            <text class="comment-inline-delete" wx:if="{{item.can_delete}}" catchtap="onDeleteComment" data-id="{{item.id}}" data-message-id="{{item.message_id}}">删除</text>
+          </view>
+        </view>
+        <!-- 内嵌评论输入 -->
+        <view class="inline-comment-input">
+          <input type="text" class="inline-input" placeholder="写评论..." value="{{commentContent}}" bindinput="onCommentInput" bindconfirm="onSubmitInlineComment" data-id="{{item.id}}" />
+          <text class="inline-submit-btn" catchtap="onSubmitInlineComment" data-id="{{item.id}}">发送</text>
+        </view>
+      </view>
+      <!-- 展开评论提示 -->
+      <view class="expand-comments-hint" wx:if="{{item.comment_count > 0 && !expandedComments[item.id]}}" bindtap="toggleCommentPopup" data-id="{{item.id}}">
+        <text>展开{{item.comment_count}}条评论</text>
+      </view>
     </view>
 
     <view wx:if="{{messages.length === 0}}" class="empty-state">
@@ -191,6 +211,16 @@
       </view>
     </view>
   </van-popup>
+
+  <!-- 悬浮功能按钮 -->
+  <view class="float-btns">
+    <view class="float-btn" bindtap="toggleDarkMode">
+      <van-icon name="{{darkMode ? 'sunny-o' : 'moon-o'}}" size="24px" color="{{darkMode ? '#ff6034' : '#666'}}" />
+    </view>
+    <view class="float-btn music-btn {{musicPlaying ? 'playing' : ''}}" bindtap="toggleMusic">
+      <van-icon name="{{musicPlaying ? 'pause' : 'music-o'}}" size="24px" color="#fff" />
+    </view>
+  </view>
 </view>
 
 <van-toast id="van-toast" />

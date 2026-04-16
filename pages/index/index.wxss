@@ -448,3 +448,113 @@
   border-radius: 8rpx;
   object-fit: cover;
 }
+
+/* 夜间模式样式 */
+.dark-mode .container {
+  background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+.dark-mode .header {
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d) !important;
+}
+
+.dark-mode .header-wave {
+  background: #1a1a1a;
+}
+
+.dark-mode .page-title,
+.dark-mode .page-subtitle {
+  color: #e5e5e5 !important;
+}
+
+.dark-mode .stats-card,
+.dark-mode .menu-grid,
+.dark-mode .timeline,
+.dark-mode .activity-card {
+  background-color: #2d2d2d !important;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark-mode .stats-num {
+  color: #ff6034 !important;
+}
+
+.dark-mode .stats-label {
+  color: #888 !important;
+}
+
+.dark-mode .stats-divider {
+  background: #3d3d3d !important;
+}
+
+.dark-mode .menu-text {
+  color: #888 !important;
+}
+
+.dark-mode .section-title,
+.dark-mode .section-hint,
+.dark-mode .section-more {
+  color: #e5e5e5 !important;
+}
+
+.dark-mode .indicator {
+  background: #4d4d4d !important;
+}
+
+.dark-mode .indicator.active {
+  background: #ff6034 !important;
+}
+
+.dark-mode .timeline-year {
+  color: #e5e5e5 !important;
+}
+
+.dark-mode .timeline-event {
+  color: #888 !important;
+}
+
+.dark-mode .timeline-line {
+  background: linear-gradient(180deg, #ff6034, #3d3d3d) !important;
+}
+
+.dark-mode .empty-state {
+  color: #666 !important;
+}
+
+/* 悬浮按钮容器 */
+.float-btns {
+  position: fixed;
+  right: 30rpx;
+  bottom: calc(180rpx + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  z-index: 999;
+}
+
+.float-btn {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark-mode .float-btn {
+  background: #2d2d2d;
+}
+
+.float-btn.music-btn {
+  background: linear-gradient(135deg, #ee0a24, #ff6034);
+}
+
+.float-btn.music-btn.playing {
+  animation: pulse 1.5s infinite;
+}
+
+.dark-mode .float-btn.music-btn {
+  background: linear-gradient(135deg, #b8192b, #d94a2b);
+}

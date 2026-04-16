@@ -11,3 +11,10 @@
 .result {
   margin-top: 1rem;
 }
+
+/* 夜间模式 */
+.container.dark-mode {
+  background-color: #1a1a2e;
+}
+
+/* 悬浮按钮 - 使用全局样式 */

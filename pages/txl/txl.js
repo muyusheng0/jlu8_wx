@@ -18,10 +18,17 @@ Page({
     filteredStudents: [],
     searchKey: '',
     nearestClassmates: [],
-    locationLoading: false
+    locationLoading: false,
+    darkMode: false,
+    musicPlaying: false
   },
 
   onLoad() {
+    const app = getApp();
+    this.setData({
+      darkMode: app.globalData.darkMode,
+      musicPlaying: app.globalData.musicPlaying
+    });
     this.loadStudents();
     this.updateLocation();
   },
@@ -122,5 +129,30 @@ Page({
   goToNearestDetail(e) {
     const id = e.currentTarget.dataset.id;
     wx.navigateTo({ url: `/pages/txl-detail/txl-detail?id=${id}` });
+  },
+
+  toggleDarkMode() {
+    const app = getApp();
+    const newDarkMode = app.toggleDarkMode();
+    this.setData({ darkMode: newDarkMode });
+  },
+
+  toggleMusic() {
+    const app = getApp();
+    if (app.globalData.musicPlaying) {
+      app.pauseMusic();
+      this.setData({ musicPlaying: false });
+    } else {
+      if (!app.globalData.musicCurrent) {
+        app.playMusic(0);
+      } else {
+        app.resumeMusic();
+      }
+      this.setData({ musicPlaying: true });
+    }
+  },
+
+  onDarkModeChange(darkMode) {
+    this.setData({ darkMode });
   }
 });

@@ -213,3 +213,30 @@
   font-size: 22rpx;
   color: #969799;
 }
+
+/* 夜间模式 */
+.container.dark-mode {
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.container.dark-mode .profile-card {
+  background: linear-gradient(135deg, #2d2d5a 0%, #3d3d7a 100%);
+}
+
+.container.dark-mode .voice-item {
+  border-bottom-color: #333;
+}
+
+.container.dark-mode .voice-from {
+  color: #e0e0e0;
+}
+
+.container.dark-mode .voice-empty {
+  color: #6b6b7b;
+}
+
+.container.dark-mode .voice-tip {
+  color: #b0b0b0;
+}
+
+/* 悬浮按钮 - 使用全局样式 */

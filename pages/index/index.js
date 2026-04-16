@@ -9,11 +9,17 @@ Page({
     activities: [],
     timeline: [],
     currentSwiper: 0,
-    unreadActivityCount: 0
+    unreadActivityCount: 0,
+    // 夜间模式
+    darkMode: false,
+    musicPlaying: false
   },
 
   onLoad() {
     this.checkBind();
+    // 同步夜间模式状态
+    const app = getApp();
+    this.setData({ darkMode: app.globalData.darkMode });
   },
 
   onShow() {
@@ -131,5 +137,34 @@ Page({
       // 跳转到通讯录
       wx.switchTab({ url: '/pages/txl/txl' });
     }
+  },
+
+  // 夜间模式切换
+  toggleDarkMode() {
+    const app = getApp();
+    const newDarkMode = app.toggleDarkMode();
+    this.setData({ darkMode: newDarkMode });
+  },
+
+  // 音乐播放切换
+  toggleMusic() {
+    const app = getApp();
+    if (app.globalData.musicPlaying) {
+      app.pauseMusic();
+      this.setData({ musicPlaying: false });
+    } else {
+      // 如果没有播放过，先播放第一首
+      if (!app.globalData.musicCurrent) {
+        app.playMusic(0);
+      } else {
+        app.resumeMusic();
+      }
+      this.setData({ musicPlaying: true });
+    }
+  },
+
+  // 夜间模式变化回调
+  onDarkModeChange(darkMode) {
+    this.setData({ darkMode });
   }
 });

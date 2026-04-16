@@ -81,3 +81,36 @@
   color: #c8c9cc;
   margin-top: 8rpx;
 }
+
+/* 夜间模式 */
+.container.dark-mode {
+  background: #1a1a2e;
+}
+
+.container.dark-mode .page-header {
+  background: #252542;
+  border-bottom-color: #333;
+}
+
+.container.dark-mode .page-title {
+  color: #e0e0e0;
+}
+
+.container.dark-mode .activity-item {
+  background: #252542;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.3);
+}
+
+.container.dark-mode .activity-user {
+  color: #e0e0e0;
+}
+
+.container.dark-mode .activity-content {
+  color: #b0b0b0;
+}
+
+.container.dark-mode .empty-state {
+  color: #6b6b7b;
+}
+
+/* 悬浮按钮 - 使用全局样式 */

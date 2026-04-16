@@ -1,4 +1,4 @@
-<view class="container">
+<view class="container {{darkMode ? 'dark-mode' : ''}}">
   <van-loading wx:if="{{loading}}" vertical />
 
   <view class="page-header">
@@ -17,5 +17,15 @@
   <view class="empty-state" wx:if="{{!loading && logs.length === 0}}">
     <view class="empty-icon">🔐</view>
     <text>暂无登录记录</text>
+  </view>
+
+  <!-- 悬浮功能按钮 -->
+  <view class="float-btns">
+    <view class="float-btn" bindtap="toggleDarkMode">
+      <van-icon name="{{darkMode ? 'sunny-o' : 'moon-o'}}" size="24px" color="{{darkMode ? '#ff6034' : '#666'}}" />
+    </view>
+    <view class="float-btn music-btn {{musicPlaying ? 'playing' : ''}}" bindtap="toggleMusic">
+      <van-icon name="{{musicPlaying ? 'pause' : 'music-o'}}" size="24px" color="#fff" />
+    </view>
   </view>
 </view>
