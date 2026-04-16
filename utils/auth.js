@@ -54,8 +54,6 @@ function bind(openid, name, studentId) {
 function request(url, data, method = 'GET') {
   const app = getApp();
   return new Promise((resolve, reject) => {
-    wx.showLoading({ title: '加载中...' });
-
     wx.request({
       url: app.globalData.apiBase + url,
       data,
@@ -65,17 +63,21 @@ function request(url, data, method = 'GET') {
         'Authorization': app.globalData.token ? `Bearer ${app.globalData.token}` : ''
       },
       success: (res) => {
-        wx.hideLoading();
         if (res.data.success) {
           resolve(res.data);
+        } else if (res.data.error === 'Invalid token' || res.data.error === 'Token过期') {
+          // Token无效，清除本地存储并跳转登录
+          wx.removeStorageSync('token');
+          wx.removeStorageSync('userInfo');
+          app.globalData.token = null;
+          app.globalData.userInfo = null;
+          app.globalData.isBind = false;
+          reject(new Error(res.data.error));
         } else {
           reject(new Error(res.data.error || 'Request failed'));
         }
       },
-      fail: (err) => {
-        wx.hideLoading();
-        reject(err);
-      }
+      fail: reject
     });
   });
 }
