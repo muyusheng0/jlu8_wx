@@ -80,10 +80,56 @@
 
   <!-- 校友会区域 -->
   <view class="content-area" wx:if="{{currentTab === 'alumni'}}">
-    <view class="empty-state">
+    <!-- 各地校友会 -->
+    <view class="alumni-section" wx:if="{{alumniAssociations.length > 0}}">
+      <view class="alumni-section-title">🎓 各地校友会</view>
+      <view class="alumni-grid">
+        <view class="alumni-card" wx:for="{{alumniAssociations}}" wx:key="id">
+          <view class="alumni-image">
+            <view class="alumni-image-placeholder">🎓</view>
+          </view>
+          <view class="alumni-content">
+            <view class="alumni-location-badge">📍 {{item.location}}</view>
+            <view class="alumni-title">{{item.name}}</view>
+            <view class="alumni-desc" wx:if="{{item.description}}">{{item.description}}</view>
+            <view class="alumni-contact">
+              <view class="contact-item" wx:if="{{item.contact}}">📞 {{item.contact}}</view>
+              <view class="contact-item" wx:if="{{item.wechat}}">💬 微信号：{{item.wechat}}</view>
+              <view class="contact-item" wx:if="{{item.email}}">📧 邮箱：{{item.email}}</view>
+              <view class="contact-item" wx:if="{{item.join_method}}">✨ {{item.join_method}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 校友会动态 -->
+    <view class="alumni-section" wx:if="{{alumniNews.length > 0}}">
+      <view class="alumni-section-title">📰 校友会动态</view>
+      <view class="alumni-grid">
+        <view class="alumni-card alumni-news-card" wx:for="{{alumniNews}}" wx:key="id" bindtap="onAlumniNewsTap" data-url="{{item.source_url}}">
+          <view class="alumni-image" wx:if="{{item.image_url}}">
+            <image src="{{item.image_url}}" mode="aspectFill" />
+          </view>
+          <view class="alumni-image" wx:else>
+            <view class="alumni-image-placeholder">📰</view>
+          </view>
+          <view class="alumni-content">
+            <view class="alumni-location" wx:if="{{item.location}}">📍 {{item.location}}</view>
+            <view class="alumni-title">{{item.title}}</view>
+            <view class="alumni-desc" wx:if="{{item.content}}">{{item.content}}</view>
+            <view class="alumni-meta">
+              <text class="alumni-date">📅 {{item.published_time}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{alumniAssociations.length === 0 && alumniNews.length === 0}}">
       <view class="empty-icon">🎓</view>
-      <text>校友会功能</text>
-      <text class="empty-hint">即将上线</text>
+      <text>暂无校友会资讯</text>
     </view>
   </view>
 
