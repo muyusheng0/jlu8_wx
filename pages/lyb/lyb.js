@@ -30,6 +30,12 @@ Page({
     audioContext: null,
     // 评论自动展开（类微信朋友圈）
     expandedComments: {},  // {messageId: true/false}
+    // AI生成图
+    showAiPanel: false,
+    aiPrompt: '',
+    aiAspectRatio: '1:1',
+    aiGenerating: false,
+    aiImageUrl: '',
     // 夜间模式
     darkMode: false,
     musicPlaying: false
@@ -574,6 +580,61 @@ Page({
         }
       }
     });
+  },
+
+  // AI生成图相关
+  toggleAiPanel() {
+    this.setData({ showAiPanel: !this.data.showAiPanel });
+  },
+
+  onAiPromptInput(e) {
+    this.setData({ aiPrompt: e.detail.value });
+  },
+
+  setAiAspectRatio(e) {
+    const ratio = e.currentTarget.dataset.ratio;
+    this.setData({ aiAspectRatio: ratio });
+  },
+
+  async generateAiImage() {
+    if (!getApp().globalData.isBind) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
+    }
+    const { aiPrompt } = this.data;
+    if (!aiPrompt.trim()) {
+      wx.showToast({ title: '请输入图片描述', icon: 'none' });
+      return;
+    }
+
+    this.setData({ aiGenerating: true });
+    try {
+      const res = await request('/ai/image/generate', {
+        prompt: aiPrompt,
+        aspect_ratio: this.data.aiAspectRatio
+      }, 'POST');
+      this.setData({ aiGenerating: false });
+      if (res.success) {
+        this.setData({ aiImageUrl: res.url });
+        wx.showToast({ title: '生成成功' });
+      } else {
+        wx.showToast({ title: res.error || '生成失败', icon: 'none' });
+      }
+    } catch (e) {
+      this.setData({ aiGenerating: false });
+      wx.showToast({ title: e.message || '生成失败', icon: 'none' });
+    }
+  },
+
+  insertAiImage() {
+    if (this.data.aiImageUrl) {
+      this.setData({ newImageUrl: this.data.aiImageUrl, showAiPanel: false, aiImageUrl: '', aiPrompt: '' });
+      wx.showToast({ title: '已插入图片' });
+    }
+  },
+
+  clearAiImage() {
+    this.setData({ aiImageUrl: '' });
   },
 
   // 夜间模式切换

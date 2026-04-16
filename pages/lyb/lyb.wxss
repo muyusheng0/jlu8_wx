@@ -639,9 +639,129 @@
   border-top-color: #3d3d3d;
 }
 
+/* AI生成图面板 */
+.ai-panel {
+  background: #fff;
+  border-radius: 20rpx;
+  margin: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.06);
+}
+
+.ai-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.ai-panel-title {
+  font-size: 32rpx;
+  color: #323233;
+  font-weight: 600;
+}
+
+.ai-panel-close {
+  padding: 10rpx;
+}
+
+.ai-panel-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.ai-input {
+  background: #f7f8fa !important;
+  border-radius: 16rpx !important;
+  padding: 24rpx !important;
+  font-size: 28rpx !important;
+}
+
+.ai-aspect-select {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.ai-aspect-label {
+  font-size: 26rpx;
+  color: #969799;
+}
+
+.ai-aspect-options {
+  display: flex;
+  gap: 16rpx;
+}
+
+.ai-aspect-btn {
+  padding: 10rpx 24rpx;
+  border-radius: 32rpx;
+  background: #f7f8fa;
+  font-size: 24rpx;
+  color: #646566;
+  transition: all 0.3s;
+}
+
+.ai-aspect-btn.active {
+  background: linear-gradient(135deg, #ff6034, #ee0a24);
+  color: #fff;
+}
+
+.ai-result {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.ai-result-image {
+  width: 100%;
+  height: 300rpx;
+  border-radius: 16rpx;
+  object-fit: cover;
+}
+
+.ai-result-actions {
+  display: flex;
+  gap: 16rpx;
+}
+
+.ai-generate-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2) !important;
+  border: none !important;
+}
+
 /* 夜间模式样式 */
 .dark-mode .container {
   background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+.dark-mode .ai-panel {
+  background: #2d2d2d !important;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark-mode .ai-panel-title {
+  color: #e5e5e5 !important;
+}
+
+.dark-mode .ai-input {
+  background: #3d3d3d !important;
+  color: #e5e5e5 !important;
+}
+
+.dark-mode .ai-aspect-label {
+  color: #888 !important;
+}
+
+.dark-mode .ai-aspect-btn {
+  background: #3d3d3d !important;
+  color: #888 !important;
+}
+
+.dark-mode .ai-aspect-btn.active {
+  background: linear-gradient(135deg, #667eea, #764ba2) !important;
+  color: #fff !important;
 }
 
 .dark-mode .header {

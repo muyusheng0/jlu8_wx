@@ -52,10 +52,57 @@
         <view class="voice-record-btn recording" bindtap="onStopRecord" wx:if="{{isRecording}}">
           <van-icon name="stop-circle" size="20px" color="#ee0a24" />
         </view>
+        <!-- AI生成图按钮 -->
+        <view class="action-btn ai-btn" bindtap="toggleAiPanel">
+          <van-icon name="gem-o" size="20px" color="{{showAiPanel ? '#ee0a24' : '#969799'}}" />
+        </view>
       </view>
       <text class="char-count">{{newContent.length}}/500</text>
       <van-button type="primary" size="small" bind:click="onSubmit" round class="submit-btn" loading="{{uploadingImage}}">
         <van-icon name="send" size="16px" /> 发布
+      </van-button>
+    </view>
+  </view>
+
+  <!-- AI生成图面板 -->
+  <view class="ai-panel" wx:if="{{showAiPanel}}">
+    <view class="ai-panel-header">
+      <text class="ai-panel-title">🎨 AI 创作</text>
+      <view class="ai-panel-close" bindtap="toggleAiPanel">
+        <van-icon name="cross" size="16px" color="#969799" />
+      </view>
+    </view>
+    <view class="ai-panel-content">
+      <van-field
+        value="{{aiPrompt}}"
+        placeholder="描述你想生成的图片..."
+        bind:change="onAiPromptInput"
+        type="textarea"
+        autosize
+        border="{{false}}"
+        show-confirm-bar="{{false}}"
+        class="ai-input"
+      />
+      <!-- 比例选择 -->
+      <view class="ai-aspect-select">
+        <text class="ai-aspect-label">比例:</text>
+        <view class="ai-aspect-options">
+          <view class="ai-aspect-btn {{aiAspectRatio === '1:1' ? 'active' : ''}}" bindtap="setAiAspectRatio" data-ratio="1:1">1:1</view>
+          <view class="ai-aspect-btn {{aiAspectRatio === '16:9' ? 'active' : ''}}" bindtap="setAiAspectRatio" data-ratio="16:9">16:9</view>
+          <view class="ai-aspect-btn {{aiAspectRatio === '9:16' ? 'active' : ''}}" bindtap="setAiAspectRatio" data-ratio="9:16">9:16</view>
+        </view>
+      </view>
+      <!-- AI生成图预览 -->
+      <view class="ai-result" wx:if="{{aiImageUrl}}">
+        <image src="{{aiImageUrl}}" mode="aspectFill" class="ai-result-image" />
+        <view class="ai-result-actions">
+          <van-button size="small" round bindtap="insertAiImage">插入留言</van-button>
+          <van-button size="small" round type="default" bindtap="clearAiImage">清除</van-button>
+        </view>
+      </view>
+      <!-- AI生成按钮 -->
+      <van-button type="primary" block round bindtap="generateAiImage" loading="{{aiGenerating}}" class="ai-generate-btn">
+        {{aiGenerating ? '生成中...' : '生成'}}
       </van-button>
     </view>
   </view>
